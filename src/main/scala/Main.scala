@@ -7,6 +7,7 @@ val cards = List(("Kupfer", 0, 1, 0, 50), ("Silber", 3, 2, 0, 50), ("Gold", 6, 3
                   ("Wachstube", 4, 0, 0, 10), ("Keller", 2, -1, -1, -1), ("Garten", -1, -1, -1, -1))
 val stock = ListBuffer[(String, Int, Int, Int, Int)]()
 
+
 @main def main(): Unit = {
   println("Please type out a Card you want to add to the Stock:")
   if (addCard(getCard(readLine()))) {
@@ -39,3 +40,4 @@ def addCard(card: (String, Int, Int, Int, Int)): Boolean = {
     false
   }
 }
+
