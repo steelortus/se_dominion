@@ -1,7 +1,7 @@
-package de.hwtg.se.dominion
+package de.htwg.se.dominion
 
-import scalatest.matchers.should.Matchers._
-import scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers._
+import org.scalatest.wordspec.AnyWordSpec
 
 class CardSpec extends AnyWordSpec {
     "A Card" should {
@@ -41,7 +41,7 @@ class CardSpec extends AnyWordSpec {
             s.stock.contains(Card.Holzfaeller) should be(true)
             s.stock.length should be(8)
 
-            s.AddCard(Card.Miliz) should be(true)
+            s.addCard(Card.Miliz) should be(true)
             s.stock.contains(Card.Miliz) should be(true)
             s.stock.length should be(9)
         }
