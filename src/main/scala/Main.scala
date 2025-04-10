@@ -3,12 +3,7 @@ import scala.collection.mutable.ListBuffer
 import de.htwg.se.dominion.Card
 
 
-val cards = List(("Kupfer", 0, 1, 0, 50), ("Silber", 3, 2, 0, 50), ("Gold", 6, 3, 0, 50), ("Anwesen", 2, 0, 1, 50),
-                  ("Herzogtum", 5, 0, 3, 25), ("Provinz", 8, 0, 6, 12), ("Fluch", 0, 0, -1, 50), ("Burggraben", 2, 0, 0, 10),
-                  ("Miliz", 4, 0, 0, 9), ("Holzfaeller", 3, 0, 0, 10), ("Markt", 5, 0, 0, 10), ("Laboratorium", 4, 0, 0, 10),
-                  ("Keller", 2, -1, -1, -1), ("Garten", -1, -1, -1, -1))
-val stock = ListBuffer[(String, Int, Int, Int, Int)]()
-
+val stock = ListBuffer[Card]()
 
 @main def main(): Unit = {
   println(Card.Kupfer.getCost)
@@ -20,12 +15,12 @@ val stock = ListBuffer[(String, Int, Int, Int, Int)]()
   }
 }
 
-def getCard(name: String): (String, Int, Int, Int, Int) = {
-  var selectedCard: Option[(String, Int, Int, Int, Int)] = None
+def getCard(name: String): Card = {
+  var selectedCard: Option[Card] = None
   var inputName = name
 
   while (selectedCard.isEmpty) {
-    selectedCard = cards.find(_._1 == inputName)
+    selectedCard = Card.values.find(_.toString.equalsIgnoreCase(inputName))
     if (selectedCard.isEmpty) {
       println(s"Card '$inputName' not found. Please try again:")
       inputName = readLine()
@@ -34,7 +29,7 @@ def getCard(name: String): (String, Int, Int, Int, Int) = {
   selectedCard.get
 }
 
-def addCard(card: (String, Int, Int, Int, Int)): Boolean = {
+def addCard(card:Card): Boolean = {
   if (stock.length < 10) {
     stock += card
     true
