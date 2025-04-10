@@ -11,7 +11,7 @@ val stock = ListBuffer[(String, Int, Int, Int, Int)]()
 
 
 @main def main(): Unit = {
-  println(Card.Kupfer)
+  println(Card.Kupfer.getCost)
   println("Please type out a Card you want to add to the Stock:")
   if (addCard(getCard(readLine()))) {
     println("Card added successfully.")
