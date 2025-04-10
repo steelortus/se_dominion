@@ -1,6 +1,5 @@
 import io.StdIn._
 import scala.collection.mutable.ListBuffer
-// Name, Kosten, Geldwert, Punktewert, Anzahl auf dem Stapel.
 val cards = List(("Kupfer", 0, 1, 0, 50), ("Silber", 3, 2, 0, 50), ("Gold", 6, 3, 0, 50), ("Anwesen", 2, 0, 1, 50),
                   ("Herzogtum", 5, 0, 3, 25), ("Provinz", 8, 0, 6, 12), ("Fluch", 0, 0, -1, 50), ("Burggraben", 2, 0, 0, 10),
                   ("Miliz", 4, 0, 0, 9), ("Holzfaeller", 3, 0, 0, 10), ("Markt", 5, 0, 0, 10), ("Laborant", 4, 0, 0, 10),
@@ -40,4 +39,3 @@ def addCard(card: (String, Int, Int, Int, Int)): Boolean = {
     false
   }
 }
-
