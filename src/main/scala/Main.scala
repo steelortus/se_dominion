@@ -1,18 +1,26 @@
 import io.StdIn._
 import scala.collection.mutable.ListBuffer
 import de.htwg.se.dominion.Card
+import de.htwg.se.dominion.Stock
 
 
 val stock = ListBuffer[Card]()
 
 @main def main(): Unit = {
-  println(Card.Kupfer.getCost)
+  val s = new Stock()
+
+  s.setupStock()
+  s.printStock()
+
   println("Please type out a Card you want to add to the Stock:")
-  if (addCard(getCard(readLine()))) {
+
+  if (s.addCard(getCard(readLine()))) {
     println("Card added successfully.")
   } else {
     println("Failed to add card.")
   }
+
+  s.printStock()
 }
 
 def getCard(name: String): Card = {
@@ -27,14 +35,4 @@ def getCard(name: String): Card = {
     }
   }
   selectedCard.get
-}
-
-def addCard(card:Card): Boolean = {
-  if (stock.length < 10) {
-    stock += card
-    true
-  } else {
-    println("Cannot add more than 10 cards to the stock.")
-    false
-  }
 }
