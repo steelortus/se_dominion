@@ -6,6 +6,7 @@ import org.scalatest.wordspec.AnyWordSpec
 class CardSpec extends AnyWordSpec {
     "A Card" should {
         val s = new Stock()
+        val regx = "([a-zA-Z]+ - Cost: [0-8]{1}, Value: [0123]{1}, Points: (-1|[01369])+, Amount: [0-9]+\n?)+"
         val card = Card.Kupfer
         "have a getName" in {
             card.getName should be("Kupfer")
@@ -42,6 +43,8 @@ class CardSpec extends AnyWordSpec {
             s.stock.contains(Card.Provinz) should be(true)
             s.stock.contains(Card.Fluch) should be(true)
 
+            s.toString should fullyMatch regex regx
+
             s.stock.contains(Card.Holzfaeller) should be(false)
             s.stock.contains(Card.Miliz) should be(false)
         }
@@ -49,6 +52,7 @@ class CardSpec extends AnyWordSpec {
             s.addCard(Card.Holzfaeller) should be(true)
             s.stock.contains(Card.Holzfaeller) should be(true)
             s.stock.length should be(8)
+            s.toString should fullyMatch regex regx
 
             s.addCard(Card.Miliz) should be(true)
             s.stock.contains(Card.Miliz) should be(true)
@@ -63,6 +67,8 @@ class CardSpec extends AnyWordSpec {
 
             s.addCard(Card.Gold) should be(false)
             s.stock.length should be(9)
+
+            s.toString should fullyMatch regex regx
         }
         "not add a Card to the Stock if it exceeds the limit" in {
             s.addCard(Card.Garten) should be(true)
@@ -79,6 +85,7 @@ class CardSpec extends AnyWordSpec {
             s.stock.length should be(17)
             s.addCard(Card.Dieb) should be(false)
             s.stock.length should be(17)
+            s.toString should fullyMatch regex regx
         }
 
         "addCard with String input" in {
@@ -98,6 +105,8 @@ class CardSpec extends AnyWordSpec {
             s2.stock.length should be(17)
             s2.addCard("Hexe") should be(false)
             s2.stock.length should be(17)
+
+            s2.toString should fullyMatch regex regx
         }
         "getCard returns the Card or NotACard" in {
             s.getCard("Kupfer") should be(Card.Kupfer)
