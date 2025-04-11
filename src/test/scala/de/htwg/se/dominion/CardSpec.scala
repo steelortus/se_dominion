@@ -107,5 +107,12 @@ class CardSpec extends AnyWordSpec {
             s.getCard("Garten") should be(Card.Garten)
             s.getCard("Markt") should be(Card.Markt)
         }
+        "cards should be in Stock" in {
+            s.stock should contain (Card.Garten)
+            s.stock should contain (Card.Markt)
+            s.stock should contain (Card.Jahrmarkt)
+            s.stock.contains(Card.Dieb) should be(false)
+            s.stock.contains(Card.Abenteurer) should be(false)
+        }
     }
 }
