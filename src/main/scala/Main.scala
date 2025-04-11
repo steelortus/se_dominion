@@ -4,8 +4,7 @@ import de.htwg.se.dominion.Stock
 
 @main def main(): Unit = {
     val s = new Stock()
-
-    s.setupStock()
+    
     s.printStock()
 
     println("Please type out a Card you want to add to the Stock:")

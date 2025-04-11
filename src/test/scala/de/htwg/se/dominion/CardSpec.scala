@@ -6,7 +6,6 @@ import org.scalatest.wordspec.AnyWordSpec
 class CardSpec extends AnyWordSpec {
     "A Card" should {
         val s = new Stock()
-        s.setupStock()
         val card = Card.Kupfer
         "have a getName" in {
             card.getName should be("Kupfer")

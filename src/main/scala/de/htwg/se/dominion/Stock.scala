@@ -2,12 +2,12 @@ package de.htwg.se.dominion
 
 import scala.io.StdIn._
 import de.htwg.se.dominion.Card
-import scala.collection.mutable.ListBuffer
+import scala.collection.immutable.List
 
 case class Stock() {
-    val stock = ListBuffer[Card]()
+    var stock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
 
-    def setupStock(): Unit = {
+    /*def setupStock(): Unit = {
         stock += Card.Kupfer
         stock += Card.Silber
         stock += Card.Gold
@@ -15,7 +15,7 @@ case class Stock() {
         stock += Card.Herzogtum
         stock += Card.Provinz
         stock += Card.Fluch
-    }
+    }*/
     
     def printStock(): Unit = {
         println("Current stock:")
@@ -26,7 +26,7 @@ case class Stock() {
 
     def addCard(card:Card): Boolean = {
         if (stock.length < 17 && !stock.contains(card)) {
-            stock += card
+            stock = stock :+ card
             true
         } else {
             println("Cannot add this Card to the Stock. Maybe it's already in it?")
