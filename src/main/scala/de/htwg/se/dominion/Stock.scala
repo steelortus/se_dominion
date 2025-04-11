@@ -1,5 +1,6 @@
 package de.htwg.se.dominion
 
+import scala.io.StdIn._
 import de.htwg.se.dominion.Card
 import scala.collection.mutable.ListBuffer
 
@@ -31,5 +32,23 @@ case class Stock() {
             println("Cannot add this Card to the Stock. Maybe it's already in it?")
             false
         }
+    }
+
+    def addCard(name:String): Boolean = {
+        addCard(getCard(name))
+    }
+
+    private def getCard(name: String): Card = {
+        var selectedCard: Option[Card] = None
+        var inputName = name
+
+        while (selectedCard.isEmpty) {
+            selectedCard = Card.values.find(_.toString.equalsIgnoreCase(inputName))
+            if (selectedCard.isEmpty) {
+                println(s"Card '$inputName' not found. Please try again:")
+                inputName = readLine()
+            }
+        }
+        selectedCard.get
     }
 }
