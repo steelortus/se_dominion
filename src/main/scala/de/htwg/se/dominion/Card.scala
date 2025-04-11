@@ -16,7 +16,7 @@ enum Card(name:String, cost:Int, value:Int, points:Int, amount:Int):
     case Fluch extends Card("Fluch", 0, 0, -1, 50)
 
     case Burggraben extends Card("Burggraben", 2, 0, 0, 10)
-    case Kappele extends Card("Kappele", 2, 0, 0, 10)
+    case Kapelle extends Card("Kapelle", 2, 0, 0, 10)
     case Keller extends Card("Keller", 2, 0, 0, 10) 
 
     case Dorf extends  Card("Dorf", 3, 0, 0, 10)
