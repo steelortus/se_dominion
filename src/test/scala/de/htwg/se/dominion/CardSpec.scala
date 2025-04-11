@@ -70,5 +70,24 @@ class CardSpec extends AnyWordSpec {
             s.addCard(Card.Dieb) should be(false)
             s.stock.length should be(17)
         }
+
+        "addCard with String input" in {
+            val s2 = new Stock()
+            s2.addCard("Dorf") should be(true)
+            s2.addCard("Kupfer") should be(false)
+            s2.addCard("Peter") should be(false)
+            s2.addCard(Card.Garten) should be(true)
+            s2.addCard(Card.Markt) should be(true)
+            s2.addCard(Card.Jahrmarkt) should be(true)
+            s2.addCard(Card.Laboratorium) should be(true)
+            s2.addCard(Card.Burggraben) should be(true)
+            s2.addCard(Card.Kappele) should be(true)
+            s2.addCard(Card.Keller) should be(true)
+            s2.addCard(Card.Bibliothek) should be(true)
+            s2.addCard(Card.Miliz) should be(true)
+            s2.stock.length should be(17)
+            s2.addCard("Hexe") should be(false)
+            s2.stock.length should be(17)
+        }
     }
 }
