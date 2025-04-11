@@ -89,5 +89,13 @@ class CardSpec extends AnyWordSpec {
             s2.addCard("Hexe") should be(false)
             s2.stock.length should be(17)
         }
+        "getCard returns the Card or NotACard" in {
+            s.getCard("Kupfer") should be(Card.Kupfer)
+            s.getCard("Silber") should be(Card.Silber)
+            s.getCard("Peter") should be(Card.NotACard)
+            s.getCard("NotACard") should be(Card.NotACard)
+            s.getCard("Garten") should be(Card.Garten)
+            s.getCard("Markt") should be(Card.Markt)
+        }
     }
 }

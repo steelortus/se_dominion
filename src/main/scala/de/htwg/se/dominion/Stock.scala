@@ -28,7 +28,7 @@ case class Stock() {
         addCard(getCard(name))
     }
 
-    private def getCard(name: String): Card = {
+    def getCard(name: String): Card = {
         Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
     }
 }
