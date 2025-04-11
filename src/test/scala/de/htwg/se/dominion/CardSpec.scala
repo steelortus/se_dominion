@@ -9,18 +9,28 @@ class CardSpec extends AnyWordSpec {
         val card = Card.Kupfer
         "have a getName" in {
             card.getName should be("Kupfer")
+            card.getName should not be("Peter")
+            card.getName should not be("NotACard")
         }
         "have a getCost" in {
             card.getCost should be(0)
+            card.getCost should not be(1)
+            card.getCost should not be(-1)
         }
         "have a getValue" in {
             card.getValue should be(1)
+            card.getValue should not be(0)
+            card.getValue should not be(-1)
         }
         "have a getPoints" in {
             card.getPoints should be(0)
+            card.getPoints should not be(1)
+            card.getPoints should not be(-1)
         }
         "have a getAmount" in {
             card.getAmount should be(50)
+            card.getAmount should not be(0)
+            card.getAmount should not be(100)
         }
         "have an auto setup Stock" in {
             s.stock.length should be(7)
