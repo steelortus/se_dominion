@@ -6,16 +6,6 @@ import scala.collection.immutable.List
 
 case class Stock() {
     var stock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
-
-    /*def setupStock(): Unit = {
-        stock += Card.Kupfer
-        stock += Card.Silber
-        stock += Card.Gold
-        stock += Card.Anwesen
-        stock += Card.Herzogtum
-        stock += Card.Provinz
-        stock += Card.Fluch
-    }*/
     
     def printStock(): Unit = {
         println("Current stock:")
