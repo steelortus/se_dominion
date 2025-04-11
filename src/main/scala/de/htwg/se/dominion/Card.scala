@@ -44,3 +44,5 @@ enum Card(name:String, cost:Int, value:Int, points:Int, amount:Int):
     case Abenteurer extends Card("Abenteurer", 6, 0, 0, 10)
     
     case Garten extends Card("Garten", 4, 0, 0, 10)
+
+    case NotACard extends Card("NotACard", 0, 0, 0, 0)

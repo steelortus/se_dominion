@@ -25,7 +25,7 @@ case class Stock() {
     }
 
     def addCard(card:Card): Boolean = {
-        if (stock.length < 17 && !stock.contains(card)) {
+        if (stock.length < 17 && !stock.contains(card) && card != Card.NotACard) {
             stock = stock :+ card
             true
         } else {
@@ -39,16 +39,6 @@ case class Stock() {
     }
 
     private def getCard(name: String): Card = {
-        var selectedCard: Option[Card] = None
-        var inputName = name
-
-        while (selectedCard.isEmpty) {
-            selectedCard = Card.values.find(_.toString.equalsIgnoreCase(inputName))
-            if (selectedCard.isEmpty) {
-                println(s"Card '$inputName' not found. Please try again:")
-                inputName = readLine()
-            }
-        }
-        selectedCard.get
+        Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
     }
 }
