@@ -7,11 +7,10 @@ import scala.collection.immutable.List
 case class Stock() {
     var stock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
     
-    def printStock(): Unit = {
-        println("Current stock:")
-        for (card <- stock) {
-            println(s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}")
-        }
+    override def toString(): String = {
+        stock.map(card =>
+            s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
+        ).mkString("\n")
     }
 
     def addCard(card:Card): Boolean = {
