@@ -6,11 +6,9 @@ import scala.collection.immutable.List
 
 case class Stock() {
     var stock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
-    
-    override def toString(): String = {
-        stock.map(card =>
-            s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
-        ).mkString("\n")
+
+    def getCard(name: String): Card = {
+        Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
     }
 
     def addCard(card:Card): Boolean = {
@@ -27,7 +25,9 @@ case class Stock() {
         addCard(getCard(name))
     }
 
-    def getCard(name: String): Card = {
-        Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
+    override def toString(): String = {
+        stock.map(card =>
+            s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
+        ).mkString("\n")
     }
 }
