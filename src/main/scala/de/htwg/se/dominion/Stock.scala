@@ -5,7 +5,8 @@ import de.htwg.se.dominion.Card
 import scala.collection.immutable.List
 
 case class Stock() {
-    var stock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
+    val setupStock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
+    var stock = setupStock
 
     def getCard(name: String): Card = {
         Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
@@ -23,6 +24,20 @@ case class Stock() {
 
     def addCard(name:String): Boolean = {
         addCard(getCard(name))
+    }
+
+    def removeCard(card:Card): Boolean = {
+        if (!setupStock.contains(card) && stock.contains(card)) {
+            stock = stock.filterNot(_ == card)
+            true
+        } else {
+            println("Cannot remove this Card from the Stock. Maybe it's not in it?")
+            false
+        }
+    }
+
+    def removeCard(name:String): Boolean = {
+        removeCard(getCard(name))
     }
 
     override def toString(): String = {

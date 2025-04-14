@@ -16,4 +16,14 @@ import de.htwg.se.dominion.Stock
     }
 
     println(s.toString())
+
+    println("Please type out a Card you want to remove from the Stock:")
+
+    if (s.removeCard(readLine())) {
+        println("Card removed successfully.")
+    } else {
+        println("Failed to remove card.")
+    }
+
+    println(s.toString())
 }
