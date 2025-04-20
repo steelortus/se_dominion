@@ -3,26 +3,24 @@ import de.htwg.se.dominion.Card
 import de.htwg.se.dominion.Stock
 
 @main def main(): Unit = {
-    val s = new Stock()
+    var s = new Stock()
     
     println(s.toString())
 
     println("Please type out a Card you want to add to the Stock:")
 
-    if (s.addCard(readLine())) {
-        println("Card added successfully.")
-    } else {
-        println("Failed to add card.")
+    while(s.getLength() < 8) {
+        s = s.addCard(readLine())
+        s.toString()
     }
 
     println(s.toString())
 
     println("Please type out a Card you want to remove from the Stock:")
 
-    if (s.removeCard(readLine())) {
-        println("Card removed successfully.")
-    } else {
-        println("Failed to remove card.")
+    while(s.getLength() > 7) {
+        s = s.removeCard(readLine())
+        s.toString()
     }
 
     println(s.toString())
