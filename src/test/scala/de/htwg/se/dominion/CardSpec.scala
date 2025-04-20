@@ -123,5 +123,47 @@ class CardSpec extends AnyWordSpec {
             s.stock.contains(Card.Dieb) should be(false)
             s.stock.contains(Card.Abenteurer) should be(false)
         }
+        "remove a Card from the Stock" in {
+            s.removeCard(Card.Holzfaeller) should be(true)
+            s.stock.contains(Card.Holzfaeller) should be(false)
+            s.stock.length should be(16)
+
+            s.removeCard("Miliz") should be(true)
+            s.stock.contains(Card.Miliz) should be(false)
+            s.stock.length should be(15)
+        }
+        "not remove a Card from the Stock if it's mandatory" in {
+            s.removeCard(Card.Kupfer) should be(false)
+            s.stock.length should be(15)
+
+            s.removeCard(Card.Silber) should be(false)
+            s.stock.length should be(15)
+
+            s.removeCard(Card.Gold) should be(false)
+            s.stock.length should be(15)
+
+            s.removeCard(Card.Anwesen) should be(false)
+            s.stock.length should be(15)
+
+            s.removeCard(Card.Herzogtum) should be(false)
+            s.stock.length should be(15)
+
+            s.removeCard(Card.Provinz) should be(false)
+            s.stock.length should be(15)
+
+            s.removeCard(Card.Fluch) should be(false)
+            s.stock.length should be(15)
+
+            s.toString should fullyMatch regex regx
+        }
+        "not remove a Cad if it's not in the Stock" in {
+            s.removeCard(Card.Holzfaeller) should be(false)
+            s.stock.length should be(15)
+
+            s.removeCard("Miliz") should be(false)
+            s.stock.length should be(15)
+
+            s.toString should fullyMatch regex regx
+        }
     }
 }
