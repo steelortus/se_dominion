@@ -48,44 +48,52 @@ class CardSpec extends AnyWordSpec {
             s.stock.contains(Card.Holzfaeller) should be(false)
             s.stock.contains(Card.Miliz) should be(false)
         }
+        var updatedStock = stock
         "add a Card to the Stock" in {
-            s.addCard(Card.Holzfaeller) should be(true)
-            s.stock.contains(Card.Holzfaeller) should be(true)
-            s.stock.length should be(8)
-            s.toString should fullyMatch regex regx
+            updatedStock = updatedStock.addCard(Card.Holzfaeller)
+            updatedStock.stock.contains(Card.Holzfaeller) should be(true)
+            updatedStock.getLength() should be(8)
+            updatedStock.toString should fullyMatch regex regx
 
-            s.addCard(Card.Miliz) should be(true)
-            s.stock.contains(Card.Miliz) should be(true)
-            s.stock.length should be(9)
+            updatedStock = updatedStock.addCard(Card.Miliz)
+            updatedStock.stock.contains(Card.Miliz) should be(true)
+            updatedStock.getLength() should be(9)
         }
         "not add a Card to the Stock if it already exists in the Stock" in {
-            s.addCard(Card.Kupfer) should be(false)
-            s.stock.length should be(9)
+            var sTest = new Stock()
+            sTest = sTest.addCard(Card.Kupfer)
+            sTest theSameInstanceAs s should be(true)
+            sTest.stock.length should be(7)
             
-            s.addCard(Card.Silber) should be(false)
-            s.stock.length should be(9)
+            sTest = sTest.addCard(Card.Silber)
+            sTest theSameInstanceAs s should be(true)
+            sTest.stock.length should be(7)
 
-            s.addCard(Card.Gold) should be(false)
-            s.stock.length should be(9)
+            sTest = sTest.addCard(Card.Gold)
+            sTest theSameInstanceAs s should be(true)
+            sTest.stock.length should be(7)
 
-            s.toString should fullyMatch regex regx
+            sTest.toString should fullyMatch regex regx
         }
         "not add a Card to the Stock if it exceeds the limit" in {
-            s.addCard(Card.Garten) should be(true)
-            s.addCard(Card.Markt) should be(true)
-            s.addCard(Card.Jahrmarkt) should be(true)
-            s.addCard(Card.Laboratorium) should be(true)
-            s.addCard(Card.Burggraben) should be(true)
-            s.addCard(Card.Kapelle) should be(true)
-            s.addCard(Card.Keller) should be(true)
-            s.addCard(Card.Bibliothek) should be(true)
-            s.stock.length should be(17)
+            updatedStock = stock
+            updatedStock = updatedStock.addCard(Card.Garten) should be(true)
+            updatedStock.stock.contains(Card.Garten) should be(true)
 
-            s.addCard(Card.Abenteurer) should be(false)
-            s.stock.length should be(17)
-            s.addCard(Card.Dieb) should be(false)
-            s.stock.length should be(17)
-            s.toString should fullyMatch regex regx
+            updatedStock = updatedStock.addCard(Card.Markt) should be(true)
+            updatedStock = updatedStock.addCard(Card.Jahrmarkt) should be(true)
+            updatedStock = updatedStock.addCard(Card.Laboratorium) should be(true)
+            updatedStock = updatedStock.addCard(Card.Burggraben) should be(true)
+            updatedStock = updatedStock.addCard(Card.Kapelle) should be(true)
+            updatedStock = updatedStock.addCard(Card.Keller) should be(true)
+            updatedStock = updatedStock.addCard(Card.Bibliothek) should be(true)
+            updatedStock = updatedStock.stock.length should be(17)
+
+            var updatedStock2 = updatedStock
+            updatedStock2 = updatedStock2.addCard(Card.Abenteurer) should be(false)
+            updatedStock2 theSameInstanceAs updatedStock should be(true)
+            updatedStock2.stock.length should be(17)
+            updatedStock2.toString should fullyMatch regex regx
         }
 
         "addCard with String input" in {
