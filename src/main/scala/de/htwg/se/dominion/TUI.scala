@@ -4,40 +4,45 @@ import scala.io.StdIn._
 import de.htwg.se.dominion.Stock
 
 case class TUI() {
-    var s = new Stock()
-
-    def run(): Unit = {
+    def run(stock: Stock): Unit = {
         println("> Enter your command:")
         print("> ")
-        var input = readLine()
-        while (input.equalsIgnoreCase("exit") == false) {
-            input = input.toLowerCase()
-            input match {
+        val input = readLine().toLowerCase()
+
+        if (input.equalsIgnoreCase("exit")) {
+            println("Exiting the program.")
+        } else {
+            val updatedStock = input match {
                 case "add" =>
-                    add()
+                    add(stock)
                 case "remove" =>
-                    remove()
+                    remove(stock)
                 case "show" =>
-                    println(s.toString())
+                    println(stock.toString())
+                    stock // Return the unchanged stock
                 case _ =>
                     println("Unknown command. Please try again.")
+                    stock // Return the unchanged stock
             }
-            println("> Enter your command:")
-            print("> ")
-            input = readLine()
+            run(updatedStock) // Recursively call `run` with the updated stock
         }
-        println("Exiting the program.")
     }
 
-    def add(): Unit = {
+    def add(stock: Stock): Stock = {
         println("Please type out a Card you want to add to the Stock:")
         print("> ")
-        s = s.addCard(readLine())
+        val cardName = readLine()
+        val updatedStock = stock.addCard(stock.getCard(cardName))
+        println(updatedStock.toString())
+        updatedStock
     }
 
-    def remove(): Unit = {
+    def remove(stock: Stock): Stock = {
         println("Please type out a Card you want to remove from the Stock:")
         print("> ")
-        s = s.removeCard(readLine())
+        val cardName = readLine()
+        val updatedStock = stock.removeCard(stock.getCard(cardName))
+        println(updatedStock.toString())
+        updatedStock
     }
 }
