@@ -2,10 +2,11 @@ package de.htwg.se.dominion
 
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
+import de.htwg.se.dominion.Card
 
 class CardSpec extends AnyWordSpec {
     "A Card" should {
-        val s = new Stock()
+        var s = new Stock()
         val regx = "([a-zA-Z]+ - Cost: [0-8]{1}, Value: [0123]{1}, Points: (-1|[01369])+, Amount: [0-9]+\n?)+"
         val card = Card.Kupfer
         "have a getName" in {
@@ -48,73 +49,83 @@ class CardSpec extends AnyWordSpec {
             s.stock.contains(Card.Holzfaeller) should be(false)
             s.stock.contains(Card.Miliz) should be(false)
         }
-        var updatedStock = stock
         "add a Card to the Stock" in {
-            updatedStock = updatedStock.addCard(Card.Holzfaeller)
-            updatedStock.stock.contains(Card.Holzfaeller) should be(true)
-            updatedStock.getLength() should be(8)
-            updatedStock.toString should fullyMatch regex regx
+            s = s.addCard(Card.Holzfaeller)
+            s.stock.contains(Card.Holzfaeller) should be(true)
+            s.getLength() should be(8)
+            s.toString should fullyMatch regex regx
 
-            updatedStock = updatedStock.addCard(Card.Miliz)
-            updatedStock.stock.contains(Card.Miliz) should be(true)
-            updatedStock.getLength() should be(9)
+            s = s.addCard(Card.Miliz)
+            s.stock.contains(Card.Miliz) should be(true)
+            s.getLength() should be(9)
         }
         "not add a Card to the Stock if it already exists in the Stock" in {
-            var sTest = new Stock()
-            sTest = sTest.addCard(Card.Kupfer)
-            sTest theSameInstanceAs s should be(true)
-            sTest.stock.length should be(7)
+            val regularStock = new Stock()
+            var updatedStock = new Stock()
+
+            updatedStock = updatedStock.addCard(Card.Kupfer)
+            updatedStock == regularStock should be(true)
+            updatedStock.stock.length should be(7)
             
-            sTest = sTest.addCard(Card.Silber)
-            sTest theSameInstanceAs s should be(true)
-            sTest.stock.length should be(7)
+            updatedStock = updatedStock.addCard(Card.Silber)
+            updatedStock == regularStock should be(true)
+            updatedStock.stock.length should be(7)
 
-            sTest = sTest.addCard(Card.Gold)
-            sTest theSameInstanceAs s should be(true)
-            sTest.stock.length should be(7)
+            updatedStock = updatedStock.addCard(Card.Gold)
+            updatedStock == regularStock should be(true)
+            updatedStock.stock.length should be(7)
 
-            sTest.toString should fullyMatch regex regx
+            updatedStock.toString should fullyMatch regex regx
         }
+
         "not add a Card to the Stock if it exceeds the limit" in {
-            updatedStock = stock
-            updatedStock = updatedStock.addCard(Card.Garten) should be(true)
-            updatedStock.stock.contains(Card.Garten) should be(true)
+            s = s.addCard(Card.Garten)
+            s.stock.contains(Card.Garten) should be(true)
 
-            updatedStock = updatedStock.addCard(Card.Markt) should be(true)
-            updatedStock = updatedStock.addCard(Card.Jahrmarkt) should be(true)
-            updatedStock = updatedStock.addCard(Card.Laboratorium) should be(true)
-            updatedStock = updatedStock.addCard(Card.Burggraben) should be(true)
-            updatedStock = updatedStock.addCard(Card.Kapelle) should be(true)
-            updatedStock = updatedStock.addCard(Card.Keller) should be(true)
-            updatedStock = updatedStock.addCard(Card.Bibliothek) should be(true)
-            updatedStock = updatedStock.stock.length should be(17)
+            s = s.addCard(Card.Markt)
+            s = s.addCard(Card.Jahrmarkt)
+            s = s.addCard(Card.Laboratorium)
+            s = s.addCard(Card.Burggraben)
+            s = s.addCard(Card.Kapelle)
+            s = s.addCard(Card.Keller)
+            s = s.addCard(Card.Bibliothek)
+            s.stock.length should be(17)
 
-            var updatedStock2 = updatedStock
-            updatedStock2 = updatedStock2.addCard(Card.Abenteurer) should be(false)
-            updatedStock2 theSameInstanceAs updatedStock should be(true)
-            updatedStock2.stock.length should be(17)
-            updatedStock2.toString should fullyMatch regex regx
+            s.toString should fullyMatch regex regx
+
+            var updatedStock = s
+            updatedStock = updatedStock.addCard(Card.Abenteurer)
+            updatedStock == s should be(true)
+            updatedStock.stock.length should be(17)
+            updatedStock.toString should fullyMatch regex regx
         }
 
         "addCard with String input" in {
-            val s2 = new Stock()
-            s2.addCard("Dorf") should be(true)
-            s2.addCard("Kupfer") should be(false)
-            s2.addCard("Peter") should be(false)
-            s2.addCard("Garten") should be(true)
-            s2.addCard("Markt") should be(true)
-            s2.addCard("jahrmarkt") should be(true)
-            s2.addCard("LABORAtorium") should be(true)
-            s2.addCard("burggraben") should be(true)
-            s2.addCard("Kapelle") should be(true)
-            s2.addCard("Keller") should be(true)
-            s2.addCard("Bibliothek") should be(true)
-            s2.addCard("Miliz") should be(true)
-            s2.stock.length should be(17)
-            s2.addCard("Hexe") should be(false)
-            s2.stock.length should be(17)
+            var filledStock = new Stock()
+            filledStock = filledStock.addCard("Dorf")
+            filledStock.stock.contains(Card.Dorf) should be(true)
+            filledStock.getLength() should be (8)
 
-            s2.toString should fullyMatch regex regx
+            var invalidStock = filledStock.addCard("Peter")
+            invalidStock == filledStock should be(true)
+            invalidStock.getLength() should be (8)
+
+            filledStock = filledStock.addCard("Garten")
+            filledStock = filledStock.addCard("Markt")
+            filledStock = filledStock.addCard("jahrmarkt")
+            filledStock = filledStock.addCard("LABORAtorium")
+            filledStock = filledStock.addCard("burggraben")
+            filledStock = filledStock.addCard("Kapelle")
+            filledStock = filledStock.addCard("Keller")
+            filledStock = filledStock.addCard("Bibliothek")
+            filledStock = filledStock.addCard("Miliz")
+            filledStock.stock.length should be(17)
+
+            invalidStock = filledStock.addCard("Abenteurer")
+            invalidStock == filledStock should be(true)
+            invalidStock.stock.length should be(17)
+
+            filledStock.toString should fullyMatch regex regx
         }
         "getCard returns the Card or NotACard" in {
             s.getCard("Kupfer") should be(Card.Kupfer)
@@ -132,43 +143,52 @@ class CardSpec extends AnyWordSpec {
             s.stock.contains(Card.Abenteurer) should be(false)
         }
         "remove a Card from the Stock" in {
-            s.removeCard(Card.Holzfaeller) should be(true)
+            s = s.removeCard(Card.Holzfaeller)
             s.stock.contains(Card.Holzfaeller) should be(false)
             s.stock.length should be(16)
 
-            s.removeCard("Miliz") should be(true)
+            s = s.removeCard("Miliz")
             s.stock.contains(Card.Miliz) should be(false)
             s.stock.length should be(15)
         }
         "not remove a Card from the Stock if it's mandatory" in {
-            s.removeCard(Card.Kupfer) should be(false)
+            val originalStock = s
+
+            s = s.removeCard(Card.Kupfer)
+            s == originalStock should be(true)
             s.stock.length should be(15)
 
-            s.removeCard(Card.Silber) should be(false)
+            s = s.removeCard(Card.Silber)
+            s == originalStock should be(true)
             s.stock.length should be(15)
 
-            s.removeCard(Card.Gold) should be(false)
+            s = s.removeCard(Card.Gold)
+            s == originalStock should be(true)
             s.stock.length should be(15)
 
-            s.removeCard(Card.Anwesen) should be(false)
+            s = s.removeCard(Card.Anwesen)
+            s == originalStock should be(true)
             s.stock.length should be(15)
 
-            s.removeCard(Card.Herzogtum) should be(false)
+            s = s.removeCard(Card.Herzogtum)
+            s == originalStock should be(true)
             s.stock.length should be(15)
 
-            s.removeCard(Card.Provinz) should be(false)
+            s = s.removeCard(Card.Provinz)
+            s == originalStock should be(true)
             s.stock.length should be(15)
 
-            s.removeCard(Card.Fluch) should be(false)
+            s = s.removeCard(Card.Fluch)
+            s == originalStock should be(true)
             s.stock.length should be(15)
 
             s.toString should fullyMatch regex regx
         }
-        "not remove a Cad if it's not in the Stock" in {
-            s.removeCard(Card.Holzfaeller) should be(false)
+        "not remove a Card if it's not in the Stock" in {
+            s = s.removeCard(Card.Holzfaeller)
             s.stock.length should be(15)
 
-            s.removeCard("Miliz") should be(false)
+            s = s.removeCard("Miliz")
             s.stock.length should be(15)
 
             s.toString should fullyMatch regex regx
