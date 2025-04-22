@@ -20,6 +20,8 @@ case class TUI() {
                     remove(stock)
                 case "play" =>
                     play(stock)
+                case "fill" =>
+                    fill(stock)
                 case "show" =>
                     println(s"${PURPLE}${stock.toString()}${CLEARCOLOR}")
                     println(s"${PURPLE}\nAmount of Cards: ${stock.getLength()}${CLEARCOLOR}")
@@ -70,7 +72,27 @@ case class TUI() {
             stock
         } else {
             println(s"${YELLOW}Playing the game... (not implemented yet)${CLEARCOLOR}")
+            val p1 = new Player()
+            println(s"${YELLOW}Player 1: ${p1.toString()}${CLEARCOLOR}")
+            p1.shuffleDeck(p1.getDeck())
+            println(s"${YELLOW}Player 1: ${p1.toString()}${CLEARCOLOR}")
             stock
         }
+    }
+
+    def fill(stock:Stock): Stock = {
+        var debug_stock = stock
+        debug_stock = debug_stock.addCard(Card.Garten)
+        debug_stock = debug_stock.addCard(Card.Markt)
+        debug_stock = debug_stock.addCard(Card.Jahrmarkt)
+        debug_stock = debug_stock.addCard(Card.Dieb)
+        debug_stock = debug_stock.addCard(Card.Abenteurer)
+        debug_stock = debug_stock.addCard(Card.Dorf)
+        debug_stock = debug_stock.addCard(Card.Hexe)
+        debug_stock = debug_stock.addCard(Card.Laboratorium)
+        debug_stock = debug_stock.addCard(Card.Bibliothek)
+        debug_stock = debug_stock.addCard(Card.Holzfaeller)
+        println(s"${GREEN}Stock filled successfully!${CLEARCOLOR}")
+        debug_stock
     }
 }
