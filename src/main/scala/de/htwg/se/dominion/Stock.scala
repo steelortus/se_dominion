@@ -15,7 +15,6 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
         if (stock.length < 17 && !stock.contains(card) && card != Card.NotACard) {
             Stock(stock :+ card)
         } else {
-            println("Cannot add this Card to the Stock. Maybe it's already in it?")
             this
         }
     }
@@ -28,7 +27,6 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
         if (!setupStock.contains(card) && stock.contains(card)) {
             Stock(stock.filterNot(_ == card))
         } else {
-            println("Cannot remove this Card from the Stock. Maybe it's not in it?")
             this
         }
     }

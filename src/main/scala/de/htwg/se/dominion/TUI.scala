@@ -2,15 +2,16 @@ package de.htwg.se.dominion
 
 import scala.io.StdIn._
 import de.htwg.se.dominion.Stock
+import de.htwg.se.dominion.ConsoleColors._
 
 case class TUI() {
     def run(stock: Stock): Unit = {
-        println("> Enter your command:")
+        println(s"${BLUE}> Enter your command:${CLEARCOLOR}")
         print("> ")
         val input = readLine().toLowerCase()
 
         if (input.equalsIgnoreCase("exit")) {
-            println("Exiting the program.")
+            println(s"${YELLOW}Exiting the program.${CLEARCOLOR}")
         } else {
             val updatedStock = input match {
                 case "add" =>
@@ -20,10 +21,10 @@ case class TUI() {
                 case "play" =>
                     play(stock)
                 case "show" =>
-                    println(stock.toString())
+                    println(s"${PURPLE}${stock.toString()}${CLEARCOLOR}")
                     stock // Return the unchanged stock
                 case _ =>
-                    println("Unknown command. Please try again.")
+                    println(s"${RED}Unknown command. Please try again.${CLEARCOLOR}")
                     stock // Return the unchanged stock
             }
             run(updatedStock) // Recursively call `run` with the updated stock
@@ -31,31 +32,40 @@ case class TUI() {
     }
 
     def add(stock:Stock): Stock = {
-        println("Please type out a Card you want to add to the Stock:")
+        println(s"${CYAN}Please type out a Card you want to add to the Stock:${CLEARCOLOR}")
         print("> ")
         val cardName = readLine()
         val updatedStock = stock.addCard(stock.getCard(cardName))
-        println(updatedStock.toString())
-        updatedStock
+        if (updatedStock == stock) {
+            println(s"${RED}Cannot add this Card to the Stock. Maybe it's already in it?${CLEARCOLOR}")
+            updatedStock
+        } else {
+            println(s"${GREEN}Card added successfully!${CLEARCOLOR}")
+            updatedStock
+        }
     }
 
     def remove(stock:Stock): Stock = {
-        println("Please type out a Card you want to remove from the Stock:")
+        println(s"${CYAN}Please type out a Card you want to remove from the Stock:${CLEARCOLOR}")
         print("> ")
         val cardName = readLine()
         val updatedStock = stock.removeCard(stock.getCard(cardName))
-        println(updatedStock.toString())
-        updatedStock
+        if (updatedStock == stock) {
+            println(s"${RED}Cannot remove this Card from the Stock. Maybe it's not in it?${CLEARCOLOR}")
+            updatedStock
+        } else {
+            println(s"${GREEN}Card removed successfully!${CLEARCOLOR}")
+            updatedStock
+        }
     }
 
     def play(stock:Stock): Stock = {
         if (stock.getLength() < 17) {
-            println(s"There is not enough cards in the Stock! ${stock.getLength()} out of required 17")
-            stock // Return the unchanged stock
+            println(s"${RED}There is not enough cards in the Stock! ${stock.getLength()} out of required 17${CLEARCOLOR}")
+            stock
         } else {
-            println("Playing the game... (not implemented yet)")
-            println(s"There are ${stock.getLength()} cards in the Stock.")
-            stock // Return the unchanged stock
+            println(s"${YELLOW}Playing the game... (not implemented yet)${CLEARCOLOR}")
+            stock
 
         }
     }
