@@ -38,7 +38,11 @@ case class TUI() {
         val cardName = readLine()
         val updatedStock = stock.addCard(stock.getCard(cardName))
         if (updatedStock == stock) {
-            println(s"${RED}Cannot add this Card to the Stock. Maybe it's already in it?${CLEARCOLOR}")
+            if (updatedStock.getLength() == 17) {
+                println(s"${RED}Cannot add this Card to the Stock. The Stock is already full!${CLEARCOLOR}")
+            } else {
+                println(s"${RED}Cannot add this Card to the Stock. Maybe it's already in it?${CLEARCOLOR}")
+            }
             updatedStock
         } else {
             println(s"${GREEN}Card added successfully!${CLEARCOLOR}")
@@ -67,7 +71,6 @@ case class TUI() {
         } else {
             println(s"${YELLOW}Playing the game... (not implemented yet)${CLEARCOLOR}")
             stock
-
         }
     }
 }
