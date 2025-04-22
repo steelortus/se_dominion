@@ -22,6 +22,7 @@ case class TUI() {
                     play(stock)
                 case "show" =>
                     println(s"${PURPLE}${stock.toString()}${CLEARCOLOR}")
+                    println(s"${PURPLE}\nAmount of Cards: ${stock.getLength()}${CLEARCOLOR}")
                     stock // Return the unchanged stock
                 case _ =>
                     println(s"${RED}Unknown command. Please try again.${CLEARCOLOR}")
