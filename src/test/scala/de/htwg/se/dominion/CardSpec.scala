@@ -6,8 +6,6 @@ import de.htwg.se.dominion.Card
 
 class CardSpec extends AnyWordSpec {
     "A Card" should {
-        var s = new Stock()
-        val regx = "([a-zA-Z]+ - Cost: [0-8]{1}, Value: [0123]{1}, Points: (-1|[01369])+, Amount: [0-9]+\n?)+"
         val card = Card.Kupfer
         "have a getName" in {
             card.getName should be("Kupfer")
@@ -34,6 +32,10 @@ class CardSpec extends AnyWordSpec {
             card.getAmount should not be(0)
             card.getAmount should not be(100)
         }
+    }
+    "A Stock" should {
+        var s = new Stock()
+        val regx = "([a-zA-Z]+ - Cost: [0-8]{1}, Value: [0123]{1}, Points: (-1|[01369])+, Amount: [0-9]+\n?)+"
         "have an auto setup Stock" in {
             s.stock.length should be(7)
             s.stock.contains(Card.Kupfer) should be(true)
