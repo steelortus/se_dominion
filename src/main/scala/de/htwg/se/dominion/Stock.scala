@@ -7,9 +7,7 @@ import scala.collection.immutable.List
 case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)) {
     val setupStock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
 
-    def getCard(name: String): Card = {
-        Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
-    }
+    def getCard(name: String): Card = Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
 
     def addCard(card:Card): Stock = {
         if (stock.length < 17 && !stock.contains(card) && card != Card.NotACard) {
@@ -19,9 +17,7 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
         }
     }
 
-    def addCard(name:String): Stock = {
-        addCard(getCard(name))
-    }
+    def addCard(name:String): Stock = addCard(getCard(name))
 
     def removeCard(card:Card): Stock = {
         if (!setupStock.contains(card) && stock.contains(card)) {
@@ -31,13 +27,9 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
         }
     }
 
-    def removeCard(name:String): Stock = {
-        removeCard(getCard(name))
-    }
+    def removeCard(name:String): Stock = removeCard(getCard(name))
 
-    def getLength(): Int = {
-        stock.length
-    }
+    def getLength(): Int = stock.length
 
     override def toString(): String = {
         stock.map(card =>

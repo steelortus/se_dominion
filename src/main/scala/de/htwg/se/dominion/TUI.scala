@@ -20,17 +20,18 @@ case class TUI() {
                     remove(stock)
                 case "play" =>
                     play(stock)
+                    stock
                 case "fill" =>
                     fill(stock)
                 case "show" =>
                     println(s"${PURPLE}${stock.toString()}${CLEARCOLOR}")
                     println(s"${PURPLE}\nAmount of Cards: ${stock.getLength()}${CLEARCOLOR}")
-                    stock // Return the unchanged stock
+                    stock
                 case _ =>
                     println(s"${RED}Unknown command. Please try again.${CLEARCOLOR}")
-                    stock // Return the unchanged stock
+                    stock
             }
-            run(updatedStock) // Recursively call `run` with the updated stock
+            run(updatedStock)
         }
     }
 
@@ -66,17 +67,17 @@ case class TUI() {
         }
     }
 
-    def play(stock:Stock): Stock = {
+    def play(stock:Stock): Unit = {
         if (stock.getLength() < 17) {
             println(s"${RED}There is not enough cards in the Stock! ${stock.getLength()} out of required 17${CLEARCOLOR}")
-            stock
         } else {
             println(s"${YELLOW}Playing the game... (not implemented yet)${CLEARCOLOR}")
-            val p1 = new Player()
-            println(s"${YELLOW}Player 1: ${p1.toString()}${CLEARCOLOR}")
-            p1.shuffleDeck(p1.getDeck())
-            println(s"${YELLOW}Player 1: ${p1.toString()}${CLEARCOLOR}")
-            stock
+            var p1 = new Player()
+            println(s"${YELLOW}Player 1 Deck:\n${p1.toString()}${CLEARCOLOR}\n")
+            p1 = p1.shuffleDeck()
+            println(s"${GREEN}Player 1 shuffled Deck:\n${p1.toString()}${CLEARCOLOR}\n")
+            p1 = p1.drawCardFromDeck()
+            println(s"${PURPLE}Player 1 Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
         }
     }
 
