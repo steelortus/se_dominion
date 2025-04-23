@@ -37,9 +37,9 @@ case class Player(deck: List[Card] = List(
     }
 
     def discardFromHand(index:Int): Player = {
-        if (index >= 1 && index <= hand.length) {
+        if (index >= 0 && index < hand.length) {
             val discardedCard = hand(index)
-            val newHand = hand.drop(index)
+            val newHand = hand.take(index) ++ hand.drop(index + 1)
             val newDiscard = discard :+ discardedCard
             this.copy(hand = newHand, discard = newDiscard)
         } else {
@@ -48,9 +48,9 @@ case class Player(deck: List[Card] = List(
     }
 
     def discardFromDeck(index:Int): Player = {
-        if (index >= 1 && index <= deck.length) {
+        if (index >= 0 && index < deck.length) {
             val discardedCard = deck(index)
-            val newDeck = deck.drop(index)
+            val newDeck = deck.take(index) ++ deck.drop(index + 1)
             val newDiscard = discard :+ discardedCard
             this.copy(deck = newDeck, discard = newDiscard)
         } else {
@@ -63,6 +63,10 @@ case class Player(deck: List[Card] = List(
     def getDiscard(): List[Card] = discard
 
     override def toString(): String = {
+        deckToString() + "\n" + handToString() + "\n" + discardToString()
+    }
+    
+    def deckToString(): String = {
         deck.map(card =>
             s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
         ).mkString("\n")
@@ -70,6 +74,12 @@ case class Player(deck: List[Card] = List(
 
     def handToString(): String = {
         hand.map(card =>
+            s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
+        ).mkString("\n")
+    }
+
+    def discardToString(): String = {
+        discard.map(card =>
             s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
         ).mkString("\n")
     }

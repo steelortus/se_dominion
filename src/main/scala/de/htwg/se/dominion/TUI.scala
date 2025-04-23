@@ -73,11 +73,18 @@ case class TUI() {
         } else {
             println(s"${YELLOW}Playing the game... (not implemented yet)${CLEARCOLOR}")
             var p1 = new Player()
-            println(s"${YELLOW}Player 1 Deck:\n${p1.toString()}${CLEARCOLOR}\n")
+            println(s"${YELLOW}Player 1 Deck:\n${p1.deckToString()}${CLEARCOLOR}\n")
             p1 = p1.shuffleDeck()
-            println(s"${GREEN}Player 1 shuffled Deck:\n${p1.toString()}${CLEARCOLOR}\n")
+            println(s"${GREEN}Player 1 shuffled Deck:\n${p1.deckToString()}${CLEARCOLOR}\n")
             p1 = p1.drawCardFromDeck()
+            println(s"${YELLOW}Player 1 Deck after drawing:\n${p1.deckToString()}${CLEARCOLOR}\n")
             println(s"${PURPLE}Player 1 Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
+            p1 = p1.drawCardFromDeck()
+            p1 = p1.drawCardFromDeck()
+            p1 = p1.discardFromHand(1)
+            println(s"${YELLOW}Player 1 Deck after discarding from Hand:\n${p1.deckToString()}${CLEARCOLOR}\n")
+            println(s"${PURPLE}Player 1 Hand after discarding from Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
+            println(s"${CYAN}Player 1 Discard after discarding from Hand:\n${p1.discardToString()}${CLEARCOLOR}\n")
         }
     }
 
