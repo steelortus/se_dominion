@@ -58,10 +58,6 @@ case class Player(deck: List[Card] = List(
         }
     }
 
-    def getDeck(): List[Card] = deck
-    def getHand(): List[Card] = hand
-    def getDiscard(): List[Card] = discard
-
     override def toString(): String = {
         deckToString() + "\n" + handToString() + "\n" + discardToString()
     }
