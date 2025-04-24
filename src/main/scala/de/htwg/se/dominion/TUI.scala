@@ -6,7 +6,7 @@ import de.htwg.se.dominion.ConsoleColors._
 
 case class TUI() {
     def run(stock: Stock): Unit = {
-        println(s"${BLUE}> Enter your command:${CLEARCOLOR}")
+        println(s"${BLUE}> Enter your command:${CLEARCOLOR} (h for help)")
         print("> ")
         val input = readLine().toLowerCase()
 
@@ -26,6 +26,19 @@ case class TUI() {
                 case "show" =>
                     println(s"${PURPLE}${stock.toString()}${CLEARCOLOR}")
                     println(s"${PURPLE}\nAmount of Cards: ${stock.getLength()}${CLEARCOLOR}")
+                    stock
+                case "list" =>
+                    list(stock)
+                    stock
+                case "h" =>
+                    println(s"""COMMANDS:
+                            |${YELLOW}add${CLEARCOLOR}\t-   Type in cards to add to your stock
+                            |${YELLOW}remove${CLEARCOLOR}\t-   Type in cards to remove from current stock
+                            |${YELLOW}play${CLEARCOLOR}\t-   Starts the match (17 cards in stock needed!)
+                            |${YELLOW}fill${CLEARCOLOR}\t-   Fills your stock with the default cards
+                            |${YELLOW}show${CLEARCOLOR}\t-   Displays the current stock
+                            |${YELLOW}list${CLEARCOLOR}\t-   Shows a list of all cards you can still add
+                            |${YELLOW}exit${CLEARCOLOR}\t-   Exit this program""".stripMargin)
                     stock
                 case _ =>
                     println(s"${RED}Unknown command. Please try again.${CLEARCOLOR}")
@@ -102,5 +115,13 @@ case class TUI() {
         debug_stock = debug_stock.addCard(Card.Holzfaeller)
         println(s"${GREEN}Stock filled successfully!${CLEARCOLOR}")
         debug_stock
+    }
+
+    def list(stock:Stock): Stock = {
+        val all_cards = List[Card](Card.Burggraben, Card.Kapelle, Card.Keller, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Buerokrat, Card.Dieb, Card.Festmahl, Card.Geldverleiher, Card.Miliz, Card.Schmiede, Card.Spion, Card.Thronsaal, Card.Umbau, Card.Bibliothek, Card.Hexe, Card.Jahrmarkt, Card.Laboratorium, Card.Markt, Card.Mine, Card.Raatsversammlung, Card.Abenteurer, Card.Garten)
+        val notIncluded = all_cards.filterNot(card => stock.contains(card))
+        println("Liste der noch verfuegbaren Karten:")
+        println(notIncluded.map(_.name).mkString(" | "))
+        stock
     }
 }

@@ -27,6 +27,8 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
         }
     }
 
+    def contains(card: Card): Boolean = stock.contains(card)
+
     def removeCard(name:String): Stock = removeCard(getCard(name))
 
     def getLength(): Int = stock.length

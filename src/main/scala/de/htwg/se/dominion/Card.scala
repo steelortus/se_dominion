@@ -1,6 +1,6 @@
 package de.htwg.se.dominion
 
-enum Card(name:String, cost:Int, value:Int, points:Int, amount:Int):
+enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amount:Int):
     def getName: String = name
     def getCost: Int = cost
     def getValue: Int = value
