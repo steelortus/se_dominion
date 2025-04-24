@@ -118,7 +118,11 @@ case class TUI() {
     }
 
     def list(stock:Stock): Stock = {
-        val all_cards = List[Card](Card.Burggraben, Card.Kapelle, Card.Keller, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Buerokrat, Card.Dieb, Card.Festmahl, Card.Geldverleiher, Card.Miliz, Card.Schmiede, Card.Spion, Card.Thronsaal, Card.Umbau, Card.Bibliothek, Card.Hexe, Card.Jahrmarkt, Card.Laboratorium, Card.Markt, Card.Mine, Card.Raatsversammlung, Card.Abenteurer, Card.Garten)
+        val all_cards = List[Card](Card.Burggraben, Card.Kapelle, Card.Keller, Card.Dorf, Card.Holzfaeller,
+                        Card.Werkstatt, Card.Buerokrat, Card.Dieb, Card.Festmahl, Card.Geldverleiher, Card.Miliz,
+                        Card.Schmiede, Card.Spion, Card.Thronsaal, Card.Umbau, Card.Bibliothek, Card.Hexe,
+                        Card.Jahrmarkt, Card.Laboratorium, Card.Markt, Card.Mine, Card.Ratsversammlung,
+                        Card.Abenteurer, Card.Garten)
         val notIncluded = all_cards.filterNot(card => stock.contains(card))
         println("Liste der noch verfuegbaren Karten:")
         println(notIncluded.map(_.name).mkString(" | "))

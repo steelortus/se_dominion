@@ -39,7 +39,7 @@ enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amou
     case Laboratorium extends Card("Laboratorium", 5, 0, 0, 10)
     case Markt extends Card("Markt", 5, 0, 0, 10)
     case Mine extends Card("Mine", 5, 0, 0, 10)
-    case Raatsversammlung extends Card("Ratsversammlung", 5, 0, 0, 10)
+    case Ratsversammlung extends Card("Ratsversammlung", 5, 0, 0, 10)
 
     case Abenteurer extends Card("Abenteurer", 6, 0, 0, 10)
     
