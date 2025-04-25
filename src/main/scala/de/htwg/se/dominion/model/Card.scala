@@ -1,4 +1,4 @@
-package de.htwg.se.dominion
+package de.htwg.se.dominion.model
 
 enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amount:Int):
     def getName: String = name

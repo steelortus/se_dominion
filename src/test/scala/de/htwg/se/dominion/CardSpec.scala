@@ -1,8 +1,8 @@
-package de.htwg.se.dominion
+package de.htwg.se.dominion.model
 
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.dominion.Card
+import de.htwg.se.dominion.model.Card
 
 class CardSpec extends AnyWordSpec {
     "A Card" should {

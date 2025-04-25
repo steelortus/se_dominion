@@ -1,8 +1,11 @@
 package de.htwg.se.dominion
+package view
 
 import scala.io.StdIn._
-import de.htwg.se.dominion.Stock
-import de.htwg.se.dominion.ConsoleColors.*
+import model.Stock
+import model.Player
+import model.Card
+import model.ConsoleColors.*
 
 case class TUI() {
     def run(stock: Stock): Unit = {

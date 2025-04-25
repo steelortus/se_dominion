@@ -1,8 +1,8 @@
-package de.htwg.se.dominion
+package de.htwg.se.dominion.model
 
 import scala.util.Random
-import de.htwg.se.dominion.Card
-import de.htwg.se.dominion.Stock
+import de.htwg.se.dominion.model.Card
+import de.htwg.se.dominion.model.Stock
 
 case class Player(deck: List[Card] = List(
                     Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer,

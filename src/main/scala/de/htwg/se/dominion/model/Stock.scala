@@ -1,7 +1,7 @@
-package de.htwg.se.dominion
+package de.htwg.se.dominion.model
 
 import scala.io.StdIn._
-import de.htwg.se.dominion.Card
+import de.htwg.se.dominion.model.Card
 import scala.collection.immutable.List
 
 case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)) {

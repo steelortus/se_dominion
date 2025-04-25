@@ -1,4 +1,4 @@
-package de.htwg.se.dominion
+package de.htwg.se.dominion.model
 
 enum ConsoleColors(val code: String) {
     case CLEARCOLOR extends ConsoleColors("\u001B[0m")
