@@ -108,6 +108,7 @@ case class TUI() {
             p2 = p2.drawFiveCardsFromDeck()
             println(YELLOW(s"Player 2 Deck after drawing five times:\n${p2.deckToString()}\n"))
             println(PURPLE(s"Player 1 Hand:\n${p2.handToString()}\n"))
+            println(RED(s"Player 2 Money in Hand: ${p2.getMoneyInHand()}\n"))
             p2 = p2.discardAllFromHand()
             println(PURPLE(s"Player 2 Hand after discarding from Hand:\n${p2.handToString()}\n"))
             println(CYAN(s"Player 2 Discard after discarding from Hand:\n${p2.discardToString()}\n"))

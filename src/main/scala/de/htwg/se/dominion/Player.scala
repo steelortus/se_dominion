@@ -70,6 +70,10 @@ case class Player(deck: List[Card] = List(
         }
     }
 
+    def getMoneyInHand(): Int = {
+        hand.map(_.getValue).sum
+    }
+
     override def toString(): String = {
         deckToString() + "\n" + handToString() + "\n" + discardToString()
     }
