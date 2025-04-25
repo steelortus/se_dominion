@@ -94,6 +94,7 @@ case class TUI() {
             println(s"${PURPLE}Player 1 Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
             p1 = p1.drawCardFromDeck()
             p1 = p1.drawCardFromDeck()
+            println(s"${PURPLE}Player 1 Hand after drawing 2 more from Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
             p1 = p1.discardFromHand(1)
             println(s"${YELLOW}Player 1 Deck after discarding from Hand:\n${p1.deckToString()}${CLEARCOLOR}\n")
             println(s"${PURPLE}Player 1 Hand after discarding from Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
