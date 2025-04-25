@@ -2,16 +2,16 @@ package de.htwg.se.dominion
 
 import scala.io.StdIn._
 import de.htwg.se.dominion.Stock
-import de.htwg.se.dominion.ConsoleColors._
+import de.htwg.se.dominion.ConsoleColors.*
 
 case class TUI() {
     def run(stock: Stock): Unit = {
-        println(s"${BLUE}> Enter your command:${CLEARCOLOR} (h for help)")
+        println(BLUE("> Enter your command: (h for help)"))
         print("> ")
         val input = readLine().toLowerCase()
 
         if (input.equalsIgnoreCase("exit")) {
-            println(s"${YELLOW}Exiting the program.${CLEARCOLOR}")
+            println(YELLOW("Exiting the program."))
         } else {
             val updatedStock = input match {
                 case "add" =>
@@ -24,24 +24,24 @@ case class TUI() {
                 case "fill" =>
                     fill(stock)
                 case "show" =>
-                    println(s"${PURPLE}${stock.toString()}${CLEARCOLOR}")
-                    println(s"${PURPLE}\nAmount of Cards: ${stock.getLength()}${CLEARCOLOR}")
+                    println(PURPLE(s"${stock.toString()}"))
+                    println(PURPLE(s"\nAmount of Cards: ${stock.getLength()}"))
                     stock
                 case "list" =>
                     list(stock)
                     stock
                 case "h" =>
-                    println(s"""COMMANDS:
-                            |${YELLOW}add${CLEARCOLOR}\t-   Type in cards to add to your stock
-                            |${YELLOW}remove${CLEARCOLOR}\t-   Type in cards to remove from current stock
-                            |${YELLOW}play${CLEARCOLOR}\t-   Starts the match (17 cards in stock needed!)
-                            |${YELLOW}fill${CLEARCOLOR}\t-   Fills your stock with the default cards
-                            |${YELLOW}show${CLEARCOLOR}\t-   Displays the current stock
-                            |${YELLOW}list${CLEARCOLOR}\t-   Shows a list of all cards you can still add
-                            |${YELLOW}exit${CLEARCOLOR}\t-   Exit this program""".stripMargin)
+                    println(YELLOW(s"""COMMANDS:
+                            |add\t-   Type in cards to add to your stock
+                            |remove\t-   Type in cards to remove from current stock
+                            |play\t-   Starts the match (17 cards in stock needed!)
+                            |fill\t-   Fills your stock with the default cards
+                            |show\t-   Displays the current stock
+                            |list\t-   Shows a list of all cards you can still add
+                            |exit\t-   Exit this program""".stripMargin))
                     stock
                 case _ =>
-                    println(s"${RED}Unknown command. Please try again.${CLEARCOLOR}")
+                    println(RED("Unknown command. Please try again."))
                     stock
             }
             run(updatedStock)
@@ -49,56 +49,56 @@ case class TUI() {
     }
 
     def add(stock:Stock): Stock = {
-        println(s"${CYAN}Please type out a Card you want to add to the Stock:${CLEARCOLOR}")
+        println(CYAN("Please type out a Card you want to add to the Stock:"))
         print("> ")
         val cardName = readLine()
         val updatedStock = stock.addCard(stock.getCard(cardName))
         if (updatedStock == stock) {
             if (updatedStock.getLength() == 17) {
-                println(s"${RED}Cannot add this Card to the Stock. The Stock is already full!${CLEARCOLOR}")
+                println(RED("Cannot add this Card to the Stock. The Stock is already full!"))
             } else {
-                println(s"${RED}Cannot add this Card to the Stock. Maybe it's already in it?${CLEARCOLOR}")
+                println(RED("Cannot add this Card to the Stock. Maybe it's already in it?"))
             }
             updatedStock
         } else {
-            println(s"${GREEN}Card added successfully!${CLEARCOLOR}")
+            println(GREEN("Card added successfully!"))
             updatedStock
         }
     }
 
     def remove(stock:Stock): Stock = {
-        println(s"${CYAN}Please type out a Card you want to remove from the Stock:${CLEARCOLOR}")
+        println(CYAN("Please type out a Card you want to remove from the Stock:"))
         print("> ")
         val cardName = readLine()
         val updatedStock = stock.removeCard(stock.getCard(cardName))
         if (updatedStock == stock) {
-            println(s"${RED}Cannot remove this Card from the Stock. Maybe it's not in it?${CLEARCOLOR}")
+            println(RED("Cannot remove this Card from the Stock. Maybe it's not in it?"))
             updatedStock
         } else {
-            println(s"${GREEN}Card removed successfully!${CLEARCOLOR}")
+            println(GREEN("Card removed successfully!"))
             updatedStock
         }
     }
 
     def play(stock:Stock): Unit = {
         if (stock.getLength() < 17) {
-            println(s"${RED}There is not enough cards in the Stock! ${stock.getLength()} out of required 17${CLEARCOLOR}")
+            println(RED(s"There is not enough cards in the Stock! ${stock.getLength()} out of required 17."))
         } else {
-            println(s"${YELLOW}Playing the game... (not implemented yet)${CLEARCOLOR}")
+            println(YELLOW("Playing the game... (not implemented yet)"))
             var p1 = new Player()
-            println(s"${YELLOW}Player 1 Deck:\n${p1.deckToString()}${CLEARCOLOR}\n")
+            println(YELLOW(s"Player 1 Deck:\n${p1.deckToString()}\n"))
             p1 = p1.shuffleDeck()
-            println(s"${GREEN}Player 1 shuffled Deck:\n${p1.deckToString()}${CLEARCOLOR}\n")
+            println(GREEN(s"Player 1 shuffled Deck:\n${p1.deckToString()}\n"))
             p1 = p1.drawCardFromDeck()
-            println(s"${YELLOW}Player 1 Deck after drawing:\n${p1.deckToString()}${CLEARCOLOR}\n")
-            println(s"${PURPLE}Player 1 Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
+            println(YELLOW(s"Player 1 Deck after drawing:\n${p1.deckToString()}\n"))
+            println(PURPLE(s"Player 1 Hand:\n${p1.handToString()}\n"))
             p1 = p1.drawCardFromDeck()
             p1 = p1.drawCardFromDeck()
-            println(s"${PURPLE}Player 1 Hand after drawing 2 more from Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
+            println(PURPLE(s"Player 1 Hand after drawing 2 more from Hand:\n${p1.handToString()}\n"))
             p1 = p1.discardFromHand(1)
-            println(s"${YELLOW}Player 1 Deck after discarding from Hand:\n${p1.deckToString()}${CLEARCOLOR}\n")
-            println(s"${PURPLE}Player 1 Hand after discarding from Hand:\n${p1.handToString()}${CLEARCOLOR}\n")
-            println(s"${CYAN}Player 1 Discard after discarding from Hand:\n${p1.discardToString()}${CLEARCOLOR}\n")
+            println(YELLOW(s"Player 1 Deck after discarding from Hand:\n${p1.deckToString()}\n"))
+            println(PURPLE(s"Player 1 Hand after discarding from Hand:\n${p1.handToString()}\n"))
+            println(CYAN(s"Player 1 Discard after discarding from Hand:\n${p1.discardToString()}\n"))
         }
     }
 
@@ -114,7 +114,7 @@ case class TUI() {
         debug_stock = debug_stock.addCard(Card.Laboratorium)
         debug_stock = debug_stock.addCard(Card.Bibliothek)
         debug_stock = debug_stock.addCard(Card.Holzfaeller)
-        println(s"${GREEN}Stock filled successfully!${CLEARCOLOR}")
+        println(GREEN("Stock filled successfully!"))
         debug_stock
     }
 
@@ -125,8 +125,8 @@ case class TUI() {
                         Card.Jahrmarkt, Card.Laboratorium, Card.Markt, Card.Mine, Card.Ratsversammlung,
                         Card.Abenteurer, Card.Garten)
         val notIncluded = all_cards.filterNot(card => stock.contains(card))
-        println("Liste der noch verfuegbaren Karten:")
-        println(notIncluded.map(_.name).mkString(" | "))
+        println(YELLOW("Liste der noch verfuegbaren Karten:"))
+        println(CYAN(notIncluded.map(_.name).mkString(" | ")))
         stock
     }
 }
