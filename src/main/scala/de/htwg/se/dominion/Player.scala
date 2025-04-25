@@ -36,6 +36,13 @@ case class Player(deck: List[Card] = List(
         }
     }
 
+    def drawFiveCardsFromDeck(): Player = {
+        val newPlayer = (1 to 5).foldLeft(this) { (player, _) =>
+            player.drawCardFromDeck()
+        }
+        newPlayer
+    }
+
     def discardFromHand(index:Int): Player = {
         if (index >= 0 && index < hand.length) {
             val discardedCard = hand(index)
@@ -45,6 +52,11 @@ case class Player(deck: List[Card] = List(
         } else {
             this
         }
+    }
+
+    def discardAllFromHand(): Player = {
+        val newDiscard = discard ++ hand
+        this.copy(hand = List[Card](), discard = newDiscard)
     }
 
     def discardFromDeck(index:Int): Player = {
