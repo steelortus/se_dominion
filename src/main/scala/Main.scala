@@ -7,5 +7,5 @@ import de.htwg.se.dominion.control.Controller
     val stock = new Stock()
     val controller = new Controller(stock)
     val t = new TUI(controller)
-    t.run(stock)
+    t.run()
 }

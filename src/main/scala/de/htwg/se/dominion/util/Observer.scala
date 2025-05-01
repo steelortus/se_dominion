@@ -13,6 +13,6 @@ trait Observable {
 }
 
 enum Event {
-    case notYet
-    case Implemented
+    case stockFull
+    case play
 }
