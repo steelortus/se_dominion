@@ -10,8 +10,6 @@ import util.Observer
 import util.Event
 import model.ConsoleColors.*
 
-case class TUI() {
-    def run(stock: Stock): Unit = {
 case class TUI(controller: Controller) extends Observer {
     controller.add(this)
     def run(): Unit = {
@@ -90,3 +88,4 @@ case class TUI(controller: Controller) extends Observer {
         controller.listCards()
     }
 }
+
