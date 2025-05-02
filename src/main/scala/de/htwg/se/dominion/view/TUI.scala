@@ -2,16 +2,12 @@ package de.htwg.se.dominion
 package view
 
 import scala.io.StdIn._
-import control.Controller
-import util.Observer
-import util.Event
 import model.Stock
 import model.Player
 import model.Card
 import model.ConsoleColors.*
 
-case class TUI(controller: Controller) extends Observer {
-    controller.add(this)
+case class TUI() {
     def run(stock: Stock): Unit = {
         println(BLUE("> Enter your command: (h for help)"))
         print("> ")
