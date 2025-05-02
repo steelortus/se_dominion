@@ -1,14 +1,13 @@
 val scala3Version = "3.6.4"
 
 enablePlugins(CoverallsPlugin)
+coverageEnabled := true
 
 lazy val root = project
   .in(file("."))
   .settings(
     name := "se_dominion",
     version := "0.1.0-SNAPSHOT",
-
-    coverageEnabled := true,
 
     scalaVersion := scala3Version,
 
