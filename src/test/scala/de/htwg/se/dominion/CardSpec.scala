@@ -195,11 +195,12 @@ class CardSpec extends AnyWordSpec {
 
             s.toString should fullyMatch regex regx
         }
-        "have a method to check, if a card is contained in the stock" {
+        "have a method to check, if a card is contained in the stock" in {
             s = new Stock()
             s.contains(Card.Kupfer) should be(true)
             s.contains(Card.Anwesen) should be(true)
-            s.contains(Card.Gold) should be(false)
+            s.contains(Card.Gold) should be(true)
+            s.contains(Card.Dorf) should be(false)
         }
     }
 }

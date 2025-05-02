@@ -171,29 +171,29 @@ class PlayerSpec extends AnyWordSpec {
             player.handToString() should fullyMatch regex regx
             player.discardToString() should fullyMatch regex regx
         }
-        "should be able to draw 5 Cards" {
+        "should be able to draw 5 Cards" in {
             val fivedrawn = player.drawFiveCardsFromDeck()
             fivedrawn.hand.length should be(5)
             fivedrawn.deck.length should be(5)
         }
-        "not be able to refill deck if it's not empty" {
+        "not be able to refill deck if it's not empty" in {
             val refilled = player.refillDeck()
             refilled == player should be(true)
         }
-        "discard all Cards from hand" {
+        "discard all Cards from hand" in {
             val fiveDrawn = player.drawFiveCardsFromDeck()
             val discarded = fiveDrawn.discardAllFromHand()
 
-            discarded.deck.length should be(5)
-            discarded.hand.length should be(0)
-            discarded.discard.length should be(5)
+            discarded.deck.length shouldBe(5)
+            discarded.hand.length shouldBe(0)
+            discarded.discard.length shouldBe(5)
         }
-        "count the money currently in Hand" {
+        "count the money currently in Hand" in {
             val fiveDrawn = player.drawFiveCardsFromDeck()
-            fiveDrawn.getMoney() should be(5)
+            fiveDrawn.getMoneyInHand() shouldBe(5)
 
             val drawOnce = player.drawCardFromDeck()
-            drawOnce.getMoney() should be(1)
+            drawOnce.getMoneyInHand() shouldBe(1)
         }
     }
 }
