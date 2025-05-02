@@ -184,16 +184,16 @@ class PlayerSpec extends AnyWordSpec {
             val fiveDrawn = player.drawFiveCardsFromDeck()
             val discarded = fiveDrawn.discardAllFromHand()
 
-            discarded.deck.length should be(5)
-            discarded.hand.length should be(0)
-            discarded.discard.length should be(5)
+            discarded.deck.length shouldBe(5)
+            discarded.hand.length shouldBe(0)
+            discarded.discard.length shouldBe(5)
         }
         "count the money currently in Hand" in {
             val fiveDrawn = player.drawFiveCardsFromDeck()
-            fiveDrawn.getMoneyInHand() should be(5)
+            fiveDrawn.getMoneyInHand() shouldBe(5)
 
             val drawOnce = player.drawCardFromDeck()
-            drawOnce.getMoneyInHand() should be(1)
+            drawOnce.getMoneyInHand() shouldBe(1)
         }
     }
 }

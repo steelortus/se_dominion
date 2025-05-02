@@ -200,6 +200,7 @@ class CardSpec extends AnyWordSpec {
             s.contains(Card.Kupfer) should be(true)
             s.contains(Card.Anwesen) should be(true)
             s.contains(Card.Gold) should be(true)
+            s.contains(Card.Dorf) should be(false)
         }
     }
 }
