@@ -4,7 +4,7 @@ package control
 import model.Stock
 
 trait State {
-    def addCard(card: String): String
+    def addCard(card: String): Stock
     def removeCard(card: String): String
     def play(): Unit
     def fillStock(): Unit

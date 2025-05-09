@@ -8,6 +8,7 @@ import model.Card
 import control.Controller
 import util.Observer
 import util.Event
+import util.ErrorEvent
 import model.ConsoleColors.*
 
 case class TUI(controller: Controller) extends Observer {
@@ -55,21 +56,40 @@ case class TUI(controller: Controller) extends Observer {
                 println(YELLOW("You are in preparation state. Please add cards to the stock."))
             case Event.stockFull =>
                 println(YELLOW("Stock is full! You can start the game now!"))
+            case Event.cardAdded =>
+                println(GREEN("Card added successfully!"))
+            case Event.cardRemoved =>
+                println(GREEN("Card removed successfully!"))
             case Event.playing =>
                 println(YELLOW("Game started!"))
+        }
+    }
+
+    override def update(e: ErrorEvent): Unit = {
+        e match {
+            case ErrorEvent.stockFull
+                println(RED("Cannot add this Card to the Stock, as the Stock is already full."))
+            case ErrorEvent.couldNotAddCard
+                println(RED("Cannot add this Card to the Stock. Maybe it's already in it?"))
+            case ErrorEvent.couldNotRemoveCard
+                println(RED("Cannot remove this Card from the Stock. Maybe it's not in it?"))
+            case ErrorEvent.invalidPlayer
+                println(RED("Invalid player. Please try again."))
+            case ErrorEvent.invalidState
+                println(RED("Invalid state. Please try again."))
         }
     }
 
     def add(): Unit = {
         println(CYAN("Please type out a Card you want to add to the Stock:"))
         print("> ")
-        println(controller.addCard(readLine()))
+        controller.addCard(readLine())
     }
 
     def remove(): Unit = {
         println(CYAN("Please type out a Card you want to remove from the Stock:"))
         print("> ")
-        println(controller.removeCard(readLine()))
+        controller.removeCard(readLine())
     }
 
     def play(): Unit = {

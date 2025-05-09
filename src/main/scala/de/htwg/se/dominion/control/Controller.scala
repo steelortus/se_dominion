@@ -12,18 +12,12 @@ case class Controller(var stock: Stock) extends Observable {
 
     var state: State = StatePreparation()
 
-    def addCard(card: String): String = {
-        state.addCard(card)
+    def addCard(card: String): Unit = {
+        stock = state.addCard(card)
     }
 
-    def removeCard(card: String): String = {
-        val updatedStock = stock.removeCard(stock.getCard(card))
-        if (updatedStock == stock) {
-            RED("Cannot remove this Card from the Stock. Maybe it's not in it?")
-        } else {
-            stock = updatedStock
-            GREEN("Card removed successfully!")
-        }
+    def removeCard(card: String): Unit = {
+        stock = state.removeCard(card)
     }
 
     def play(): Unit = {

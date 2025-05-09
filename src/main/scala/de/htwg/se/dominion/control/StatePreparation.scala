@@ -8,15 +8,37 @@ import model.Card
 import model.Player
 import util.Event
 import util.Observable
-import util.Observer
 
 case class StatePreparation(controller:Controller, stock:Stock) extends State {
-    override def addCard(card: String): String = {
-        RED("YES")
+
+    override def addCard(card: String): Stock = {
+        val updatedStock = stock.addCard(stock.getCard(card))
+        if (updatedStock == stock) {
+            if (updatedStock.getLength() == 17) {
+                notifyObservers(ErrorEvent.stockFull)
+                updatedStock
+            } else {
+                notifyObservers(ErrorEvent.couldNotAddCard)
+                updatedStock
+            }
+        } else {
+            if (updatedStock.getLength() == 17) {
+                notifyObservers(Event.stockFull)
+            }
+            notifyObservers(Event.cardAdded)
+            updatedStock
+        }
     }
 
-    override def removeCard(card: String): String = {
-        RED("Cannot remove a card in preparation state!")
+    override def removeCard(card: String): Stock = {
+        val updatedStock = stock.removeCard(stock.getCard(card))
+        if (updatedStock == stock) {
+            notifyObservers(ErrorEvent.couldNotRemoveCard)
+            updatedStock
+        } else {
+            notifyObservers(Event.cardRemoved)
+            updatedStock
+        }
     }
 
     override def play(): Unit = {
