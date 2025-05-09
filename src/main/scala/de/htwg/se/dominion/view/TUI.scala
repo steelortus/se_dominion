@@ -52,6 +52,8 @@ case class TUI(controller: Controller) extends Observer {
     override def update(e: Event): Unit = {
         e match {
             case Event.preparation =>
+                println(YELLOW("You are in preparation state. Please add cards to the stock."))
+            case Event.stockFull =>
                 println(YELLOW("Stock is full! You can start the game now!"))
             case Event.playing =>
                 println(YELLOW("Game started!"))
@@ -85,7 +87,7 @@ case class TUI(controller: Controller) extends Observer {
     }
 
     def list(): Unit = {
-        controller.listCards()
+        println(controller.listCards())
     }
 }
 

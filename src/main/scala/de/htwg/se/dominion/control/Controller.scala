@@ -10,21 +10,10 @@ import model.ConsoleColors.*
 
 case class Controller(var stock: Stock) extends Observable {
 
+    var state: State = StatePreparation()
+
     def addCard(card: String): String = {
-        val updatedStock = stock.addCard(stock.getCard(card))
-        if (updatedStock == stock) {
-            if (updatedStock.getLength() == 17) {
-                RED("Cannot add this Card to the Stock. The Stock is already full!")
-            } else {
-                RED("Cannot add this Card to the Stock. Maybe it's already in it?")
-            }
-        } else {
-            stock = updatedStock
-            if (stock.getLength() == 17) {
-                notifyObservers(Event.stockFull)
-            }
-            GREEN("Card added successfully!")
-        }
+        state.addCard(card)
     }
 
     def removeCard(card: String): String = {
@@ -41,7 +30,7 @@ case class Controller(var stock: Stock) extends Observable {
         if (stock.getLength() < 17) {
             println(RED(s"There is not enough cards in the Stock! ${stock.getLength()} out of required 17."))
         } else {
-            notifyObservers(Event.play)
+            updateState(Event.playing)
             var p1 = new Player()
             println(YELLOW(s"Player 1 Deck:\n${p1.deckToString()}\n"))
             p1 = p1.shuffleDeck()
@@ -84,38 +73,25 @@ case class Controller(var stock: Stock) extends Observable {
         debug_stock = debug_stock.addCard(Card.Laboratorium)
         debug_stock = debug_stock.addCard(Card.Bibliothek)
         debug_stock = debug_stock.addCard(Card.Holzfaeller)
-        notifyObservers(Event.stockFull)
+        updateState(Event.stockFull)
         stock = debug_stock
     }
 
-    def getStock(): Stock = stock
-
-    def listCards(): Unit = {
-        val all_cards = List[Card](Card.Burggraben, Card.Kapelle, Card.Keller, Card.Dorf, Card.Holzfaeller,
-                        Card.Werkstatt, Card.Buerokrat, Card.Dieb, Card.Festmahl, Card.Geldverleiher, Card.Miliz,
-                        Card.Schmiede, Card.Spion, Card.Thronsaal, Card.Umbau, Card.Bibliothek, Card.Hexe,
-                        Card.Jahrmarkt, Card.Laboratorium, Card.Markt, Card.Mine, Card.Ratsversammlung,
-                        Card.Abenteurer, Card.Garten)
-        val notIncluded = all_cards.filterNot(card => stock.contains(card))
-        println(YELLOW("Liste der noch verfuegbaren Karten:"))
-        println(CYAN(notIncluded.map(_.name).mkString(" | ")))
+    def listCards(): String = {
+        state.listCards()
     }
 
-    object gameState [
-        def preparation = println("Preparation")
-        def inProgress = println("In Progress")
-
-        var currentState = preparation
-        def handle(e: Event) = {
-            e match {
-                case Event.preparation =>
-                    currentState = inProgress
-                    println(YELLOW("Stock is full! You can start the game now!"))
-                case Event.play ing=>
-                    currentState = inProgress
-                    println(YELLOW("Game started!"))
-            }
-            currentState
+    def updateState(e: Event): Unit = {
+        e match {
+            case Event.preparation =>
+                state = StatePreparation()
+                notifyObservers(Event.preparation)
+            case Event.stockFull =>
+                state = StatePreparation()
+                notifyObservers(Event.stockFull)
+            case Event.playing =>
+                state = StatePlaying()
+                notifyObservers(Event.playing)
         }
-    ]
+    }
 }
