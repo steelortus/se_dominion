@@ -100,4 +100,22 @@ case class Controller(var stock: Stock) extends Observable {
         println(YELLOW("Liste der noch verfuegbaren Karten:"))
         println(CYAN(notIncluded.map(_.name).mkString(" | ")))
     }
+
+    object gameState [
+        def preparation = println("Preparation")
+        def inProgress = println("In Progress")
+
+        var currentState = preparation
+        def handle(e: Event) = {
+            e match {
+                case Event.preparation =>
+                    currentState = inProgress
+                    println(YELLOW("Stock is full! You can start the game now!"))
+                case Event.play ing=>
+                    currentState = inProgress
+                    println(YELLOW("Game started!"))
+            }
+            currentState
+        }
+    ]
 }

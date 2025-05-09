@@ -51,9 +51,9 @@ case class TUI(controller: Controller) extends Observer {
 
     override def update(e: Event): Unit = {
         e match {
-            case Event.stockFull =>
+            case Event.preparation =>
                 println(YELLOW("Stock is full! You can start the game now!"))
-            case Event.play =>
+            case Event.playing =>
                 println(YELLOW("Game started!"))
         }
     }
