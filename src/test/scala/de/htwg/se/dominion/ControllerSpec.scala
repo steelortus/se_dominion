@@ -90,8 +90,6 @@ class ControllerSpec extends AnyWordSpec {
         "list cards that are not in the stock" in {
             val controller = Controller(initialStock)
 
-            val result = controller.listCards()
-
             noException should be thrownBy controller.listCards()
         }
     }
