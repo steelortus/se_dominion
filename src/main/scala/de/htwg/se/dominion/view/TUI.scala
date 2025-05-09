@@ -2,6 +2,9 @@ package de.htwg.se.dominion
 package view
 
 import scala.io.StdIn._
+import model.Stock
+import model.Player
+import model.Card
 import control.Controller
 import util.Observer
 import util.Event
@@ -85,3 +88,4 @@ case class TUI(controller: Controller) extends Observer {
         controller.listCards()
     }
 }
+
