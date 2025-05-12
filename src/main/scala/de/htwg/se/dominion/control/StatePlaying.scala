@@ -11,15 +11,17 @@ import util.Observable
 import util.Observer
 
 case class StatePlaying() extends State {
-    override def addCard(card: String): String = {
-        RED("Cannot add a card in playing state!")
+    override def addCard(card: String, stock: Stock): Stock = {
+        notifyObservers(ErrorEvent.invalidCommand)
+        stock
     }
 
-    override def removeCard(card: String): String = {
-        RED("Cannot remove a card in playing state!")
+    override def removeCard(card: String, stock: Stock): Stock = {
+        notifyObservers(ErrorEvent.invalidCommand)
+        stock
     }
 
-    override def play(): Boolean = {
+    override def play(stock: Stock): Boolean = {
         var p1 = new Player()
         println(YELLOW(s"Player 1 Deck:\n${p1.deckToString()}\n"))
         p1 = p1.shuffleDeck()
@@ -57,14 +59,7 @@ case class StatePlaying() extends State {
         stock
     }
 
-    override def listCards(): String = {
-        val all_cards = List[Card](Card.Burggraben, Card.Kapelle, Card.Keller, Card.Dorf, Card.Holzfaeller,
-                        Card.Werkstatt, Card.Buerokrat, Card.Dieb, Card.Festmahl, Card.Geldverleiher, Card.Miliz,
-                        Card.Schmiede, Card.Spion, Card.Thronsaal, Card.Umbau, Card.Bibliothek, Card.Hexe,
-                        Card.Jahrmarkt, Card.Laboratorium, Card.Markt, Card.Mine, Card.Ratsversammlung,
-                        Card.Abenteurer, Card.Garten)
-        val notIncluded = all_cards.filterNot(card => stock.contains(card))
-        println(YELLOW("Liste der noch verfuegbaren Karten:"))
-        println(CYAN(notIncluded.map(_.name).mkString(" | ")))
+    override def listCards(stock: Stock): String = {
+        stock.toString()
     }
 }

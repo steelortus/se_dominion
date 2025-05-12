@@ -67,15 +67,15 @@ case class TUI(controller: Controller) extends Observer {
 
     override def update(e: ErrorEvent): Unit = {
         e match {
-            case ErrorEvent.stockFull
+            case ErrorEvent.stockFull =>
                 println(RED("Cannot add this Card to the Stock, as the Stock is already full."))
-            case ErrorEvent.couldNotAddCard
+            case ErrorEvent.couldNotAddCard =>
                 println(RED("Cannot add this Card to the Stock. Maybe it's already in it?"))
-            case ErrorEvent.couldNotRemoveCard
+            case ErrorEvent.couldNotRemoveCard =>
                 println(RED("Cannot remove this Card from the Stock. Maybe it's not in it?"))
-            case ErrorEvent.cantStart
+            case ErrorEvent.cantStart =>
                 println(RED("Cannot start the game. Please make sure the Stock is full and try again."))
-            case ErrorEvent.invalidCommand
+            case ErrorEvent.invalidCommand =>
                 println(RED("Invalid Command. Please try again."))
         }
     }
