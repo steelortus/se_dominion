@@ -8,6 +8,5 @@ trait State {
     def removeCard(card: String, stock: Stock): Stock
     def play(stock: Stock): Boolean
     def fillStock(stock: Stock): Stock
-    def getStock(): Stock
-    def listCards(stock: Stock): Unit
+    def listCards(stock: Stock): String
 }

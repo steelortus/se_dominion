@@ -3,6 +3,7 @@ package control
 
 import util.Observable
 import util.Event
+import util.ErrorEvent
 import model.Stock
 import model.Card
 import model.Player
@@ -11,6 +12,10 @@ import model.ConsoleColors.*
 case class Controller(var stock: Stock) extends Observable {
 
     var state: State = StatePreparation(this, stock)
+
+    def getStock(): Stock = {
+        stock
+    }
 
     def addCard(card: String): Unit = {
         stock = state.addCard(card, stock)
@@ -23,6 +28,8 @@ case class Controller(var stock: Stock) extends Observable {
     def play(): Unit = {
         if (state.play(stock) == true) {
             updateState(Event.playing)
+        } else {
+            notifyObservers(ErrorEvent.cantStart)
         }
     }
 

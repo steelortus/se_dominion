@@ -6,24 +6,25 @@ import model.Stock
 import model.Card
 import model.Player
 import util.Event
+import util.ErrorEvent
 import util.Observable
 
-case class StatePreparation(controller:Controller, stock:Stock) extends State {
+case class StatePreparation(controller: Controller, stock: Stock) extends State {
 
     override def addCard(card: String, stock: Stock): Stock = {
         val updatedStock = stock.addCard(stock.getCard(card))
         if (updatedStock == stock) {
             if (updatedStock.getLength() == 17) {
-                notifyObservers(ErrorEvent.stockFull)
+                controller.notifyObservers(ErrorEvent.stockFull)
                 updatedStock
             } else {
-                notifyObservers(ErrorEvent.couldNotAddCard)
+                controller.notifyObservers(ErrorEvent.couldNotAddCard)
                 updatedStock
             }
         } else {
-            notifyObservers(Event.cardAdded)
+            controller.notifyObservers(Event.cardAdded)
             if (updatedStock.getLength() == 17) {
-                notifyObservers(Event.stockFull)
+                controller.notifyObservers(Event.stockFull)
             }
             updatedStock
         }
@@ -32,17 +33,16 @@ case class StatePreparation(controller:Controller, stock:Stock) extends State {
     override def removeCard(card: String, stock: Stock): Stock = {
         val updatedStock = stock.removeCard(stock.getCard(card))
         if (updatedStock == stock) {
-            notifyObservers(ErrorEvent.couldNotRemoveCard)
+            controller.notifyObservers(ErrorEvent.couldNotRemoveCard)
             updatedStock
         } else {
-            notifyObservers(Event.cardRemoved)
+            controller.notifyObservers(Event.cardRemoved)
             updatedStock
         }
     }
 
     override def play(stock: Stock): Boolean = {
         if (stock.getLength() < 17) {
-            notifyObservers(ErrorEvent.cantStart)
             false
         } else {
             true
