@@ -4,10 +4,10 @@ package control
 import model.Stock
 
 trait State {
-    def addCard(card: String): Stock
-    def removeCard(card: String): String
-    def play(): Unit
-    def fillStock(): Unit
+    def addCard(card: String, stock: Stock): Stock
+    def removeCard(card: String, stock: Stock): Stock
+    def play(stock: Stock): Boolean
+    def fillStock(stock: Stock): Stock
     def getStock(): Stock
-    def listCards(): Unit
+    def listCards(stock: Stock): Unit
 }

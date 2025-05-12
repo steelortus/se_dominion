@@ -26,6 +26,6 @@ enum ErrorEvent {
     case stockFull
     case couldNotAddCard
     case couldNotRemoveCard
-    case invalidPlayer
-    case invalidState
+    case cantStart
+    case invalidCommand
 }
