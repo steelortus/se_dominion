@@ -2,6 +2,7 @@ package de.htwg.se.dominion.control
 
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
+import de.htwg.se.dominion.control._
 import de.htwg.se.dominion.model._
 import de.htwg.se.dominion.util._
 
