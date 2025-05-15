@@ -15,6 +15,11 @@ case class TurnHandler(numberOfPlayers: Int, turn: Int) {
         players(index)
     }
 
+    def updatePlayer(index: Int, player: Player): TurnHandler = {
+        val updatedPlayers = players.updated(index, player)
+        this.copy(players = updatedPlayers)
+    }
+
     def totalTurnCount(): Int = {
         turn
     }
