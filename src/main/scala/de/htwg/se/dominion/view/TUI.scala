@@ -34,6 +34,8 @@ case class TUI(controller: Controller) extends Observer {
                     show()
                 case "list" =>
                     list()
+                case "purchase" =>
+                    purchase()
                 case "h" =>
                     println(YELLOW(s"""COMMANDS:
                             |add\t-   Type in cards to add to your stock
@@ -117,6 +119,12 @@ case class TUI(controller: Controller) extends Observer {
 
     def list(): Unit = {
         println(CYAN(controller.listCards()))
+    }
+
+    def purchase(): Unit = {
+        println(CYAN("What Card would you like to purchase?"))
+        print("> ")
+        controller.purchase(readLine())
     }
 }
 
