@@ -1,13 +1,17 @@
 import scala.io.StdIn._
 import de.htwg.se.dominion.model.Stock
+import de.htwg.se.dominion.model.TurnHandler
 import de.htwg.se.dominion.view.TUI
 import de.htwg.se.dominion.control.Controller
+import de.htwg.se.dominion.control.StatePreparation
 
 // hallo :)
 
 @main def main(): Unit = {
     val stock = new Stock()
-    val controller = new Controller(stock)
+    val state = new StatePreparation(stock)
+    val th = new TurnHandler(0, 0)
+    val controller = new Controller(stock, state, th)
     val t = new TUI(controller)
     t.run()
 }

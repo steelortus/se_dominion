@@ -74,6 +74,22 @@ case class Player(deck: List[Card] = List(
         hand.map(_.getValue).sum
     }
 
+    def purchaseCard(card: Card): Player = {
+        if (getMoneyInHand() >= card.getCost) {
+            this.copy(discard = discard :+ card)
+        } else {
+            this
+        }
+    }
+
+    def addCardToHand(card: Card): Player = {
+        this.copy(hand = hand :+ card)
+    }
+
+    def addCardToDeck(card: Card): Player = {
+        this.copy(deck = deck :+ card)
+    }
+
     override def toString(): String = {
         deckToString() + "\n" + handToString() + "\n" + discardToString()
     }

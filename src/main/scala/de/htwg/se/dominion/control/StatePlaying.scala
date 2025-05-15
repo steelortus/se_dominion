@@ -10,14 +10,12 @@ import util.Event
 import util.ErrorEvent
 import util.Observable
 
-case class StatePlaying(controller: Controller, stock: Stock) extends State {
+case class StatePlaying(stock: Stock) extends State {
     override def addCard(card: String, stock: Stock): Stock = {
-        controller.notifyObservers(ErrorEvent.invalidCommand)
         stock
     }
 
     override def removeCard(card: String, stock: Stock): Stock = {
-        controller.notifyObservers(ErrorEvent.invalidCommand)
         stock
     }
 
@@ -49,12 +47,10 @@ case class StatePlaying(controller: Controller, stock: Stock) extends State {
         p2 = p2.discardAllFromHand()
         println(PURPLE(s"Player 2 Hand after discarding from Hand:\n${p2.handToString()}\n"))
         println(CYAN(s"Player 2 Discard after discarding from Hand:\n${p2.discardToString()}\n"))
-        
         false
     }
 
     override def fillStock(stock: Stock): Stock = {
-        controller.notifyObservers(ErrorEvent.invalidCommand)
         stock
     }
 
