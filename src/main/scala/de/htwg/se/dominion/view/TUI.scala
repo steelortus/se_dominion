@@ -62,6 +62,11 @@ case class TUI(controller: Controller) extends Observer {
                 println(GREEN("Card removed successfully!"))
             case Event.playing =>
                 println(YELLOW("Game started!"))
+            case Event.selectNumberOfPlayers =>
+                println(CYAN("Please select the number of players (2-4):"))
+                print("> ")
+                val input = readLine()
+                controller.createPlayers(input.toInt)
         }
     }
 
@@ -77,6 +82,10 @@ case class TUI(controller: Controller) extends Observer {
                 println(RED("Cannot start the game. Please make sure the Stock is full and try again."))
             case ErrorEvent.invalidCommand =>
                 println(RED("Invalid Command. Please try again."))
+            case ErrorEvent.invalidNumberOfPlayers =>
+                println(RED("Invalid number of players. Please select a number between 2 and 4."))
+            case ErrorEvent.invalidState =>
+                println(YELLOW("[Warning] The State has been attemped to be changed, but it is not possible with the called Event."))
         }
     }
 

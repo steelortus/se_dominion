@@ -20,6 +20,7 @@ enum Event {
     case cardAdded
     case cardRemoved
     case playing
+    case selectNumberOfPlayers
 }
 
 enum ErrorEvent {
@@ -28,4 +29,6 @@ enum ErrorEvent {
     case couldNotRemoveCard
     case cantStart
     case invalidCommand
+    case invalidNumberOfPlayers
+    case invalidState
 }

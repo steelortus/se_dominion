@@ -9,36 +9,16 @@ import util.Event
 import util.ErrorEvent
 import util.Observable
 
-case class StatePreparation(controller: Controller, stock: Stock) extends State {
+case class StatePreparation(stock: Stock) extends State {
 
     override def addCard(card: String, stock: Stock): Stock = {
         val updatedStock = stock.addCard(stock.getCard(card))
-        if (updatedStock == stock) {
-            if (updatedStock.getLength() == 17) {
-                controller.notifyObservers(ErrorEvent.stockFull)
-                updatedStock
-            } else {
-                controller.notifyObservers(ErrorEvent.couldNotAddCard)
-                updatedStock
-            }
-        } else {
-            controller.notifyObservers(Event.cardAdded)
-            if (updatedStock.getLength() == 17) {
-                controller.notifyObservers(Event.stockFull)
-            }
-            updatedStock
-        }
+        updatedStock
     }
 
     override def removeCard(card: String, stock: Stock): Stock = {
         val updatedStock = stock.removeCard(stock.getCard(card))
-        if (updatedStock == stock) {
-            controller.notifyObservers(ErrorEvent.couldNotRemoveCard)
-            updatedStock
-        } else {
-            controller.notifyObservers(Event.cardRemoved)
-            updatedStock
-        }
+        updatedStock
     }
 
     override def play(stock: Stock): Boolean = {
