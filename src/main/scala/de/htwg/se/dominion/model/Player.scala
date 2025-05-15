@@ -74,8 +74,8 @@ case class Player(deck: List[Card] = List(
         hand.map(_.getValue).sum
     }
 
-    def purchaseCard(card: Card): Player = {
-        if (getMoneyInHand() >= card.getCost) {
+    def purchaseCard(card: Card, money: Int): Player = {
+        if (money >= card.getCost) {
             this.copy(discard = discard :+ card)
         } else {
             this
