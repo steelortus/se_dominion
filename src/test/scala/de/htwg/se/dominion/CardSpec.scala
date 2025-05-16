@@ -197,10 +197,10 @@ class CardSpec extends AnyWordSpec {
         }
         "have a method to check, if a card is contained in the stock" in {
             s = new Stock()
-            s.contains(Card.Kupfer) should be(true)
-            s.contains(Card.Anwesen) should be(true)
-            s.contains(Card.Gold) should be(true)
-            s.contains(Card.Dorf) should be(false)
+            s.contains("Kupfer") should be(true)
+            s.contains("Anwesen") should be(true)
+            s.contains("Gold") should be(true)
+            s.contains("Dorf") should be(false)
         }
     }
 }

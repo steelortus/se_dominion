@@ -103,5 +103,45 @@ class ControllerSpec extends AnyWordSpec {
             controller.removeCard(Card.Garten.toString)
             testObserver.lastEvent should be(Some(Event.cardRemoved))
         }
+
+        "before game starts ask for player quantity if stock is full" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.play()
+            testObserver.lastEvent should be(Some(Event.selectNumberOfPlayers))
+        }
+
+        "not start the game if stock is not filled" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.play()
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.cantStart))
+        }
+
+        "not try to fill an already full stock" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.fillStock()
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.invalidCommand))
+        }
+
+        "only accept player count between 2 and 4" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(1)
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.invalidNumberOfPlayers))
+            testObserver.lastEvent should be(Some(Event.selectNumberOfPlayers))
+        }
+
+        "not add card to stock while playing" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            controller.play()
+            controller.addCard(Card.Geldverleiher.toString)
+            controller.getStock() should equal (fullStock)
+        }
     }
 }

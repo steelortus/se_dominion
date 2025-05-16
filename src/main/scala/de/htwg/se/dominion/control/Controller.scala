@@ -50,7 +50,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def fillStock(): Unit = {
-        val newStock = state.fillStock(new Stock())
+        val newStock = state.fillStock(stock)
         if (stock == newStock) {
             notifyObservers(ErrorEvent.invalidCommand)
         } else {
