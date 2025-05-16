@@ -19,6 +19,8 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
 
     def addCard(name:String): Stock = addCard(getCard(name))
 
+    def ++(cards: List[Card]): Stock = cards.foldLeft(this)((acc, card) => acc.addCard(card))
+
     def removeCard(card:Card): Stock = {
         if (!setupStock.contains(card) && stock.contains(card)) {
             Stock(stock.filterNot(_ == card))
