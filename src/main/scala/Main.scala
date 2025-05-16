@@ -1,6 +1,7 @@
 import scala.io.StdIn._
 import de.htwg.se.dominion.model.Stock
 import de.htwg.se.dominion.model.TurnHandler
+import de.htwg.se.dominion.model.TurnHandlerBuilder
 import de.htwg.se.dominion.view.TUI
 import de.htwg.se.dominion.control.Controller
 import de.htwg.se.dominion.control.StatePreparation
@@ -10,7 +11,8 @@ import de.htwg.se.dominion.control.StatePreparation
 @main def main(): Unit = {
     val stock = new Stock()
     val state = new StatePreparation(stock)
-    val th = new TurnHandler(0, 0)
+    val builder = new TurnHandlerBuilder()
+    val th = builder.setNumberOfPlayers(builder, 0).setTurn(builder, 0).getResult()
     val controller = new Controller(stock, state, th)
     val t = new TUI(controller)
     t.run()

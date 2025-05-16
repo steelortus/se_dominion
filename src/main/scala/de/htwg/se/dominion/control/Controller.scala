@@ -9,6 +9,7 @@ import model.Card
 import model.Player
 import model.ConsoleColors.*
 import model.TurnHandler
+import model.TurnHandlerBuilder
 
 case class Controller(var stock: Stock, var state: State, var th: TurnHandler) extends Observable {
 
@@ -67,13 +68,19 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
             notifyObservers(ErrorEvent.invalidNumberOfPlayers)
             notifyObservers(Event.selectNumberOfPlayers)
         } else {
-            th = new TurnHandler(noP, 0)
+            val builder = new TurnHandlerBuilder()
+            val finishedBuilder = builder.setNumberOfPlayers(builder, noP).setTurn(builder, 0)
+            th = finishedBuilder.getResult()
             updateState(Event.playing)
         }
     }
 
     def nextTurn(): Unit = {
         th = th.nextTurn()
+    }
+
+    def purchase(s:String): Unit = {
+        println(th)
     }
 
     def updateState(e: Event): Unit = {
