@@ -6,6 +6,7 @@ import model.Stock
 import model.Player
 import model.Card
 import control.Controller
+import control.commands.*
 import util.Observer
 import util.Event
 import util.ErrorEvent
@@ -36,6 +37,10 @@ case class TUI(controller: Controller) extends Observer {
                     list()
                 case "purchase" =>
                     purchase()
+                case "undo" =>
+                    controller.undo()
+                case "redo" =>
+                    controller.redo()
                 case "h" =>
                     println(YELLOW(s"""COMMANDS:
                             |add\t-   Type in cards to add to your stock
@@ -94,13 +99,15 @@ case class TUI(controller: Controller) extends Observer {
     def add(): Unit = {
         println(CYAN("Please type out a Card you want to add to the Stock:"))
         print("> ")
-        controller.addCard(readLine())
+        val card = readLine()
+        controller.executeCommand(AddCardCommand(controller, card))
     }
 
     def remove(): Unit = {
         println(CYAN("Please type out a Card you want to remove from the Stock:"))
         print("> ")
-        controller.removeCard(readLine())
+        val card = readLine()
+        controller.executeCommand(RemoveCardCommand(controller, card))
     }
 
     def play(): Unit = {
@@ -113,7 +120,7 @@ case class TUI(controller: Controller) extends Observer {
     }
 
     def fill(): Unit = {
-        controller.fillStock()
+        controller.executeCommand(FillStockCommand(controller))
         println(GREEN("Stock filled successfully!"))
     }
 
@@ -124,7 +131,8 @@ case class TUI(controller: Controller) extends Observer {
     def purchase(): Unit = {
         println(CYAN("What Card would you like to purchase?"))
         print("> ")
-        controller.purchase(readLine())
+        val card = readLine()
+        controller.executeCommand(PurchaseCardCommand(controller, card))
     }
 }
 

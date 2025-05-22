@@ -10,35 +10,14 @@ import model.Player
 import model.ConsoleColors.*
 import model.TurnHandler
 import model.TurnHandlerBuilder
+import commands.*
 
 case class Controller(var stock: Stock, var state: State, var th: TurnHandler) extends Observable {
 
+    private val commandManager = new CommandManager()
+
     def getStock(): Stock = {
         stock
-    }
-
-    def addCard(card: String): Unit = {
-        val newStock = state.addCard(card, stock)
-        if (stock == newStock) {
-            if (newStock.getLength() == 17) {
-                notifyObservers(Event.stockFull)
-            } else {
-                notifyObservers(ErrorEvent.couldNotAddCard)
-            }
-        } else {
-            stock = newStock
-            notifyObservers(Event.cardAdded)
-        }
-    }
-
-    def removeCard(card: String): Unit = {
-        val newStock = state.removeCard(card, stock)
-        if (stock == newStock) {
-            notifyObservers(ErrorEvent.couldNotRemoveCard)
-        } else {
-            stock = newStock
-            notifyObservers(Event.cardRemoved)
-        }
     }
 
     def play(): Unit = {
@@ -97,5 +76,17 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
             case _ =>
                 notifyObservers(ErrorEvent.invalidState)
         }
+    }
+
+    def executeCommand(cmd: Command): Unit = {
+        commandManager.executeCommand(cmd)
+    }
+
+    def undo(): Unit = {
+        commandManager.undo()
+    }
+
+    def redo(): Unit = {
+        commandManager.redo()
     }
 }
