@@ -1,6 +1,6 @@
 package de.htwg.se.dominion.model
 
-enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amount:Int):
+enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amount:Int) {
     def getName: String = name
     def getCost: Int = cost
     def getValue: Int = value
@@ -46,3 +46,13 @@ enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amou
     case Garten extends Card("Garten", 4, 0, 0, 10)
 
     case NotACard extends Card("NotACard", 0, 0, 0, 0)
+
+    override def execute(player: Player): Player = {
+        this match {
+            case Dorf =>
+                val newPlayer = player.drawCardFromDeck().drawCardFromDeck()
+                super.execute(newPlayer)
+            case _ => player
+        }
+    }
+}
