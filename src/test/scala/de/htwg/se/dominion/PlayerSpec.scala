@@ -195,5 +195,12 @@ class PlayerSpec extends AnyWordSpec {
             val drawOnce = player.drawCardFromDeck()
             drawOnce.getMoneyInHand() shouldBe(1)
         }
+
+        "purchase a card from Stock" in {
+            val p1 = player.drawFiveCardsFromDeck()
+            val result = p1.purchaseCard(Card.Silber, 5)
+
+            result.discard should contain (Card.Silber)
+        }
     }
 }
