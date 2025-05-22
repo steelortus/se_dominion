@@ -1,25 +1,25 @@
 package de.htwg.se.dominion.util
 
-trait Command {
-    def doStep(): Unit
-    def undoStep(): Unit
-    def redoStep(): Unit
+trait Command[T] {
+    def doStep(stock: T): T
+    def undoStep(stock: T): T
+    def redoStep(stock: T): T
 }
 
-class UndoManager {
+class UndoManager[T] {
     private var undoStack: List[Command] = List()
     private var redoStack: List[Command] = List()
 
-    def doStep(command: Command): Unit = {
+    def doStep(stock: T, command: Command): T = {
         undoStack = command :: undoStack
-        command.doStep()
+        command.doStep(stock)
     }
 
-    def undoStep(): Unit = {
+    def undoStep(stock: T): T = {
         undoStack match {
-            case Nil => t
+            case Nil => stock
             case head :: stack => {
-                val result = head.undoStep(t)
+                val result = head.undoStep(stock)
                 undoStack = stack
                 redoStack = head :: redoStack
                 result
@@ -27,11 +27,11 @@ class UndoManager {
         }
     }
 
-    def redoStep(): Unit = {
+    def redoStep(stock: T): T = {
         redoStack match {
             case Nil => t
             case head :: stack => {
-                val result = head.redoStep(t)
+                val result = head.redoStep(stock)
                 redoStack = stack
                 undoStack = head :: undoStack
                 result
