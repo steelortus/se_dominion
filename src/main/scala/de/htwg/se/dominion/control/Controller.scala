@@ -10,8 +10,13 @@ import model.Player
 import model.ConsoleColors.*
 import model.TurnHandler
 import model.TurnHandlerBuilder
+import util.UndoManager
+import control.State
+import util.Command
 
 case class Controller(var stock: Stock, var state: State, var th: TurnHandler) extends Observable {
+
+    val undoManager = new UndoManager[Stock]
 
     def getStock(): Stock = {
         stock

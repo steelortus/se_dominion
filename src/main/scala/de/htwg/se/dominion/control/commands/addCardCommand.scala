@@ -6,15 +6,15 @@ import de.htwg.se.dominion.model.Stock
 import de.htwg.se.dominion.util.Command
 
 class AddCardCommand(card: Card, player: Player) extends Command[Stock] {
-  override def doStep(): Unit = {
-    player.addCard(card)
-  }
+    override def doStep(stock: Stock): Stock = {
+        player.addCard(card)
+    }
 
-  override def undoStep(): Unit = {
-    player.removeCard(card)
-  }
+    override def undoStep(stock: Stock): Stock = {
+        player.removeCard(card)
+    }
 
-  override def redoStep(): Unit = {
-    doStep()
-  }
+    override def redoStep(stock: Stock): Stock = {
+        doStep()
+    }
 }

@@ -2,6 +2,7 @@ package de.htwg.se.dominion
 package control
 
 import model.Stock
+import util.UndoManager
 
 trait State {
     def addCard(card: String, stock: Stock): Stock
