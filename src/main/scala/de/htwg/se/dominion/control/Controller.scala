@@ -89,8 +89,8 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
         th.turn
     }
 
-    def getPlayerDeck(): List[Card] = {
-        th.getPlayer().deck
+    def getPlayerDeck(): String= {
+        th.getPlayer().deckToString()
     }
 
     def purchase(s:String): Unit = {

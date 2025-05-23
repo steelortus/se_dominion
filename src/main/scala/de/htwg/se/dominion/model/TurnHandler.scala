@@ -19,6 +19,10 @@ case class TurnHandlerBuilder(numberOfPlayers: Int = 0, turn: Int = 0) extends B
         th.copy(turn = turn)
     }
 
+    def generatePlayers(th: TurnHandler): TurnHandler = {
+        th.copy(players = List.fill(th.numberOfPlayers)(Player()))
+    }
+
     def getResult(): TurnHandler = {
         TurnHandler(numberOfPlayers, turn)
     }
@@ -32,7 +36,7 @@ case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = 
     }
 
     def getPlayer(): Player = {
-        players(turn % numberOfPlayers)
+        players(turn)
     }
 
     def updatePlayer(index: Int, player: Player): TurnHandler = {
