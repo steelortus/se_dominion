@@ -6,20 +6,24 @@ import model.ConsoleColors.*
 import model.Stock
 import model.Card
 import model.Player
+import model.TurnHandler
 import util.Event
 import util.ErrorEvent
 import util.Observable
+import util.Command
+import util.UndoManager
+import control.commands._
 
 case class StatePlaying(stock: Stock) extends State {
-    override def addCard(card: String, stock: Stock): Stock = {
+    override def addCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock = {
         stock
     }
 
-    override def removeCard(card: String, stock: Stock): Stock = {
+    override def removeCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock = {
         stock
     }
 
-    override def play(stock: Stock): Boolean = {
+    override def play(stock: Stock, um: UndoManager[Stock]): Boolean = {
         var p1 = new Player()
         println(YELLOW(s"Player 1 Deck:\n${p1.deckToString()}\n"))
         p1 = p1.shuffleDeck()
@@ -50,11 +54,11 @@ case class StatePlaying(stock: Stock) extends State {
         false
     }
 
-    override def fillStock(stock: Stock): Stock = {
+    override def fillStock(stock: Stock, um: UndoManager[Stock]): Stock = {
         stock
     }
 
-    override def listCards(stock: Stock): String = {
+    override def listCards(stock: Stock, um: UndoManager[Stock]): String = {
         stock.toString()
     }
 }

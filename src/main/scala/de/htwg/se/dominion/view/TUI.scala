@@ -45,6 +45,12 @@ case class TUI(controller: Controller) extends Observer {
                             |show\t-   Displays the current stock
                             |list\t-   Shows a list of all cards you can still add
                             |exit\t-   Exit this program""".stripMargin))
+                case "undo" =>
+                    controller.undo()
+                    println(GREEN("> Undone!"))
+                case "redo" =>
+                    controller.redo()
+                    println(GREEN("> Redone!"))
                 case _ =>
                     println(RED("Unknown command. Please try again."))
             }

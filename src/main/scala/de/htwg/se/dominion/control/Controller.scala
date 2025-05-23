@@ -16,14 +16,15 @@ import util.Command
 
 case class Controller(var stock: Stock, var state: State, var th: TurnHandler) extends Observable {
 
-    val undoManager = new UndoManager[Stock]
+    val prepUndoManager = new UndoManager[Stock]
+    val playUndoManager = new UndoManager[TurnHandler]
 
     def getStock(): Stock = {
         stock
     }
 
     def addCard(card: String): Unit = {
-        val newStock = state.addCard(card, stock)
+        val newStock = state.addCard(card, stock, prepUndoManager)
         if (stock == newStock) {
             if (newStock.getLength() == 17) {
                 notifyObservers(Event.stockFull)
@@ -37,7 +38,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def removeCard(card: String): Unit = {
-        val newStock = state.removeCard(card, stock)
+        val newStock = state.removeCard(card, stock, prepUndoManager)
         if (stock == newStock) {
             notifyObservers(ErrorEvent.couldNotRemoveCard)
         } else {
@@ -47,7 +48,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def play(): Unit = {
-        if (state.play(stock) == true) {
+        if (state.play(stock, prepUndoManager) == true) {
             notifyObservers(Event.selectNumberOfPlayers)
         } else {
             notifyObservers(ErrorEvent.cantStart)
@@ -55,7 +56,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def fillStock(): Unit = {
-        val newStock = state.fillStock(stock)
+        val newStock = state.fillStock(stock, prepUndoManager)
         if (stock == newStock) {
             notifyObservers(ErrorEvent.invalidCommand)
         } else {
@@ -65,7 +66,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def listCards(): String = {
-        state.listCards(stock)
+        state.listCards(stock, prepUndoManager)
     }
 
     def createPlayers(noP: Int): Unit = {
@@ -102,5 +103,13 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
             case _ =>
                 notifyObservers(ErrorEvent.invalidState)
         }
+    }
+
+    def undo(): Unit = {
+        stock = prepUndoManager.undoStep(stock)
+    }
+
+    def redo(): Unit = {
+        stock = prepUndoManager.redoStep(stock)
     }
 }

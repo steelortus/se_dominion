@@ -5,9 +5,9 @@ import model.Stock
 import util.UndoManager
 
 trait State {
-    def addCard(card: String, stock: Stock): Stock
-    def removeCard(card: String, stock: Stock): Stock
-    def play(stock: Stock): Boolean
-    def fillStock(stock: Stock): Stock
-    def listCards(stock: Stock): String
+    def addCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock
+    def removeCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock
+    def play(stock: Stock, um: UndoManager[Stock]): Boolean
+    def fillStock(stock: Stock, um: UndoManager[Stock]): Stock
+    def listCards(stock: Stock, um: UndoManager[Stock]): String
 }

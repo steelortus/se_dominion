@@ -31,8 +31,8 @@ case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = 
         this.copy(turn = nextTurn)
     }
 
-    def getPlayer(index: Int): Player = {
-        players(index)
+    def getPlayer(): Player = {
+        players(turn % numberOfPlayers)
     }
 
     def updatePlayer(index: Int, player: Player): TurnHandler = {

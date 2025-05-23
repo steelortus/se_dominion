@@ -5,23 +5,27 @@ import control.State
 import model.Stock
 import model.Card
 import model.Player
+import model.TurnHandler
 import util.Event
 import util.ErrorEvent
 import util.Observable
+import util.Command
+import util.UndoManager
+import control.commands._
 
 case class StatePreparation(stock: Stock) extends State {
 
-    override def addCard(card: String, stock: Stock): Stock = {
-        val updatedStock = stock.addCard(stock.getCard(card))
+    override def addCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock = {
+        val updatedStock = um.doStep(stock, AddCardCommand(stock.getCard(card)))
         updatedStock
     }
 
-    override def removeCard(card: String, stock: Stock): Stock = {
-        val updatedStock = stock.removeCard(stock.getCard(card))
+    override def removeCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock = {
+        val updatedStock = um.doStep(stock, RemoveCardCommand(stock.getCard(card)))
         updatedStock
     }
 
-    override def play(stock: Stock): Boolean = {
+    override def play(stock: Stock, um: UndoManager[Stock]): Boolean = {
         if (stock.getLength() < 17) {
             false
         } else {
@@ -29,22 +33,12 @@ case class StatePreparation(stock: Stock) extends State {
         }
     }
 
-    override def fillStock(stock: Stock): Stock = {
-        var debug_stock = stock
-        debug_stock = debug_stock.addCard(Card.Garten)
-        debug_stock = debug_stock.addCard(Card.Markt)
-        debug_stock = debug_stock.addCard(Card.Jahrmarkt)
-        debug_stock = debug_stock.addCard(Card.Dieb)
-        debug_stock = debug_stock.addCard(Card.Abenteurer)
-        debug_stock = debug_stock.addCard(Card.Dorf)
-        debug_stock = debug_stock.addCard(Card.Hexe)
-        debug_stock = debug_stock.addCard(Card.Laboratorium)
-        debug_stock = debug_stock.addCard(Card.Bibliothek)
-        debug_stock = debug_stock.addCard(Card.Holzfaeller)
-        debug_stock
+    override def fillStock(stock: Stock, um: UndoManager[Stock]): Stock = {
+        val updatedStock = um.doStep(stock, FillStockCommand(stock))
+        updatedStock
     }
 
-    override def listCards(stock: Stock): String = {
+    override def listCards(stock: Stock, um: UndoManager[Stock]): String = {
         val all_cards = List[Card](Card.Burggraben, Card.Kapelle, Card.Keller, Card.Dorf, Card.Holzfaeller,
                         Card.Werkstatt, Card.Buerokrat, Card.Dieb, Card.Festmahl, Card.Geldverleiher, Card.Miliz,
                         Card.Schmiede, Card.Spion, Card.Thronsaal, Card.Umbau, Card.Bibliothek, Card.Hexe,

@@ -7,10 +7,10 @@ trait Command[T] {
 }
 
 class UndoManager[T] {
-    private var undoStack: List[Command] = List()
-    private var redoStack: List[Command] = List()
+    private var undoStack: List[Command[T]] = List()
+    private var redoStack: List[Command[T]] = List()
 
-    def doStep(stock: T, command: Command): T = {
+    def doStep(stock: T, command: Command[T]): T = {
         undoStack = command :: undoStack
         command.doStep(stock)
     }
@@ -29,7 +29,7 @@ class UndoManager[T] {
 
     def redoStep(stock: T): T = {
         redoStack match {
-            case Nil => t
+            case Nil => stock
             case head :: stack => {
                 val result = head.redoStep(stock)
                 redoStack = stack
