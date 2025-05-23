@@ -11,6 +11,9 @@ import util.Observer
 import util.Event
 import util.ErrorEvent
 import model.ConsoleColors.*
+import scala.util.Try
+import scala.util.Success
+import scala.util.Failure
 
 case class TUI(controller: Controller) extends Observer {
     controller.add(this)
@@ -73,7 +76,10 @@ case class TUI(controller: Controller) extends Observer {
                 println(CYAN("Please select the number of players (2-4):"))
                 print("> ")
                 val input = readLine()
-                controller.createPlayers(input.toInt)
+                Try(input.toInt) match {
+                    case Success(n) => controller.createPlayers(n)
+                    case Failure(_) => println(RED("Please type in a number [2, 3, 4]"))
+                }
         }
     }
 

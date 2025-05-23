@@ -7,7 +7,7 @@ import scala.collection.immutable.List
 case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)) {
     val setupStock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
 
-    def getCard(name: String): Card = Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
+    def getCard(name: String): Option[Card] = Card.values.find(_.toString().equalsIgnoreCase(name))
 
     def addCard(card:Card): Stock = {
         if (stock.length < 17 && !stock.contains(card) && card != Card.NotACard) {
@@ -17,7 +17,12 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
         }
     }
 
-    def addCard(name:String): Stock = addCard(getCard(name))
+    def addCard(name:String): Stock = {
+        getCard(name) match {
+            case Some(card) => addCard(card)
+            case None => this
+        }
+    }
 
     def ++(cards: List[Card]): Stock = cards.foldLeft(this)((acc, card) => acc.addCard(card))
 
@@ -29,7 +34,12 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
         }
     }
 
-    def removeCard(name:String): Stock = removeCard(getCard(name))
+    def removeCard(name:String): Stock = {
+        getCard(name) match {
+            case Some(card) => removeCard(card)
+            case None => this
+        }
+    }
 
     def contains(card: Card): Boolean = stock.contains(card)
 

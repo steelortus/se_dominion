@@ -3,11 +3,13 @@ package de.htwg.se.dominion.control
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.dominion.control._
+import de.htwg.se.dominion.control.commands._
 import de.htwg.se.dominion.model._
 import de.htwg.se.dominion.util._
 import de.htwg.se.dominion.control._
 import scala.annotation.init
 import munit.Test
+import de.htwg.se.dominion.control.commands.AddCardCommand
 
 class ControllerSpec extends AnyWordSpec {
 
@@ -60,7 +62,7 @@ class ControllerSpec extends AnyWordSpec {
             val controller = Controller(initialStock, testState, testHandler)
             val testObserver = new TestObserver()
             controller.add(testObserver)
-            controller.addCard(testCard.toString)
+            controller.executeCommand(AddCardCommand(controller, testCard.toString()))
             testObserver.lastEvent should be(Some(Event.cardAdded))
         }
 
@@ -68,7 +70,7 @@ class ControllerSpec extends AnyWordSpec {
             val controller = Controller(fullStock, testState, testHandler)
             val testObserver = new TestObserver
             controller.add(testObserver)
-            controller.addCard(testCard.toString)
+            controller.executeCommand(AddCardCommand(controller, testCard.toString))
             testObserver.lastEvent should be(Some(Event.stockFull))
         }
 
@@ -76,7 +78,7 @@ class ControllerSpec extends AnyWordSpec {
             val controller = Controller(initialStock, testState, testHandler)
             val testObserver = new TestObserver
             controller.add(testObserver)
-            controller.addCard(Card.Provinz.toString)
+            controller.executeCommand(AddCardCommand(controller, Card.Provinz.toString))
             testObserver.lastErrorEvent should be(Some(ErrorEvent.couldNotAddCard))
         }
 
@@ -84,7 +86,7 @@ class ControllerSpec extends AnyWordSpec {
             val controller = Controller(initialStock, testState, testHandler)
             val testObserver = new TestObserver
             controller.add(testObserver)
-            controller.removeCard(Card.Provinz.toString)
+            controller.executeCommand(RemoveCardCommand(controller, Card.Provinz.toString))
             testObserver.lastErrorEvent should be(Some(ErrorEvent.couldNotRemoveCard))
         }
 
@@ -92,7 +94,7 @@ class ControllerSpec extends AnyWordSpec {
             val controller = Controller(initialStock, testState, testHandler)
             val testObserver = new TestObserver
             controller.add(testObserver)
-            controller.removeCard(testCard.toString)
+            controller.executeCommand(RemoveCardCommand(controller, testCard.toString))
             testObserver.lastErrorEvent should be(Some(ErrorEvent.couldNotRemoveCard))
         }
 
@@ -100,7 +102,7 @@ class ControllerSpec extends AnyWordSpec {
             val controller = Controller(fullStock, testState, testHandler)
             val testObserver = new TestObserver
             controller.add(testObserver)
-            controller.removeCard(Card.Garten.toString)
+            controller.executeCommand(RemoveCardCommand(controller, Card.Garten.toString))
             testObserver.lastEvent should be(Some(Event.cardRemoved))
         }
 
@@ -140,7 +142,7 @@ class ControllerSpec extends AnyWordSpec {
         "not add card to stock while playing" in {
             val controller = Controller(fullStock, testState, testHandler)
             controller.play()
-            controller.addCard(Card.Geldverleiher.toString)
+            controller.executeCommand(AddCardCommand(controller, Card.Geldverleiher.toString))
             controller.getStock() should equal (fullStock)
         }
     }

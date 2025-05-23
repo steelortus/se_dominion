@@ -9,7 +9,7 @@ final case class FillStockCommand(controller: Controller) extends Command {
 
     override def execute(): Unit = {
         previousStock = controller.getStock()
-        val newStock = controller.state.fillStock(Stock())
+        val newStock = controller.state.fillStock(previousStock)
         if (newStock == previousStock) {
             controller.notifyObservers(ErrorEvent.invalidCommand)
         } else {

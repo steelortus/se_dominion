@@ -12,12 +12,18 @@ import util.Observable
 case class StatePreparation(stock: Stock) extends State {
 
     override def addCard(card: String, stock: Stock): Stock = {
-        val updatedStock = stock.addCard(stock.getCard(card))
+        val updatedStock = stock.getCard(card) match {
+            case Some(c) => stock.addCard(c)
+            case None => stock
+        }
         updatedStock
     }
 
     override def removeCard(card: String, stock: Stock): Stock = {
-        val updatedStock = stock.removeCard(stock.getCard(card))
+        val updatedStock = stock.getCard(card) match {
+            case Some(c) => stock.removeCard(c)
+            case None => stock
+        }
         updatedStock
     }
 
@@ -30,18 +36,8 @@ case class StatePreparation(stock: Stock) extends State {
     }
 
     override def fillStock(stock: Stock): Stock = {
-        var debug_stock = stock
-        debug_stock = debug_stock.addCard(Card.Garten)
-        debug_stock = debug_stock.addCard(Card.Markt)
-        debug_stock = debug_stock.addCard(Card.Jahrmarkt)
-        debug_stock = debug_stock.addCard(Card.Dieb)
-        debug_stock = debug_stock.addCard(Card.Abenteurer)
-        debug_stock = debug_stock.addCard(Card.Dorf)
-        debug_stock = debug_stock.addCard(Card.Hexe)
-        debug_stock = debug_stock.addCard(Card.Laboratorium)
-        debug_stock = debug_stock.addCard(Card.Bibliothek)
-        debug_stock = debug_stock.addCard(Card.Holzfaeller)
-        debug_stock
+        val newStock = stock ++ List(Card.Garten, Card.Markt, Card.Jahrmarkt, Card.Dieb, Card.Abenteurer, Card.Dorf, Card.Hexe, Card.Laboratorium, Card.Bibliothek, Card.Holzfaeller)
+        newStock
     }
 
     override def listCards(stock: Stock): String = {
