@@ -48,7 +48,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def play(): Unit = {
-        if (state.play(stock) == true) {
+        if (state.play(stock, th) == true) {
             notifyObservers(Event.selectNumberOfPlayers)
         } else {
             notifyObservers(ErrorEvent.cantStart)
@@ -83,6 +83,14 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
 
     def nextTurn(): Unit = {
         th = th.nextTurn()
+    }
+
+    def getTurn(): Int = {
+        th.turn
+    }
+
+    def getPlayerDeck(): List[Card] = {
+        th.getPlayer().deck
     }
 
     def purchase(s:String): Unit = {

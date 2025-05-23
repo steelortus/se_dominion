@@ -25,7 +25,7 @@ case class StatePreparation(stock: Stock) extends State {
         updatedStock
     }
 
-    override def play(stock: Stock): Boolean = {
+    override def play(stock: Stock, th: TurnHandler): Boolean = {
         if (stock.getLength() < 17) {
             false
         } else {

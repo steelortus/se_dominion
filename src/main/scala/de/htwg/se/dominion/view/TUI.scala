@@ -73,7 +73,8 @@ case class TUI(controller: Controller) extends Observer {
             case Event.cardRemoved =>
                 println(GREEN("Card removed successfully!"))
             case Event.playing =>
-                println(YELLOW("Game started!"))
+                println(YELLOW(s"Turn ${controller.getTurn()}!\n"))
+                println(CYAN(s"Current Hand:\n${controller.getPlayerDeck()}"))
             case Event.selectNumberOfPlayers =>
                 println(CYAN("Please select the number of players (2-4):"))
                 print("> ")

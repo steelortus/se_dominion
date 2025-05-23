@@ -23,7 +23,7 @@ case class StatePlaying(stock: Stock) extends State {
         stock
     }
 
-    override def play(stock: Stock): Boolean = {
+    override def play(stock: Stock, th: TurnHandler): Boolean = {
         var p1 = new Player()
         println(YELLOW(s"Player 1 Deck:\n${p1.deckToString()}\n"))
         p1 = p1.shuffleDeck()
