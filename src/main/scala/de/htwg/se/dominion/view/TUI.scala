@@ -24,8 +24,12 @@ case class TUI(controller: Controller) extends Observer {
             input match {
                 case "add" =>
                     add()
+                //case addCmd if add.matches("add [a-zA-Z]+") =>
+                    //add(input)
                 case "remove" =>
                     remove()
+                //case removeCmd if remove.matches("remove [a-zA-Z]+") =>
+                    //remove(input)
                 case "play" =>
                     play()
                 case "fill" =>
@@ -103,10 +107,20 @@ case class TUI(controller: Controller) extends Observer {
         controller.addCard(readLine())
     }
 
+    def add(input: String): Unit = {
+        val cardName = input.stripPrefix("add ").trim
+        controller.addCard(cardName)
+    }
+
     def remove(): Unit = {
         println(CYAN("Please type out a Card you want to remove from the Stock:"))
         print("> ")
         controller.removeCard(readLine())
+    }
+
+    def remove(input: String): Unit = {
+        val cardName = input.stripPrefix("remove ").trim
+        controller.removeCard(cardName)
     }
 
     def play(): Unit = {

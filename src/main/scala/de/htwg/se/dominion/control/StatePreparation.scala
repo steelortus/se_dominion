@@ -34,7 +34,7 @@ case class StatePreparation(stock: Stock) extends State {
     }
 
     override def fillStock(stock: Stock, um: UndoManager[Stock]): Stock = {
-        val updatedStock = um.doStep(stock, FillStockCommand(stock))
+        val updatedStock = um.doStep(stock, FillStockCommand())
         updatedStock
     }
 
