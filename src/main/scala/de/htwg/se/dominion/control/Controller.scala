@@ -48,7 +48,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def play(): Unit = {
-        if (state.play(stock, prepUndoManager) == true) {
+        if (state.play(stock) == true) {
             notifyObservers(Event.selectNumberOfPlayers)
         } else {
             notifyObservers(ErrorEvent.cantStart)
@@ -66,7 +66,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def listCards(): String = {
-        state.listCards(stock, prepUndoManager)
+        state.listCards(stock)
     }
 
     def createPlayers(noP: Int): Unit = {
@@ -107,9 +107,11 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
 
     def undo(): Unit = {
         stock = prepUndoManager.undoStep(stock)
+        th = playUndoManager.undoStep(th)
     }
 
     def redo(): Unit = {
         stock = prepUndoManager.redoStep(stock)
+        th = playUndoManager.redoStep(th)
     }
 }

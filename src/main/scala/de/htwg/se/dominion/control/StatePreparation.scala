@@ -25,7 +25,7 @@ case class StatePreparation(stock: Stock) extends State {
         updatedStock
     }
 
-    override def play(stock: Stock, um: UndoManager[Stock]): Boolean = {
+    override def play(stock: Stock): Boolean = {
         if (stock.getLength() < 17) {
             false
         } else {
@@ -38,7 +38,7 @@ case class StatePreparation(stock: Stock) extends State {
         updatedStock
     }
 
-    override def listCards(stock: Stock, um: UndoManager[Stock]): String = {
+    override def listCards(stock: Stock): String = {
         val all_cards = List[Card](Card.Burggraben, Card.Kapelle, Card.Keller, Card.Dorf, Card.Holzfaeller,
                         Card.Werkstatt, Card.Buerokrat, Card.Dieb, Card.Festmahl, Card.Geldverleiher, Card.Miliz,
                         Card.Schmiede, Card.Spion, Card.Thronsaal, Card.Umbau, Card.Bibliothek, Card.Hexe,
