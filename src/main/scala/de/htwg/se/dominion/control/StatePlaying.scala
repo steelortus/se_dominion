@@ -63,7 +63,7 @@ case class StatePlaying(stock: Stock) extends State {
     }
 
     override def purchase(stock: Stock, card: Card, th: TurnHandler, um: UndoManager[TurnHandler]): TurnHandler = {
-        val updatedPlayer = um.doStep(stock, PurchaseCommand(card, th.getPlayer()))
+        val updatedPlayer = um.doStep(th, PurchaseCommand(card, stock))
         th
 
         /*if (stock.contains(card)) {

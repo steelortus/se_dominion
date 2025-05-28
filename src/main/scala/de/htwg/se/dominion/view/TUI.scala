@@ -69,6 +69,8 @@ case class TUI(controller: Controller) extends Observer {
                 println(YELLOW(s"\n----- Turn ${controller.getTurn()} -----\n"))
                 println(CYAN(s"Current Hand:\n${controller.getPlayerHand()}\n"))
                 println(GREEN(s"Current Money in Hand: ${controller.getPlayerMoney()}\n"))
+                println(GREEN(s"Current Actions: ${controller.getPlayerActions()}\n"))
+                println(GREEN(s"Current Purchases: ${controller.getPlayerPurchases()}\n"))
             case Event.selectNumberOfPlayers =>
                 println(CYAN("Please select the number of players (2-4):"))
                 print("> ")

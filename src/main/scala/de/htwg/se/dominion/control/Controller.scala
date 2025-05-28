@@ -101,6 +101,14 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
         th.getPlayer().getMoneyInHand()
     }
 
+    def getPlayerActions(): Int = {
+        th.getPlayer().actions
+    }
+
+    def getPlayerPurchases(): Int = {
+        th.getPlayer().purchases
+    }
+
     def purchase(card: String): Unit = {
         val newTh = state.purchase(stock, card, th, playUndoManager)
         notifyObservers(Event.playing)

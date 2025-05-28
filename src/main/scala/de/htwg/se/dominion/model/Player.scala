@@ -76,12 +76,20 @@ case class Player(deck: List[Card] = List(
         hand.map(_.getValue).sum
     }
 
-    def purchaseCard(card: Card): Player = {
-        if (getMoneyInHand() >= card.getCost) {
-            this.copy(discard = discard :+ card, purchases = purchases - 1)
+    def purchaseCard(card: Card, stock: Stock): Player = {
+        if (stock.contains(card)) {
+            if (getMoneyInHand() >= card.getCost && purchases > 0) {
+                this.copy(discard = discard :+ card, purchases = purchases - 1)
+            } else {
+                this
+            }
         } else {
             this
         }
+    }
+
+    def purchaseCard(card: String, stock: Stock): Player = {
+        purchaseCard(stock.getCard(card), stock)
     }
 
     def addCardToHand(card: Card): Player = {

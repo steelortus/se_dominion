@@ -6,7 +6,7 @@ import de.htwg.se.dominion.model.Stock
 import de.htwg.se.dominion.util.Command
 
 class PurchaseCommand(card: Card, player: Player) extends Command[Stock] {
-    override def doStep(stock: Stock): Stock = {
+    override def doStep(th: TurnHandler): Stock = {
         player.purchaseCard(card)
     }
 
