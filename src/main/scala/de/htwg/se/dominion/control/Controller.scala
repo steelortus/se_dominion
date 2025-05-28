@@ -100,8 +100,16 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def purchase(s:String): Unit = {
-        println(th)
         nextTurn()
+    }
+
+    def showHelp(): Unit = {
+        state match {
+            case StatePreparation(_) =>
+                notifyObservers(Event.commandsPreparation)
+            case StatePlaying(_) =>
+                notifyObservers(Event.commandsPlaying)
+        }
     }
 
     def updateState(e: Event): Unit = {

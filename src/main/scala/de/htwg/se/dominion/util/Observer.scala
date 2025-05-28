@@ -21,6 +21,8 @@ enum Event {
     case cardRemoved
     case playing
     case selectNumberOfPlayers
+    case commandsPreparation
+    case commandsPlaying
 }
 
 enum ErrorEvent {

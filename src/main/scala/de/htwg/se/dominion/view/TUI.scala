@@ -41,14 +41,7 @@ case class TUI(controller: Controller) extends Observer {
                 case "purchase" =>
                     purchase()
                 case "h" =>
-                    println(YELLOW(s"""COMMANDS:
-                            |add\t-   Type in cards to add to your stock
-                            |remove\t-   Type in cards to remove from current stock
-                            |play\t-   Starts the match (17 cards in stock needed!)
-                            |fill\t-   Fills your stock with the default cards
-                            |show\t-   Displays the current stock
-                            |list\t-   Shows a list of all cards you can still add
-                            |exit\t-   Exit this program""".stripMargin))
+                    controller.showHelp()
                 case "undo" =>
                     controller.undo()
                     println(GREEN("> Undone!"))
@@ -81,6 +74,25 @@ case class TUI(controller: Controller) extends Observer {
                 print("> ")
                 val input = readLine()
                 controller.createPlayers(input.toInt)
+            case Event.commandsPreparation =>
+                println(YELLOW(s"""COMMANDS:
+                            |h\t-   Show this help message
+                            |add\t-   Type in cards to add to your stock
+                            |remove\t-   Type in cards to remove from current stock
+                            |play\t-   Starts the match (17 cards in stock needed!)
+                            |fill\t-   Fills your stock with the default cards
+                            |show\t-   Displays the current stock
+                            |list\t-   Shows a list of all cards you can still add
+                            |undo\t-   Undo the last action
+                            |redo\t-   Redo the last action
+                            |exit\t-   Exit this program""".stripMargin))
+            case Event.commandsPlaying =>
+                println(YELLOW(s"""COMMANDS:
+                            |h\t-   Show this help message
+                            |purchase\t-   Purchase a card from the stock
+                            |undo\t-   Undo the last action
+                            |redo\t-   Redo the last action
+                            |exit\t-   Exit this program""".stripMargin))
         }
     }
 
