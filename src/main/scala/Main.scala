@@ -12,7 +12,7 @@ import de.htwg.se.dominion.control.StatePreparation
     val stock = new Stock()
     val state = new StatePreparation(stock)
     val builder = new TurnHandlerBuilder()
-    val th = builder.setNumberOfPlayers(builder, 0).setTurn(builder, 0).getResult()
+    val th = builder.setNumberOfPlayers(0).setTurn(0).getResult()
     val controller = new Controller(stock, state, th)
     val t = new TUI(controller)
     t.run()

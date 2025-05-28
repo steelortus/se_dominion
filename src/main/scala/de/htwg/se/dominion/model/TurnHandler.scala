@@ -4,19 +4,19 @@ import de.htwg.se.dominion.model.Player
 import scala.collection.immutable.List
 
 trait Builder {
-    def setNumberOfPlayers(th: TurnHandlerBuilder, numberOfPlayers: Int): TurnHandlerBuilder
-    def setTurn(th: TurnHandlerBuilder, turn: Int): TurnHandlerBuilder
+    def setNumberOfPlayers(numberOfPlayers: Int): TurnHandlerBuilder
+    def setTurn(turn: Int): TurnHandlerBuilder
     def getResult(): TurnHandler
 }
 
 case class TurnHandlerBuilder(numberOfPlayers: Int = 0, turn: Int = 0) extends Builder {
 
-    def setNumberOfPlayers(th: TurnHandlerBuilder, numberOfPlayers: Int): TurnHandlerBuilder = {
-        th.copy(numberOfPlayers = numberOfPlayers)
+    def setNumberOfPlayers(noP: Int): TurnHandlerBuilder = {
+        this.copy(numberOfPlayers = noP)
     }
 
-    def setTurn(th: TurnHandlerBuilder, turn: Int): TurnHandlerBuilder = {
-        th.copy(turn = turn)
+    def setTurn(t: Int): TurnHandlerBuilder = {
+        this.copy(turn = t)
     }
 
     def getResult(): TurnHandler = {
@@ -34,13 +34,12 @@ case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = 
                                                                                      Player().shuffleDeck().drawFiveCardsFromDeck())) {
     
     def nextTurn(): TurnHandler = {
-        val nextTurn = 1
-        //val nextTurn = (turn + 1) % numberOfPlayers
+        val nextTurn = turn + 1
         this.copy(turn = nextTurn)
     }
 
     def getPlayer(): Player = {
-        players(turn)
+        players((turn + numberOfPlayers) % numberOfPlayers)
     }
 
     def updatePlayer(player: Player): TurnHandler = {
