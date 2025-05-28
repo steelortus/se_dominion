@@ -61,4 +61,21 @@ case class StatePlaying(stock: Stock) extends State {
     override def listCards(stock: Stock): String = {
         stock.toString()
     }
+
+    override def purchase(stock: Stock, card: Card, th: TurnHandler, um: UndoManager[TurnHandler]): TurnHandler = {
+        //val updatedPlayer = um.doStep(stock.getCurrentPlayer(), PurchaseCommand(card))
+        th
+
+        /*if (stock.contains(card)) {
+            val player = th.getCurrentPlayer()
+            val playerAfterPurchase = player.purchaseCard(card, player.getMoneyInHand())
+            if (playerAfterPurchase != player) {
+                th.setCurrentPlayer(playerAfterPurchase)
+            } else {
+                throw new ErrorEvent("Not enough money to purchase this card.")
+            }
+        } else {
+            throw new ErrorEvent("Card not available in stock.")
+        }*/
+    }
 }

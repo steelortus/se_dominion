@@ -42,4 +42,10 @@ case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, C
             s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
         ).mkString("\n")
     }
+
+    def toSellString(): String = {
+        stock.map(card =>
+            s"${card.getName} - Cost: ${card.getCost}"
+        ).mkString("\n")
+    }
 }

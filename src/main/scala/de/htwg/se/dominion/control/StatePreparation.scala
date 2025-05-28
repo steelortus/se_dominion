@@ -49,4 +49,8 @@ case class StatePreparation(stock: Stock) extends State {
         val s2 = notIncluded.map(_.name).mkString(" | ")
         s"$s1\n\n$s2"
     }
+
+    override def purchase(stock: Stock, card: Card, th: TurnHandler, um: UndoManager[TurnHandler]): TurnHandler = {
+        th
+    }
 }

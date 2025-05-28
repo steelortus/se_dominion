@@ -73,8 +73,9 @@ case class TUI(controller: Controller) extends Observer {
             case Event.cardRemoved =>
                 println(GREEN("Card removed successfully!"))
             case Event.playing =>
-                println(YELLOW(s"Turn ${controller.getTurn()}!\n"))
-                println(CYAN(s"Current Hand:\n${controller.getPlayerDeck()}"))
+                println(YELLOW(s"----- Turn ${controller.getTurn()}!\n -----"))
+                println(CYAN(s"Current Hand:\n${controller.getPlayerHand()}\n"))
+                println(GREEN(s"Current Money in Hand: ${controller.getPlayerMoney()}\n"))
             case Event.selectNumberOfPlayers =>
                 println(CYAN("Please select the number of players (2-4):"))
                 print("> ")
@@ -143,7 +144,8 @@ case class TUI(controller: Controller) extends Observer {
     }
 
     def purchase(): Unit = {
-        println(CYAN("What Card would you like to purchase?"))
+        println(CYAN(controller.getStock().toSellString()))
+        println(YELLOW("\nWhat Card would you like to purchase?"))
         print("> ")
         controller.purchase(readLine())
     }

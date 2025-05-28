@@ -19,19 +19,23 @@ case class TurnHandlerBuilder(numberOfPlayers: Int = 0, turn: Int = 0) extends B
         th.copy(turn = turn)
     }
 
-    def generatePlayers(th: TurnHandler): TurnHandler = {
-        th.copy(players = List.fill(th.numberOfPlayers)(Player()))
-    }
-
     def getResult(): TurnHandler = {
         TurnHandler(numberOfPlayers, turn)
     }
+
+    override def toString(): String = {
+        s"TurnHandlerBuilder(numberOfPlayers=$numberOfPlayers, turn=$turn)"
+    }
 }
 
-case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = List()) {
+case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = List(Player().shuffleDeck().drawFiveCardsFromDeck(),
+                                                                                     Player().shuffleDeck().drawFiveCardsFromDeck(),
+                                                                                     Player().shuffleDeck().drawFiveCardsFromDeck(),
+                                                                                     Player().shuffleDeck().drawFiveCardsFromDeck())) {
     
     def nextTurn(): TurnHandler = {
-        val nextTurn = (turn + 1) % numberOfPlayers
+        val nextTurn = 1
+        //val nextTurn = (turn + 1) % numberOfPlayers
         this.copy(turn = nextTurn)
     }
 
@@ -39,18 +43,16 @@ case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = 
         players(turn)
     }
 
-    def updatePlayer(index: Int, player: Player): TurnHandler = {
-        val updatedPlayers = players.updated(index, player)
+    def updatePlayer(player: Player): TurnHandler = {
+        val updatedPlayers = players.updated(turn, player)
         this.copy(players = updatedPlayers)
     }
 
     def totalTurnCount(): Int = {
         turn
     }
-}
 
-object TurnHandler {
-    def apply(numberOfPlayers: Int, turn: Int): TurnHandler = {
-        new TurnHandler(numberOfPlayers, turn, List.fill(numberOfPlayers)(Player()))
+    override def toString: String = {
+        s"TurnHandler(numberOfPlayers=$numberOfPlayers, turn=$turn, players=${players.mkString("\n")})"
     }
 }

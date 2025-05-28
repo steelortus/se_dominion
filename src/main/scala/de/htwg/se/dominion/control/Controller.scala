@@ -77,6 +77,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
             val builder = new TurnHandlerBuilder()
             val finishedBuilder = builder.setNumberOfPlayers(builder, noP).setTurn(builder, 0)
             th = finishedBuilder.getResult()
+            println(th.toString())
             updateState(Event.playing)
         }
     }
@@ -89,8 +90,12 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
         th.turn
     }
 
-    def getPlayerDeck(): String= {
-        th.getPlayer().deckToString()
+    def getPlayerHand(): String = {
+        th.getPlayer().handToString()
+    }
+
+    def getPlayerMoney(): Int = {
+        th.getPlayer().getMoneyInHand()
     }
 
     def purchase(s:String): Unit = {
