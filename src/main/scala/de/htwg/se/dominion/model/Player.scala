@@ -8,7 +8,9 @@ case class Player(deck: List[Card] = List(
                     Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer,
                     Card.Anwesen, Card.Anwesen, Card.Anwesen),
                   hand: List[Card] = List(),
-                  discard: List[Card] = List()) {
+                  discard: List[Card] = List(),
+                  purchases: Int = 1,
+                  actions: Int = 1) {
 
     def shuffleDeck(): Player = {
         val shuffledDeck = Random.shuffle(deck)
@@ -74,9 +76,9 @@ case class Player(deck: List[Card] = List(
         hand.map(_.getValue).sum
     }
 
-    def purchaseCard(card: Card, money: Int): Player = {
-        if (money >= card.getCost) {
-            this.copy(discard = discard :+ card)
+    def purchaseCard(card: Card): Player = {
+        if (getMoneyInHand() >= card.getCost) {
+            this.copy(discard = discard :+ card, purchases = purchases - 1)
         } else {
             this
         }
