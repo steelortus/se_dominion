@@ -3,11 +3,25 @@ package de.htwg.se.dominion.model
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.dominion.model.Card
+import de.htwg.se.dominion.model.Player
+import de.htwg.se.dominion.model.Stock
 
 class PlayerSpec extends AnyWordSpec {
     "A Player" should {
+        var debug_stock = Stock()
+        debug_stock = debug_stock.addCard(Card.Garten)
+        debug_stock = debug_stock.addCard(Card.Markt)
+        debug_stock = debug_stock.addCard(Card.Jahrmarkt)
+        debug_stock = debug_stock.addCard(Card.Dieb)
+        debug_stock = debug_stock.addCard(Card.Abenteurer)
+        debug_stock = debug_stock.addCard(Card.Dorf)
+        debug_stock = debug_stock.addCard(Card.Hexe)
+        debug_stock = debug_stock.addCard(Card.Laboratorium)
+        debug_stock = debug_stock.addCard(Card.Bibliothek)
+        val stock = debug_stock.addCard(Card.Holzfaeller)
+
         val player = Player()
-        val regx = "([a-zA-Z]+ - Cost: [0-8]{1}, Value: [0123]{1}, Points: (-1|[01369])+, Amount: [0-9]+\n?)*"
+        val regx = "(((Deck|Hand|Discard):\n?)?([a-zA-Z]+ - Value: [0123]{1}, Points: (-1|[01369])+\n?)*\n?)+"
         "have a deck" in {
             player.deck.length should be(10)
 
@@ -164,9 +178,7 @@ class PlayerSpec extends AnyWordSpec {
         }
 
         "should have a toString() that prints out the deck, hand and discard" in {
-            val regxToString = "(([a-zA-Z]+ - Cost: [0-8]{1}, Value: [0123]{1}, Points: (-1|[01369])+, Amount: [0-9]+\n?)*\n?)*"
-
-            player.toString() should fullyMatch regex regxToString
+            player.toString() should fullyMatch regex regx
             player.deckToString() should fullyMatch regex regx
             player.handToString() should fullyMatch regex regx
             player.discardToString() should fullyMatch regex regx
@@ -198,9 +210,20 @@ class PlayerSpec extends AnyWordSpec {
 
         "purchase a card from Stock" in {
             val p1 = player.drawFiveCardsFromDeck()
-            val result = p1.purchaseCard(Card.Silber, 5)
+            val result = p1.purchaseCard(Card.Silber, stock)
 
-            result.discard should contain (Card.Silber)
+            result.discard.contains(Card.Silber) should be(true)
+            result.hand.contains(Card.Silber) should be(false)
+            result.deck.contains(Card.Silber) should be(false)
+        }
+
+        "not purchase a card that is not in Stock" in {
+            val p1 = player.drawFiveCardsFromDeck()
+            val result = p1.purchaseCard(Card.Werkstatt, stock)
+
+            result.discard.contains(Card.Werkstatt) should be(false)
+            result.hand.contains(Card.Werkstatt) should be(false)
+            result.deck.contains(Card.Werkstatt) should be(false)
         }
     }
 }

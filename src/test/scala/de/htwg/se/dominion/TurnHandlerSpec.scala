@@ -16,26 +16,23 @@ class TurnHandlerSpec extends AnyWordSpec {
         }
 
         "return the next player's turn correctly" in {
-            val th = TurnHandler(3, 0)
+            val th = TurnHandler(2, 0)
             val nextTh = th.nextTurn()
             nextTh.turn should be(1)
         }
 
         "wrap around to the first player after the last player" in {
-            val th = TurnHandler(3, 2)
+            val th = TurnHandler(2, 2)
             val nextTh = th.nextTurn()
-            nextTh.turn should be(0)
+            nextTh.turn should be(3)
+            th.getPlayer() should be(th.players(0))
         }
 
         "return how many turns have been played" in {
-            val th = TurnHandler(3, 2)
-            th.totalTurnCount() should be(2)
-        }
-
-        "return the correct player for a given index" in {
-            val th = TurnHandler(3, 0)
-            val player = th.getPlayer(1)
-            player should be(Player())
+            val th = TurnHandler(2, 47)
+            th.totalTurnCount() should be(47)
+            val nextTh = th.nextTurn()
+            nextTh.totalTurnCount() should be(48)
         }
     }
 }

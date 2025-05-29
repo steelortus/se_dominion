@@ -126,19 +126,19 @@ case class Player(deck: List[Card] = List(
     
     def deckToString(): String = {
         deck.map(card =>
-            s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
+            s"${card.getName} - Value: ${card.getValue}, Points: ${card.getPoints}"
         ).mkString("\n")
     }
 
     def handToString(): String = {
         hand.map(card =>
-            s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
+            s"${card.getName} - Value: ${card.getValue}, Points: ${card.getPoints}"
         ).mkString("\n")
     }
 
     def discardToString(): String = {
         discard.map(card =>
-            s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
+            s"${card.getName} - Value: ${card.getValue}, Points: ${card.getPoints}"
         ).mkString("\n")
     }
 }
