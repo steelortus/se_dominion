@@ -2,7 +2,7 @@ import scala.io.StdIn._
 import de.htwg.se.dominion.model.Stock
 import de.htwg.se.dominion.model.TurnHandler
 import de.htwg.se.dominion.model.TurnHandlerBuilder
-import de.htwg.se.dominion.view.TUI
+import de.htwg.se.dominion.view._
 import de.htwg.se.dominion.control.Controller
 import de.htwg.se.dominion.control.StatePreparation
 
@@ -16,7 +16,7 @@ import de.htwg.se.dominion.control.StatePreparation
     val controller = new Controller(stock, state, th)
     val t = new TUI(controller)
     
-    //new Thread(() => GUI.main(Array())).start()
+    new Thread(() => GUI.initWith(controller)).start()
 
     t.run()
 }

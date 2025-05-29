@@ -63,6 +63,7 @@ case class TUI(controller: Controller) extends Observer {
     }
 
     override def update(e: Event): Unit = {
+        println(s"[TUI] Received event: $e")
         e match {
             case Event.preparation =>
                 println(YELLOW("You are in preparation state. Please add cards to the stock."))

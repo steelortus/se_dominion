@@ -14,7 +14,8 @@ lazy val root = project
     libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test,
     libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.19",
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test",
-    libraryDependencies += "org.scalafx" %% "scalafx" % "24.0.0-R35",
+    libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "3.0.0"
+    /*libraryDependencies += "org.scalafx" %% "scalafx" % "24.0.0-R35",
     libraryDependencies ++= {
       lazy val osName = System.getProperty("os.name") match {
         case os if os.toLowerCase.contains("mac") => "mac"
@@ -24,5 +25,5 @@ lazy val root = project
       }
       Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
         .map(lib => "org.openjfx" % s"javafx-$lib" % "21" classifier osName)
-    }
+    }*/
   )
