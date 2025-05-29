@@ -8,11 +8,13 @@ import de.htwg.se.dominion.util.Command
 
 class PurchaseCommand(card: Card, stock: Stock) extends Command[TurnHandler] {
     override def doStep(th: TurnHandler): TurnHandler = {
-        th.updatePlayer(th.getPlayer().purchaseCard(card, stock))
+        val newTh = th.updatePlayer(th.getPlayer().purchaseCard(card, stock))
+        newTh
     }
 
     override def undoStep(th: TurnHandler): TurnHandler = {
-        th.updatePlayer(th.getPlayer().returnCard(card))
+        val oldTh = th.updatePlayer(th.getPlayer().returnCard(card))
+        oldTh
     }
 
     override def redoStep(th: TurnHandler): TurnHandler = {

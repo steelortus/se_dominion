@@ -79,6 +79,7 @@ case class Player(deck: List[Card] = List(
     def purchaseCard(card: Card, stock: Stock): Player = {
         if (stock.contains(card)) {
             if (getMoneyInHand() >= card.getCost && purchases > 0) {
+                println("got here!")
                 this.copy(discard = discard :+ card, purchases = purchases - 1)
             } else {
                 this
