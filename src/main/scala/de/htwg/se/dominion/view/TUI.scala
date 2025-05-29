@@ -10,6 +10,8 @@ import util.Observer
 import util.Event
 import util.ErrorEvent
 import model.ConsoleColors.*
+import scala.util.{Try, Success, Failure}
+import scala.annotation.tailrec
 
 case class TUI(controller: Controller) extends Observer {
     controller.add(this)
@@ -77,10 +79,23 @@ case class TUI(controller: Controller) extends Observer {
                 println(GREEN(s"Current Actions: ${controller.getPlayerActions()}"))
                 println(GREEN(s"Current Purchases: ${controller.getPlayerPurchases()}\n"))
             case Event.selectNumberOfPlayers =>
-                println(CYAN("Please select the number of players (2-4):"))
-                print("> ")
-                val input = readLine()
-                controller.createPlayers(input.toInt)
+                @annotation.tailrec
+                def requestNumberOfPlayers(): Unit = {
+                    println(CYAN("Please select the number of players (2-4):"))
+                    print("> ")
+                    val input = readLine()
+                    Try(input.toInt) match {
+                        case Success(n) if n >= 2 && n <= 4 =>
+                            controller.createPlayers(n)
+                        case Success(_) =>
+                            println(RED("Number must be between 2 and 4."))
+                            requestNumberOfPlayers()
+                        case Failure(_) =>
+                            println(RED("Please type in a number [2, 3, 4]"))
+                            requestNumberOfPlayers()
+                    }
+                }
+                requestNumberOfPlayers()
             case Event.outOfActions =>
                 println(YELLOW("You are out of actions for this turn. You can either continue purchasing or end your turn.\n"))
             case Event.outOfPurchases =>
