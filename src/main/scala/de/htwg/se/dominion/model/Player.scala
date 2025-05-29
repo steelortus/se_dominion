@@ -76,6 +76,10 @@ case class Player(deck: List[Card] = List(
         hand.map(_.getValue).sum
     }
 
+    def getPoints(): Int = {
+        hand.map(_.getPoints).sum + discard.map(_.getPoints).sum + deck.map(_.getPoints).sum
+    }
+
     def purchaseCard(card: Card, stock: Stock): Player = {
         if (stock.contains(card)) {
             if (getMoneyInHand() >= card.getCost && purchases > 0) {

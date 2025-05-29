@@ -128,6 +128,19 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
         purchase(stock.getCard(card))
     }
 
+    def endGame(): Unit = {
+        state match {
+            case StatePreparation(_) =>
+                notifyObservers(ErrorEvent.invalidCommand)
+            case StatePlaying(_) =>
+                notifyObservers(Event.endGame)
+        }
+    }
+
+    def getAllPoints(): List[Int] = {
+        th.players.map(_.getPoints())
+    }
+
     def showHelp(): Unit = {
         state match {
             case StatePreparation(_) =>

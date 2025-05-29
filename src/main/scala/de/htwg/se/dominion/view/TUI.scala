@@ -44,6 +44,9 @@ case class TUI(controller: Controller) extends Observer {
                     end()
                 case "h" =>
                     controller.showHelp()
+                //temporary command to end the game prematurely
+                case "e" =>
+                    endGame()
                 case "undo" =>
                     controller.undo()
                     println(GREEN("> Undone!"))
@@ -102,6 +105,14 @@ case class TUI(controller: Controller) extends Observer {
                             |undo\t-   Undo the last action
                             |redo\t-   Redo the last action
                             |exit\t-   Exit this program""".stripMargin))
+            case Event.endGame =>
+                println(YELLOW("Game over! Here are the final results:"))
+                val pointsList = controller.getAllPoints()
+                val resultString = pointsList.zipWithIndex
+                    .map { case (points, idx) => s"Player ${idx + 1}: $points Points" }
+                    .mkString("\n")
+                println(PURPLE(resultString))
+                System.exit(0)
         }
     }
 
@@ -173,6 +184,10 @@ case class TUI(controller: Controller) extends Observer {
 
     def end(): Unit = {
         controller.nextTurn()
+    }
+
+    def endGame(): Unit = {
+        controller.endGame()
     }
 }
 

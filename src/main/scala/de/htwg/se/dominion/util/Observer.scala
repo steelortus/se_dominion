@@ -25,6 +25,7 @@ enum Event {
     case commandsPlaying
     case outOfActions
     case outOfPurchases
+    case endGame
 }
 
 enum ErrorEvent {
