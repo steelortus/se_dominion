@@ -43,9 +43,6 @@ case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = 
     }
 
     def updatePlayer(player: Player): TurnHandler = {
-        println("##############################\n")
-        println(player.toString())
-        println("\n##############################")
         val updatedPlayers = players.updated(((turn + numberOfPlayers) % numberOfPlayers), player)
         this.copy(players = updatedPlayers)
     }
