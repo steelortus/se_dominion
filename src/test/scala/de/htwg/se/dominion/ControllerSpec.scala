@@ -296,7 +296,7 @@ class ControllerSpec extends AnyWordSpec {
             testObserver.lastErrorEvent should be(Some(ErrorEvent.invalidState))
         }
 
-        "undo and redo steps in Preparation State" in {
+        "undo and redo adding Cards in Preparation State" in {
             val controller = Controller(initialStock, testState, testHandler)
             val testObserver = new TestObserver
             controller.add(testObserver)
@@ -308,7 +308,31 @@ class ControllerSpec extends AnyWordSpec {
             addedStock should equal(controller.getStock())
         }
 
-        "undo and redo steps in Playing State" in {
+        "undo and redo removing Cards in Preparation State" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.removeCard(Card.Garten.toString)
+            val removedStock = controller.getStock()
+            controller.undo()
+            removedStock should not equal controller.getStock()
+            controller.redo()
+            removedStock should equal(controller.getStock())
+        }
+
+        "undo and redo filling the Stock in Preparation State" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.fillStock()
+            val filledStock = controller.getStock()
+            controller.undo()
+            filledStock should not equal controller.getStock()
+            controller.redo()
+            filledStock should equal(controller.getStock())
+        }
+
+        "undo and redo purchasing Cards in Playing State" in {
             val controller = Controller(fullStock, testState, testHandler)
             val testObserver = new TestObserver
             controller.add(testObserver)
