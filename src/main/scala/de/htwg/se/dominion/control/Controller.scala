@@ -110,7 +110,8 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def purchase(card: String): Unit = {
-        val newTh = state.purchase(stock, card, th, playUndoManager)
+        val cardOpt = stock.getCard(card)
+        val newTh = state.purchase(stock, cardOpt, th, playUndoManager)
         notifyObservers(Event.playing)
     }
 
