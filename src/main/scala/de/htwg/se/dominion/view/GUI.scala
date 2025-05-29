@@ -8,8 +8,49 @@ import scalafx.scene.paint._
 import scalafx.scene.text.Text
 
 import de.htwg.se.dominion.control.Controller
+import de.htwg.se.dominion.util.Observer
+import de.htwg.se.dominion.util.Event
+import de.htwg.se.dominion.util.ErrorEvent
 
-object GUI extends JFXApp3 {
+object GUI extends JFXApp3 with Observer {
+    override def update(e: Event): Unit = {
+        e match {
+            case Event.preparation =>
+                println("Preparation phase started.")
+            case Event.stockFull =>
+                println("Stock is full.")
+            case Event.cardAdded =>
+                println("Card added to stock.")
+            case Event.cardRemoved =>
+                println("Card removed from stock.")
+            case Event.playing =>
+                println("Game is now in playing state.")
+            case Event.selectNumberOfPlayers =>
+                println("Please select the number of players.")
+            case _ =>
+                println("Event not handled: " + e)
+        }
+    }
+
+    override def update(e: ErrorEvent): Unit = {
+        e match {
+            case ErrorEvent.stockFull =>
+                println("Error: Stock is full, cannot add more cards.")
+            case ErrorEvent.couldNotAddCard =>
+                println("Error: Could not add card to stock.")
+            case ErrorEvent.couldNotRemoveCard =>
+                println("Error: Could not remove card from stock.")
+            case ErrorEvent.cantStart =>
+                println("Error: Cannot start the game, please check the stock.")
+            case ErrorEvent.invalidCommand =>
+                println("Error: Invalid command entered.")
+            case ErrorEvent.invalidNumberOfPlayers =>
+                println("Error: Invalid number of players selected.")
+            case ErrorEvent.invalidState =>
+                println("Error: Invalid state for the operation.")
+        }
+    }
+
     override def start(): Unit = {
         stage = new JFXApp3.PrimaryStage {
         //    initStyle(StageStyle.Unified)
