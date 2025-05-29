@@ -143,5 +143,56 @@ class ControllerSpec extends AnyWordSpec {
             controller.addCard(Card.Geldverleiher.toString)
             controller.getStock() should equal (fullStock)
         }
+
+        "be able to return the current turn" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            controller.getTurn() should be(0)
+        }
+
+        "be able to return the current player's Hand as String" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            controller.createPlayers(2)
+            val player = controller.getPlayerHand()
+            player should fullyMatch regex "(((Deck|Hand|Discard):\n?)?([a-zA-Z]+ - Value: [0123]{1}, Points: (-1|[01369])+\n?)*\n?)+"
+        }
+
+        "be able to return the current player's money in Hand" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            controller.createPlayers(2)
+            val playerMoney = controller.getPlayerMoney()
+            playerMoney should (be >= 2 and be <= 5)
+        }
+
+        "be able to return how many purchases the current player has left" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            controller.createPlayers(2)
+            val purchases = controller.getPlayerPurchases()
+            purchases should be(1)
+        }
+
+        "be able to return how many actions the current player has left" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            controller.createPlayers(2)
+            val actions = controller.getPlayerActions()
+            actions should be(1)
+        }
+
+        "observe ErrorEvent.invalidCommand when nextTurn() is called if the State is in Preparation" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.nextTurn()
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.invalidCommand))
+        }
+
+        "go to the next turn in Playing State" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(2)
+            val initialTurn = controller.getTurn()
+            controller.nextTurn()
+            controller.getTurn() should be(initialTurn + 1)
+        }
     }
 }
