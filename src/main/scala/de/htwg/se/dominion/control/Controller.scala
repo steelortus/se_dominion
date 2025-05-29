@@ -138,7 +138,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def getAllPoints(): List[Int] = {
-        th.players.map(_.getPoints())
+        th.players.take(th.numberOfPlayers).map(_.getPoints())
     }
 
     def showHelp(): Unit = {
