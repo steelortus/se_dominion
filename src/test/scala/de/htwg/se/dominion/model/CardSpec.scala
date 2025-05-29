@@ -211,5 +211,10 @@ class CardSpec extends AnyWordSpec {
             val updatedPlayer = Card.Dorf.execute(player)
             updatedPlayer.hand.length should be(2)
         }
+        "print a Sell String of the Stock" in {
+            s = new Stock()
+            val stockString = "([a-zA-Z]+ - Cost: [0-8]{1}\n?)+" 
+            s.toSellString() should fullyMatch regex stockString
+        }
     }
 }

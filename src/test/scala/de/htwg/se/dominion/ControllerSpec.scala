@@ -140,10 +140,31 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not add card to stock while playing" in {
-            val controller = Controller(fullStock, testState, testHandler)
-            controller.play()
+            val playState = StatePlaying(initialStock)
+            val controller = Controller(initialStock, playState, testHandler)
             controller.addCard(Card.Geldverleiher.toString)
+            controller.getStock() should equal (initialStock)
+        }
+
+        "not remove a card from stock while playing" in {
+            val playState = StatePlaying(fullStock)
+            val controller = Controller(fullStock, playState, testHandler)
+            controller.removeCard(Card.Garten.toString)
             controller.getStock() should equal (fullStock)
+        }
+
+        "not fill cards to stock while playing" in {
+            val playState = StatePlaying(fullStock)
+            val controller = Controller(fullStock, playState, testHandler)
+            controller.fillStock()
+            controller.getStock() should equal (fullStock)
+        }
+
+        "not purchase a Card while in Preparation State" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val oldTh = controller.th
+            controller.purchase(Card.Kupfer)
+            oldTh == controller.th should be(true)
         }
 
         "be able to return the current turn" in {
@@ -352,6 +373,13 @@ class ControllerSpec extends AnyWordSpec {
             controller.add(testObserver)
             val newStock = controller.state.fillStock(initialStock, controller.prepUndoManager)
             newStock should not equal initialStock
+        }
+
+        "remove an observable again" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.remove(testObserver)
         }
     }
 }

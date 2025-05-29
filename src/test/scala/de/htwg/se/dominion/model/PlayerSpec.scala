@@ -225,5 +225,26 @@ class PlayerSpec extends AnyWordSpec {
             result.hand.contains(Card.Werkstatt) should be(false)
             result.deck.contains(Card.Werkstatt) should be(false)
         }
+
+        "add a Card to the hand" in {
+            val p1 = player.addCardToHand(Card.Silber)
+            p1.hand.contains(Card.Silber) should be(true)
+        }
+
+        "add a Card to the deck" in {
+            val p1 = player.addCardToDeck(Card.Silber)
+            p1.deck.contains(Card.Silber) should be(true)
+        }
+
+        "not return a card if it's not in the discard" in {
+            val p1 = player.returnCard(Card.Silber)
+            p1.discard.contains(Card.Silber) should be(false)
+            p1 == player should be(true)
+        }
+
+        "be able to purchase a Card with a card String" in {
+            val result = player.purchaseCard("Kupfer", stock)
+            result.discard.contains(Card.Kupfer) should be(true)
+        }
     }
 }
