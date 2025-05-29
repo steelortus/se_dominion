@@ -96,10 +96,6 @@ case class TUI(controller: Controller) extends Observer {
                     }
                 }
                 requestNumberOfPlayers()
-            case Event.outOfActions =>
-                println(YELLOW("You are out of actions for this turn. You can either continue purchasing or end your turn.\n"))
-            case Event.outOfPurchases =>
-                println(YELLOW("You are out of purchases for this turn.\n"))
             case Event.commandsPreparation =>
                 println(YELLOW(s"""COMMANDS:
                             |h\t-   Show this help message
@@ -147,6 +143,14 @@ case class TUI(controller: Controller) extends Observer {
                 println(RED("Invalid number of players. Please select a number between 2 and 4."))
             case ErrorEvent.invalidState =>
                 println(YELLOW("[Warning] The State has been attemped to be changed, but it is not possible with the called Event."))
+            case ErrorEvent.couldNotPurchaseCard =>
+                println(RED("Could not purchase the Card."))
+            case ErrorEvent.outOfActions =>
+                println(RED("You are out of actions for this turn. You can either continue purchasing or end your turn.\n"))
+            case ErrorEvent.outOfPurchases =>
+                println(RED("You are out of purchases for this turn.\n"))
+            case ErrorEvent.couldNotPurchaseCard =>
+                println(RED("Could not purchase the Card.\n"))
         }
     }
 

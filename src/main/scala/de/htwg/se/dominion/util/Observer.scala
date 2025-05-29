@@ -23,8 +23,6 @@ enum Event {
     case selectNumberOfPlayers
     case commandsPreparation
     case commandsPlaying
-    case outOfActions
-    case outOfPurchases
     case endGame
 }
 
@@ -36,4 +34,7 @@ enum ErrorEvent {
     case invalidCommand
     case invalidNumberOfPlayers
     case invalidState
+    case couldNotPurchaseCard
+    case outOfActions
+    case outOfPurchases
 }

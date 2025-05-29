@@ -48,6 +48,8 @@ object GUI extends JFXApp3 with Observer {
                 println("Error: Invalid number of players selected.")
             case ErrorEvent.invalidState =>
                 println("Error: Invalid state for the operation.")
+            case _ =>
+                println("Error not handled: " + e)
         }
     }
 

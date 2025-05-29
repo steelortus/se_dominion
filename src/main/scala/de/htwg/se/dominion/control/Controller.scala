@@ -114,12 +114,18 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def purchase(card: Card): Unit = {
-        th = state.purchase(stock, card, th, playUndoManager)
-        if (getPlayerPurchases() > 0) {
-            notifyObservers(Event.playing)
+        val newTh = state.purchase(stock, card, th, playUndoManager)
+        if (th == newTh) {
+            if (getPlayerPurchases() > 0) {
+                notifyObservers(Event.playing)
+                notifyObservers(ErrorEvent.couldNotPurchaseCard)
+            } else {
+                notifyObservers(Event.playing)
+                notifyObservers(ErrorEvent.outOfPurchases)
+            }
         } else {
+            th = newTh
             notifyObservers(Event.playing)
-            notifyObservers(Event.outOfPurchases)
         }
     }
 

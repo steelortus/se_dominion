@@ -202,5 +202,14 @@ class CardSpec extends AnyWordSpec {
             s.contains("Gold") should be(true)
             s.contains("Dorf") should be(false)
         }
+        "return a player after executing a Card" in {
+            val player = Player()
+            Card.NotACard.execute(player) should be(player)
+        }
+        "draw 2 Cards if Dorf is executed" in {
+            val player = Player()
+            val updatedPlayer = Card.Dorf.execute(player)
+            updatedPlayer.hand.length should be(2)
+        }
     }
 }
