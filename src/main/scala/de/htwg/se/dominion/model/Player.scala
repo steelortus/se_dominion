@@ -102,6 +102,12 @@ case class Player(deck: List[Card] = List(
         }
     }
 
+    def nextTurn(): Player = {
+        val newPlayer = this.discardAllFromHand()
+        val redrawnPlayer = newPlayer.drawFiveCardsFromDeck()
+        redrawnPlayer.copy(actions = 1, purchases = 1)
+    }
+
     def addCardToHand(card: Card): Player = {
         this.copy(hand = hand :+ card)
     }

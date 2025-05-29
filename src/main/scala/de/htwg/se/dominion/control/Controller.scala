@@ -87,8 +87,8 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
             case StatePreparation(_) =>
                 notifyObservers(ErrorEvent.invalidCommand)
             case StatePlaying(_) =>
-                val resetActionsAndPurchases = th.getPlayer()
-                th = th.updatePlayer(resetActionsAndPurchases.copy(purchases = 1, actions = 1))
+                val player = th.getPlayer()
+                th = th.updatePlayer(player.nextTurn())
                 th = th.nextTurn()
                 notifyObservers(Event.playing)
         }
