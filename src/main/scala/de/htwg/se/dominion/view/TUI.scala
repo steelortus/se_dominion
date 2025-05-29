@@ -40,6 +40,8 @@ case class TUI(controller: Controller) extends Observer {
                     list()
                 case "purchase" =>
                     purchase()
+                case "end" =>
+                    end()
                 case "h" =>
                     controller.showHelp()
                 case "undo" =>
@@ -68,14 +70,18 @@ case class TUI(controller: Controller) extends Observer {
             case Event.playing =>
                 println(YELLOW(s"\n----- Turn ${controller.getTurn()} -----\n"))
                 println(CYAN(s"Current Hand:\n${controller.getPlayerHand()}\n"))
-                println(GREEN(s"Current Money in Hand: ${controller.getPlayerMoney()}\n"))
-                println(GREEN(s"Current Actions: ${controller.getPlayerActions()}\n"))
+                println(GREEN(s"Current Money in Hand: ${controller.getPlayerMoney()}"))
+                println(GREEN(s"Current Actions: ${controller.getPlayerActions()}"))
                 println(GREEN(s"Current Purchases: ${controller.getPlayerPurchases()}\n"))
             case Event.selectNumberOfPlayers =>
                 println(CYAN("Please select the number of players (2-4):"))
                 print("> ")
                 val input = readLine()
                 controller.createPlayers(input.toInt)
+            case Event.outOfActions =>
+                println(YELLOW("You are out of actions for this turn. You can either continue purchasing or end your turn.\n"))
+            case Event.outOfPurchases =>
+                println(YELLOW("You are out of purchases for this turn.\n"))
             case Event.commandsPreparation =>
                 println(YELLOW(s"""COMMANDS:
                             |h\t-   Show this help message
@@ -92,6 +98,7 @@ case class TUI(controller: Controller) extends Observer {
                 println(YELLOW(s"""COMMANDS:
                             |h\t-   Show this help message
                             |purchase\t-   Purchase a card from the stock
+                            |end\t-   End your turn
                             |undo\t-   Undo the last action
                             |redo\t-   Redo the last action
                             |exit\t-   Exit this program""".stripMargin))
@@ -162,6 +169,10 @@ case class TUI(controller: Controller) extends Observer {
         println(YELLOW("\nWhat Card would you like to purchase?"))
         print("> ")
         controller.purchase(readLine())
+    }
+
+    def end(): Unit = {
+        controller.nextTurn()
     }
 }
 

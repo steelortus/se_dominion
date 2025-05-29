@@ -23,6 +23,8 @@ enum Event {
     case selectNumberOfPlayers
     case commandsPreparation
     case commandsPlaying
+    case outOfActions
+    case outOfPurchases
 }
 
 enum ErrorEvent {
