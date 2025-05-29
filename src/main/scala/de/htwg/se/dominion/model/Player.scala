@@ -92,6 +92,16 @@ case class Player(deck: List[Card] = List(
         purchaseCard(stock.getCard(card), stock)
     }
 
+    // Never call this method directly, only through the UndoManager, otherwise this will break the game logic.
+    def returnCard(card: Card): Player = {
+        if (discard.contains(card)) {
+            val newDiscard = discard.dropRight(1)
+            this.copy(discard = newDiscard, purchases = purchases + 1)
+        } else {
+            this
+        }
+    }
+
     def addCardToHand(card: Card): Player = {
         this.copy(hand = hand :+ card)
     }
@@ -101,7 +111,7 @@ case class Player(deck: List[Card] = List(
     }
 
     override def toString(): String = {
-        deckToString() + "\n" + handToString() + "\n" + discardToString()
+        "Deck:\n" + deckToString() + "\nHand:\n" + handToString() + "\nDiscard:\n" + discardToString()
     }
     
     def deckToString(): String = {

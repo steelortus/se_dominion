@@ -84,7 +84,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
 
     def nextTurn(): Unit = {
         val resetActionsAndPurchases = th.getPlayer()
-        th.updatePlayer(resetActionsAndPurchases.copy(purchases = 1, actions = 1))
+        th = th.updatePlayer(resetActionsAndPurchases.copy(purchases = 1, actions = 1))
         th = th.nextTurn()
         notifyObservers(Event.playing)
     }
@@ -94,7 +94,7 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def getPlayerHand(): String = {
-        th.getPlayer().handToString()
+        th.getPlayer().toString()
     }
 
     def getPlayerMoney(): Int = {
@@ -111,8 +111,12 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
 
     def purchase(card: String): Unit = {
         val cardOpt = stock.getCard(card)
-        val newTh = state.purchase(stock, cardOpt, th, playUndoManager)
-        notifyObservers(Event.playing)
+        th = state.purchase(stock, cardOpt, th, playUndoManager)
+        if (getPlayerPurchases() > 0) {
+            notifyObservers(Event.playing)
+        } else {
+            nextTurn()
+        }
     }
 
     def showHelp(): Unit = {

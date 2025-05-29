@@ -12,7 +12,7 @@ class PurchaseCommand(card: Card, stock: Stock) extends Command[TurnHandler] {
     }
 
     override def undoStep(th: TurnHandler): TurnHandler = {
-        th
+        th.updatePlayer(th.getPlayer().returnCard(card))
     }
 
     override def redoStep(th: TurnHandler): TurnHandler = {
