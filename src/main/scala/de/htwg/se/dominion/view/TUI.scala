@@ -51,10 +51,8 @@ case class TUI(controller: Controller) extends Observer {
                     endGame()
                 case "undo" =>
                     controller.undo()
-                    println(GREEN("> Undone!"))
                 case "redo" =>
                     controller.redo()
-                    println(GREEN("> Redone!"))
                 case _ =>
                     println(RED("Unknown command. Please try again."))
             }
@@ -125,6 +123,14 @@ case class TUI(controller: Controller) extends Observer {
                     .mkString("\n")
                 println(PURPLE(resultString))
                 System.exit(0)
+            case Event.undoPrep =>
+                println(GREEN("> Undone!"))
+            case Event.redoPrep =>
+                println(GREEN("> Redone!"))
+            case Event.undoPlay =>
+                println(GREEN("> Undone!"))
+            case Event.redoPlay =>
+                println(GREEN("> Redone!"))
         }
     }
 

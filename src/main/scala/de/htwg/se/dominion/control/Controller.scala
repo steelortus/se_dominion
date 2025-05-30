@@ -172,12 +172,24 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     }
 
     def undo(): Unit = {
-        stock = prepUndoManager.undoStep(stock)
-        th = playUndoManager.undoStep(th)
+        state match {
+            case StatePreparation(stock) =>
+                notifyObservers(Event.undoPrep)
+                this.stock = prepUndoManager.undoStep(stock)
+            case StatePlaying(stock) =>
+                notifyObservers(Event.undoPlay)
+                th = playUndoManager.undoStep(th)
+        }
     }
 
     def redo(): Unit = {
-        stock = prepUndoManager.redoStep(stock)
-        th = playUndoManager.redoStep(th)
+        state match {
+            case StatePreparation(stock) =>
+                notifyObservers(Event.undoPrep)
+                this.stock = prepUndoManager.redoStep(stock)
+            case StatePlaying(stock) =>
+                notifyObservers(Event.undoPlay)
+                th = playUndoManager.redoStep(th)
+        }
     }
 }

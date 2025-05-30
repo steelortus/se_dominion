@@ -24,6 +24,10 @@ enum Event {
     case commandsPreparation
     case commandsPlaying
     case endGame
+    case undoPrep
+    case redoPrep
+    case undoPlay
+    case redoPlay
 }
 
 enum ErrorEvent {
