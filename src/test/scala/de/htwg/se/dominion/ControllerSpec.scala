@@ -62,6 +62,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.add(testObserver)
             controller.addCard(testCard.toString)
             testObserver.lastEvent should be(Some(Event.cardAdded))
+            controller.state.addCard(Card.Dorf.toString, initialStock, controller.prepUndoManager) should not equal controller.stock
         }
 
         "notify if Stock is full" in {
@@ -102,6 +103,7 @@ class ControllerSpec extends AnyWordSpec {
             controller.add(testObserver)
             controller.removeCard(Card.Garten.toString)
             testObserver.lastEvent should be(Some(Event.cardRemoved))
+            controller.state.removeCard(Card.Dorf.toString, fullStock, controller.prepUndoManager) should not equal controller.stock
         }
 
         "before game starts ask for player quantity if stock is full" in {
@@ -138,10 +140,31 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not add card to stock while playing" in {
-            val controller = Controller(fullStock, testState, testHandler)
-            controller.play()
+            val playState = StatePlaying(initialStock)
+            val controller = Controller(initialStock, playState, testHandler)
             controller.addCard(Card.Geldverleiher.toString)
+            controller.getStock() should equal (initialStock)
+        }
+
+        "not remove a card from stock while playing" in {
+            val playState = StatePlaying(fullStock)
+            val controller = Controller(fullStock, playState, testHandler)
+            controller.removeCard(Card.Garten.toString)
             controller.getStock() should equal (fullStock)
+        }
+
+        "not fill cards to stock while playing" in {
+            val playState = StatePlaying(fullStock)
+            val controller = Controller(fullStock, playState, testHandler)
+            controller.fillStock()
+            controller.getStock() should equal (fullStock)
+        }
+
+        "not purchase a Card while in Preparation State" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val oldTh = controller.th
+            controller.purchase(Card.Kupfer)
+            oldTh == controller.th should be(true)
         }
 
         "be able to return the current turn" in {
@@ -193,6 +216,170 @@ class ControllerSpec extends AnyWordSpec {
             val initialTurn = controller.getTurn()
             controller.nextTurn()
             controller.getTurn() should be(initialTurn + 1)
+        }
+
+        "purchase a card" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(2)
+            controller.purchase(Card.Kupfer)
+            controller.th.getPlayer().discard.contains(Card.Kupfer) should be(true)
+            testObserver.lastEvent should be(Some(Event.playing))
+        }
+
+        "not purchase a card if the player has no purchases left" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(2)
+            controller.purchase(Card.Kupfer)
+            controller.purchase(Card.Kupfer)
+            testObserver.lastEvent should be(Some(Event.playing))
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.outOfPurchases))
+        }
+
+        "not purchase a card if the player has no money left or the card is not in the stock" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(2)
+            controller.purchase(Card.Gold)
+            testObserver.lastEvent should be(Some(Event.playing))
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.couldNotPurchaseCard))
+        }
+
+        "be able to purchase a card with a String of a card" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(2)
+            controller.purchase(Card.Kupfer.toString)
+            controller.th.getPlayer().discard.contains(Card.Kupfer) should be(true)
+            testObserver.lastEvent should be(Some(Event.playing))
+        }
+
+        "not end the game if it hasn't started yet" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.endGame()
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.invalidCommand))
+        }
+
+        "be able to end the game" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(2)
+            controller.play()
+            controller.endGame()
+            testObserver.lastEvent should be(Some(Event.endGame))
+        }
+
+        "be able to get a List of Points of all Players" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            controller.createPlayers(2)
+            controller.getAllPoints() should be(List(3, 3))
+        }
+
+        "display Preparation commands in Preparation State" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.showHelp()
+            testObserver.lastEvent should be(Some(Event.commandsPreparation))
+        }
+
+        "display Playing commands in Playing State" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(2)
+            controller.play()
+            controller.showHelp()
+            testObserver.lastEvent should be(Some(Event.commandsPlaying))
+        }
+
+        "signal an Event that the State is now in Preparation" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.updateState(Event.preparation)
+            testObserver.lastEvent should be(Some(Event.preparation))
+        }
+
+        "return an invalid State Event if the wrong Event is sent to updateState" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.updateState(Event.endGame)
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.invalidState))
+        }
+
+        "undo and redo adding Cards in Preparation State" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.addCard(testCard.toString)
+            val addedStock = controller.getStock()
+            controller.undo()
+            addedStock should not equal controller.getStock()
+            controller.redo()
+            addedStock should equal(controller.getStock())
+        }
+
+        "undo and redo removing Cards in Preparation State" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.removeCard(Card.Garten.toString)
+            val removedStock = controller.getStock()
+            controller.undo()
+            removedStock should not equal controller.getStock()
+            controller.redo()
+            removedStock should equal(controller.getStock())
+        }
+
+        "undo and redo filling the Stock in Preparation State" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.fillStock()
+            val filledStock = controller.getStock()
+            controller.undo()
+            filledStock should not equal controller.getStock()
+            controller.redo()
+            filledStock should equal(controller.getStock())
+        }
+
+        "undo and redo purchasing Cards in Playing State" in {
+            val controller = Controller(fullStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.createPlayers(2)
+            controller.play()
+            controller.purchase(Card.Kupfer)
+            val newTh = controller.th
+            controller.undo()
+            newTh should not equal controller.th
+            controller.redo()
+            newTh should equal(controller.th)
+        }
+
+        "fill a stock in Preparation State" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            val newStock = controller.state.fillStock(initialStock, controller.prepUndoManager)
+            newStock should not equal initialStock
+        }
+
+        "remove an observable again" in {
+            val controller = Controller(initialStock, testState, testHandler)
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.remove(testObserver)
         }
     }
 }

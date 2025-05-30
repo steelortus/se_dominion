@@ -19,15 +19,15 @@ object GUI extends SimpleSwingApplication with Observer {
         main(Array())
     }
 
-    val statusLabel = new Label("Dominion gestartet!")
+    val statusLabel = new Label("Dominion started!")
 
     val stockPanel = new FlowPanel(FlowPanel.Alignment.Left)()
     val selectionPanel = new FlowPanel(FlowPanel.Alignment.Left)()
-    val startGameButton = new Button("Spiel starten") { visible = false }
+    val startGameButton = new Button("Start the game") { visible = false }
 
     val playerButtons = new FlowPanel(FlowPanel.Alignment.Center)(
         Seq(2, 3, 4).map { n =>
-        new Button(s"$n Spieler") {
+        new Button(s"$n players") {
             reactions += { case ButtonClicked(_) => controller.createPlayers(n) }
         }
         }*
@@ -49,10 +49,10 @@ object GUI extends SimpleSwingApplication with Observer {
         }) = BorderPanel.Position.North
 
         layout(new BoxPanel(Orientation.Vertical) {
-            contents += new Label("Stock (aktuell ausgewählt):")
+            contents += new Label("Stock:")
             contents += new ScrollPane(stockPanel)
             contents += Swing.VStrut(10)
-            contents += new Label("Karten zum Hinzufügen:")
+            contents += new Label("Cards to add:")
             contents += new ScrollPane(selectionPanel)
         }) = BorderPanel.Position.Center
 
@@ -108,7 +108,7 @@ object GUI extends SimpleSwingApplication with Observer {
         println(s"[GUI] Received event: $e")
         e match {
         case Event.preparation =>
-            statusLabel.text = "Vorbereitungsphase: Wähle Karten für den Stock."
+            statusLabel.text = "Preparation phase. Choose cards to add to the stock"
             updateStockDisplay()
             updateCardSelection()
 
@@ -117,31 +117,31 @@ object GUI extends SimpleSwingApplication with Observer {
             updateCardSelection()
 
         case Event.stockFull =>
-            statusLabel.text = "Stock ist voll. Starte das Spiel."
+            statusLabel.text = "Stock full. Start the game"
             startGameButton.visible = true
             updateStockDisplay()
             updateCardSelection()
 
         case Event.selectNumberOfPlayers =>
-            statusLabel.text = "Wähle die Anzahl an Spielern."
+            statusLabel.text = "Choose number of players"
             startGameButton.visible = false
             playerButtons.visible = true
 
         case Event.playing =>
-            statusLabel.text = "Spiel gestartet!"
+            statusLabel.text = "Game started!"
             playerButtons.visible = false
         }
     }
 
     override def update(e: ErrorEvent): Unit = Swing.onEDT {
         statusLabel.text = e match {
-        case ErrorEvent.stockFull => "Fehler: Der Stock ist bereits voll."
-        case ErrorEvent.couldNotAddCard => "Fehler: Karte konnte nicht hinzugefügt werden."
-        case ErrorEvent.couldNotRemoveCard => "Fehler: Karte konnte nicht entfernt werden."
-        case ErrorEvent.cantStart => "Fehler: Spielstart nicht möglich."
-        case ErrorEvent.invalidCommand => "Fehler: Ungültiger Befehl."
-        case ErrorEvent.invalidNumberOfPlayers => "Fehler: Spieleranzahl ungültig."
-        case ErrorEvent.invalidState => "Fehler: Ungültiger Zustand."
+        case ErrorEvent.stockFull => "Stock full!"
+        case ErrorEvent.couldNotAddCard => "Card could not be added"
+        case ErrorEvent.couldNotRemoveCard => "Card can not be removed"
+        case ErrorEvent.cantStart => "Can not start the game"
+        case ErrorEvent.invalidCommand => "unknown command"
+        case ErrorEvent.invalidNumberOfPlayers => "invalid number of players"
+        case ErrorEvent.invalidState => "invalid state"
         }
     }
 }
