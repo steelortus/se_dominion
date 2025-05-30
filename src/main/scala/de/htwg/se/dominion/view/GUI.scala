@@ -24,12 +24,14 @@ object GUI extends SimpleSwingApplication with Observer {
     val stockPanel = new FlowPanel(FlowPanel.Alignment.Left)()
     val selectionPanel = new FlowPanel(FlowPanel.Alignment.Left)()
     val startGameButton = new Button("Start the game") { visible = false }
+    val undoButton = new Button("undo")
+    val redoButton = new Button("redo")
 
     val playerButtons = new FlowPanel(FlowPanel.Alignment.Center)(
         Seq(2, 3, 4).map { n =>
-        new Button(s"$n players") {
-            reactions += { case ButtonClicked(_) => controller.createPlayers(n) }
-        }
+            new Button(s"$n players") {
+                reactions += { case ButtonClicked(_) => controller.createPlayers(n) }
+            }
         }*
     )
     playerButtons.visible = false
@@ -40,12 +42,33 @@ object GUI extends SimpleSwingApplication with Observer {
             Future { controller.play() }
     }
 
+    val unredoButtons = new FlowPanel(FlowPanel.Alignment.Right)(
+        undoButton,
+        redoButton
+    )
+    unredoButtons.visible = true
+
+    listenTo(undoButton, redoButton)
+    reactions += {
+        case ButtonClicked(`undoButton`) => {
+            controller.undo()
+            stockPanel.revalidate()
+            stockPanel.repaint()
+        }
+        case ButtonClicked(`redoButton`) => {
+            controller.redo()
+            stockPanel.revalidate()
+            stockPanel.repaint()
+        }
+    }
+
     def top: Frame = new MainFrame {
         title = "Dominion GUI"
         preferredSize = new Dimension(900, 600)
         contents = new BorderPanel {
         layout(new BoxPanel(Orientation.Vertical) {
             contents += statusLabel
+            contents += unredoButtons
         }) = BorderPanel.Position.North
 
         layout(new BoxPanel(Orientation.Vertical) {
