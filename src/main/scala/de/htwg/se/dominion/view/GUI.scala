@@ -52,13 +52,9 @@ object GUI extends SimpleSwingApplication with Observer {
     reactions += {
         case ButtonClicked(`undoButton`) => {
             controller.undo()
-            stockPanel.revalidate()
-            stockPanel.repaint()
         }
         case ButtonClicked(`redoButton`) => {
             controller.redo()
-            stockPanel.revalidate()
-            stockPanel.repaint()
         }
     }
 
@@ -153,6 +149,16 @@ object GUI extends SimpleSwingApplication with Observer {
         case Event.playing =>
             statusLabel.text = "Game started!"
             playerButtons.visible = false
+
+        case Event.undoPrep =>
+            statusLabel.text = "undo"
+            updateStockDisplay()
+            updateCardSelection()
+
+        case Event.redoPrep =>
+            statusLabel.text = "redo"
+            updateStockDisplay()
+            updateCardSelection()
         }
     }
 
