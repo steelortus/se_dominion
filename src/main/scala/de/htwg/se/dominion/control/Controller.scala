@@ -135,9 +135,9 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
 
     def endGame(): Unit = {
         state match {
-            case StatePreparation(_) =>
+            case StatePreparation(stock) =>
                 notifyObservers(ErrorEvent.invalidCommand)
-            case StatePlaying(_) =>
+            case StatePlaying(stock) =>
                 notifyObservers(Event.endGame)
         }
     }
@@ -148,9 +148,9 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
 
     def showHelp(): Unit = {
         state match {
-            case StatePreparation(_) =>
+            case StatePreparation(stock) =>
                 notifyObservers(Event.commandsPreparation)
-            case StatePlaying(_) =>
+            case StatePlaying(stock) =>
                 notifyObservers(Event.commandsPlaying)
         }
     }
@@ -174,22 +174,22 @@ case class Controller(var stock: Stock, var state: State, var th: TurnHandler) e
     def undo(): Unit = {
         state match {
             case StatePreparation(stock) =>
-                notifyObservers(Event.undoPrep)
                 this.stock = prepUndoManager.undoStep(stock)
+                notifyObservers(Event.undoPrep)
             case StatePlaying(stock) =>
-                notifyObservers(Event.undoPlay)
                 th = playUndoManager.undoStep(th)
+                notifyObservers(Event.undoPlay)
         }
     }
 
     def redo(): Unit = {
         state match {
             case StatePreparation(stock) =>
-                notifyObservers(Event.undoPrep)
                 this.stock = prepUndoManager.redoStep(stock)
+                notifyObservers(Event.redoPrep)
             case StatePlaying(stock) =>
-                notifyObservers(Event.undoPlay)
                 th = playUndoManager.redoStep(th)
+                notifyObservers(Event.redoPlay)
         }
     }
 }
