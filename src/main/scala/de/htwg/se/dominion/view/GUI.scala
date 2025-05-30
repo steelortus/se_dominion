@@ -20,7 +20,6 @@ object GUI extends SimpleSwingApplication with Observer {
     }
 
     val statusLabel = new Label("Dominion started!")
-
     val stockPanel = new FlowPanel(FlowPanel.Alignment.Left)()
     val selectionPanel = new FlowPanel(FlowPanel.Alignment.Left)()
     val startGameButton = new Button("Start the game") { visible = false }
@@ -130,6 +129,7 @@ object GUI extends SimpleSwingApplication with Observer {
             statusLabel.text = "Preparation phase. Choose cards to add to the stock"
             updateStockDisplay()
             updateCardSelection()
+            statusLabel.
 
         case Event.cardAdded | Event.cardRemoved =>
             updateStockDisplay()
