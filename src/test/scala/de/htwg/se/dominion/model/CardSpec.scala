@@ -3,6 +3,7 @@ package de.htwg.se.dominion.model
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.dominion.model.Card
+import de.htwg.se.dominion.model.TurnHandler
 
 class CardSpec extends AnyWordSpec {
     "A Card" should {
@@ -203,13 +204,13 @@ class CardSpec extends AnyWordSpec {
             s.contains("Dorf") should be(false)
         }
         "return a player after executing a Card" in {
-            val player = Player()
-            Card.NotACard.execute(player) should be(player)
+            val players = TurnHandler(2, 0)
+            Card.NotACard.execute(players) should be(players)
         }
         "draw 2 Cards if Dorf is executed" in {
-            val player = Player()
-            val updatedPlayer = Card.Dorf.execute(player)
-            updatedPlayer.hand.length should be(2)
+            val players = TurnHandler(2, 0)
+            val updatedPlayer = Card.Dorf.execute(players)
+            updatedPlayer.getPlayer().hand.length should be(7)
         }
         "print a Sell String of the Stock" in {
             s = new Stock()

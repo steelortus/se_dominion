@@ -47,11 +47,11 @@ enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amou
 
     case NotACard extends Card("NotACard", 0, 0, 0, 0)
 
-    def execute(player: Player): Player = {
+    def execute(th: TurnHandler): TurnHandler = {
         this match {
             case Dorf =>
-                player.drawCardFromDeck().drawCardFromDeck()
-            case _ => player
+                th.updatePlayer(th.getPlayer().drawCardFromDeck().drawCardFromDeck())
+            case _ => th
         }
     }
 }
