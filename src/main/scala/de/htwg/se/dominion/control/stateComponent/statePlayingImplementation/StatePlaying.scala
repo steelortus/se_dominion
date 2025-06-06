@@ -7,9 +7,7 @@ import de.htwg.se.dominion.model.stockComponent.StockInterface
 import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import model.playerComponent.PlayerInterface
-import model.playerComponent.playerComponentImplementation.Player
 import model.turnHandlerComponent.TurnHandlerInterface
-import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 import util.Event
 import util.ErrorEvent
 import util.Observable
@@ -26,34 +24,8 @@ case class StatePlaying(stock: Stock) extends State {
         stock
     }
 
-    override def play(stock: Stock, th: TurnHandler): Boolean = {
-        var p1 = new Player()
-        println(YELLOW(s"Player 1 Deck:\n${p1.deckToString()}\n"))
-        p1 = p1.shuffleDeck()
-        println(GREEN(s"Player 1 shuffled Deck:\n${p1.deckToString()}\n"))
-        p1 = p1.drawCardFromDeck()
-        println(YELLOW(s"Player 1 Deck after drawing:\n${p1.deckToString()}\n"))
-        println(PURPLE(s"Player 1 Hand:\n${p1.handToString()}\n"))
-        p1 = p1.drawCardFromDeck()
-        p1 = p1.drawCardFromDeck()
-        println(PURPLE(s"Player 1 Hand after drawing 2 more from Hand:\n${p1.handToString()}\n"))
-        p1 = p1.discardFromHand(1)
-        println(YELLOW(s"Player 1 Deck after discarding from Hand:\n${p1.deckToString()}\n"))
-        println(PURPLE(s"Player 1 Hand after discarding from Hand:\n${p1.handToString()}\n"))
-        println(CYAN(s"Player 1 Discard after discarding from Hand:\n${p1.discardToString()}\n"))
-
-        println(YELLOW("\nGame over! (not implemented yet)\n\n"))
-        var p2 = new Player()
-        println(YELLOW(s"Player 2 Deck:\n${p2.deckToString()}\n"))
-        p2 = p2.shuffleDeck()
-        println(GREEN(s"Player 2 shuffled Deck:\n${p2.deckToString()}\n"))
-        p2 = p2.drawFiveCardsFromDeck()
-        println(YELLOW(s"Player 2 Deck after drawing five times:\n${p2.deckToString()}\n"))
-        println(PURPLE(s"Player 1 Hand:\n${p2.handToString()}\n"))
-        println(RED(s"Player 2 Money in Hand: ${p2.getMoneyInHand()}\n"))
-        p2 = p2.discardAllFromHand()
-        println(PURPLE(s"Player 2 Hand after discarding from Hand:\n${p2.handToString()}\n"))
-        println(CYAN(s"Player 2 Discard after discarding from Hand:\n${p2.discardToString()}\n"))
+    override def play(stock: Stock, th: TurnHandlerInterface): Boolean = {
+        println(CYAN(s"TODO\n"))
         false
     }
 
@@ -65,7 +37,7 @@ case class StatePlaying(stock: Stock) extends State {
         stock.toString()
     }
 
-    override def purchase(stock: Stock, card: Card, th: TurnHandler, um: UndoManager[TurnHandler]): TurnHandler = {
+    override def purchase(stock: Stock, card: Card, th: TurnHandlerInterface, um: UndoManager[TurnHandlerInterface]): TurnHandlerInterface = {
         val updatedTurnHandler = um.doStep(th, PurchaseCommand(card, stock))
         updatedTurnHandler
     }

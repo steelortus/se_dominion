@@ -15,7 +15,7 @@ import de.htwg.se.dominion.control.stateComponent.statePreparationImplementation
     val controller = new Controller(stock, state, th)
     val t = new TUI(controller)
     
-    new Thread(() => GUI.initWith(controller)).start()
+    //new Thread(() => GUI.initWith(controller)).start()
 
     t.run()
 }

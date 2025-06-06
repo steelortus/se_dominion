@@ -4,7 +4,11 @@ import de.htwg.se.dominion.model.Card
 import de.htwg.se.dominion.model.stockComponent.StockInterface
 import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 
-trait PlayerInterface {
+trait PlayerInterface(val deck: List[Card] = List(),
+                      val hand: List[Card] = List(),
+                      val discard: List[Card] = List(),
+                      val purchases: Int,
+                      val actions: Int) {
     def shuffleDeck(): PlayerInterface
     def refillDeck(): PlayerInterface
     def drawCardFromDeck(): PlayerInterface

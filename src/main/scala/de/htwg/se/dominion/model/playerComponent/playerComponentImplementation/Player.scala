@@ -7,13 +7,13 @@ import de.htwg.se.dominion.model.Card
 import de.htwg.se.dominion.model.stockComponent.StockInterface
 import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 
-case class Player(deck: List[Card] = List(
+case class Player(override val deck: List[Card] = List(
                     Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer,
                     Card.Anwesen, Card.Anwesen, Card.Anwesen),
-                  hand: List[Card] = List(),
-                  discard: List[Card] = List(),
-                  purchases: Int = 1,
-                  actions: Int = 1) extends PlayerInterface {
+                  override val hand: List[Card] = List(),
+                  override val discard: List[Card] = List(),
+                  override val purchases: Int = 1,
+                  override val actions: Int = 1) extends PlayerInterface(deck, hand, discard, purchases, actions) {
 
     def shuffleDeck(): Player = {
         val shuffledDeck = Random.shuffle(deck)

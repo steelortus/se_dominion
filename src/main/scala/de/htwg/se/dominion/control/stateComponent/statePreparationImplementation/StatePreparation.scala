@@ -6,9 +6,7 @@ import de.htwg.se.dominion.model.stockComponent.StockInterface
 import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import model.playerComponent.PlayerInterface
-import model.playerComponent.playerComponentImplementation.Player
 import model.turnHandlerComponent.TurnHandlerInterface
-import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 import util.Event
 import util.ErrorEvent
 import util.Observable
@@ -28,7 +26,7 @@ case class StatePreparation(stock: Stock) extends State {
         updatedStock
     }
 
-    override def play(stock: Stock, th: TurnHandler): Boolean = {
+    override def play(stock: Stock, th: TurnHandlerInterface): Boolean = {
         if (stock.getLength() < 17) {
             false
         } else {
@@ -53,7 +51,7 @@ case class StatePreparation(stock: Stock) extends State {
         s"$s1\n\n$s2"
     }
 
-    override def purchase(stock: Stock, card: Card, th: TurnHandler, um: UndoManager[TurnHandler]): TurnHandler = {
+    override def purchase(stock: Stock, card: Card, th: TurnHandlerInterface, um: UndoManager[TurnHandlerInterface]): TurnHandlerInterface = {
         th
     }
 }

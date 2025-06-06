@@ -17,25 +17,29 @@ case class TurnHandlerBuilder(numberOfPlayers: Int = 0, turn: Int = 0) extends B
     }
 
     def getResult(): TurnHandler = {
-        TurnHandler(numberOfPlayers, turn)
+        new TurnHandler(numberOfPlayers, turn)
     }
 }
 
-case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = List(Player().shuffleDeck().drawFiveCardsFromDeck(),
-                                                                                     Player().shuffleDeck().drawFiveCardsFromDeck(),
-                                                                                     Player().shuffleDeck().drawFiveCardsFromDeck(),
-                                                                                     Player().shuffleDeck().drawFiveCardsFromDeck())) extends TurnHandlerInterface {
+case class TurnHandler(override val numberOfPlayers: Int, override val turn: Int, override val players: List[PlayerInterface]) extends TurnHandlerInterface(numberOfPlayers, turn, players) {
+
+    def this(numberOfPlayers: Int, turn: Int) = {
+        this(numberOfPlayers, turn, List(Player().shuffleDeck().drawFiveCardsFromDeck(),
+                                         Player().shuffleDeck().drawFiveCardsFromDeck(),
+                                         Player().shuffleDeck().drawFiveCardsFromDeck(),
+                                         Player().shuffleDeck().drawFiveCardsFromDeck()))
+    }
     
     def nextTurn(): TurnHandler = {
         val nextTurn = turn + 1
         this.copy(turn = nextTurn)
     }
 
-    def getPlayer(): Player = {
+    def getPlayer(): PlayerInterface = {
         players((turn + numberOfPlayers) % numberOfPlayers)
     }
 
-    def updatePlayer(player: Player): TurnHandler = {
+    def updatePlayer(player: PlayerInterface): TurnHandler = {
         val updatedPlayers = players.updated(((turn + numberOfPlayers) % numberOfPlayers), player)
         this.copy(players = updatedPlayers)
     }

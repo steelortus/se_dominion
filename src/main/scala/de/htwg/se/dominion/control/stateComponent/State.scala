@@ -6,13 +6,12 @@ import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Sto
 import model.Card
 import util.UndoManager
 import model.turnHandlerComponent.TurnHandlerInterface
-import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 
 trait State {
     def addCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock
     def removeCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock
-    def play(stock: Stock, th: TurnHandler): Boolean
+    def play(stock: Stock, th: TurnHandlerInterface): Boolean
     def fillStock(stock: Stock, um: UndoManager[Stock]): Stock
     def listCards(stock: Stock): String
-    def purchase(stock: Stock, card: Card, th: TurnHandler, um: UndoManager[TurnHandler]): TurnHandler
+    def purchase(stock: Stock, card: Card, th: TurnHandlerInterface, um: UndoManager[TurnHandlerInterface]): TurnHandlerInterface
 }

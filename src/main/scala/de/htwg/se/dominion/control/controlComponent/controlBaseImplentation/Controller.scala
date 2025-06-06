@@ -10,10 +10,9 @@ import de.htwg.se.dominion.model.stockComponent.StockInterface
 import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import model.playerComponent.PlayerInterface
-import model.playerComponent.playerComponentImplementation.Player
 import model.ConsoleColors.*
 import model.turnHandlerComponent.TurnHandlerInterface
-import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
+import model.turnHandlerComponent.Builder
 import model.turnHandlerComponent.turnHandlerImplementation.TurnHandlerBuilder
 import util.UndoManager
 import control.stateComponent.State
@@ -21,10 +20,10 @@ import control.stateComponent.statePreparationImplementation.StatePreparation
 import control.stateComponent.statePlayingImplementation.StatePlaying
 import util.Command
 
-case class Controller(var stock: Stock, var state: State, var th: TurnHandler) extends ControllerInterface with Observable {
+case class Controller(var stock: Stock, var state: State, var th: TurnHandlerInterface) extends ControllerInterface with Observable {
 
     val prepUndoManager = new UndoManager[Stock]
-    val playUndoManager = new UndoManager[TurnHandler]
+    val playUndoManager = new UndoManager[TurnHandlerInterface]
 
     def getStock(): Stock = {
         stock
