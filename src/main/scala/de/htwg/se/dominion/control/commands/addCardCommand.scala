@@ -2,19 +2,18 @@ package de.htwg.se.dominion.control.commands
 
 import de.htwg.se.dominion.model.Card
 import de.htwg.se.dominion.model.stockComponent.StockInterface
-import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import de.htwg.se.dominion.util.Command
 
-class AddCardCommand(card: Card) extends Command[Stock] {
-    override def doStep(stock: Stock): Stock = {
+class AddCardCommand(card: Card) extends Command[StockInterface] {
+    override def doStep(stock: StockInterface): StockInterface = {
         stock.addCard(card)
     }
 
-    override def undoStep(stock: Stock): Stock = {
+    override def undoStep(stock: StockInterface): StockInterface = {
         stock.removeCard(card)
     }
 
-    override def redoStep(stock: Stock): Stock = {
+    override def redoStep(stock: StockInterface): StockInterface = {
         doStep(stock)
     }
 }

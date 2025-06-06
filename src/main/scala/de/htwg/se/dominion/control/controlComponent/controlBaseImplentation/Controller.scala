@@ -7,7 +7,6 @@ import util.Observable
 import util.Event
 import util.ErrorEvent
 import de.htwg.se.dominion.model.stockComponent.StockInterface
-import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import model.playerComponent.PlayerInterface
 import model.ConsoleColors.*
@@ -20,12 +19,12 @@ import control.stateComponent.statePreparationImplementation.StatePreparation
 import control.stateComponent.statePlayingImplementation.StatePlaying
 import util.Command
 
-case class Controller(var stock: Stock, var state: State, var th: TurnHandlerInterface) extends ControllerInterface with Observable {
+case class Controller(var stock: StockInterface, var state: State, var th: TurnHandlerInterface) extends ControllerInterface with Observable {
 
-    val prepUndoManager = new UndoManager[Stock]
+    val prepUndoManager = new UndoManager[StockInterface]
     val playUndoManager = new UndoManager[TurnHandlerInterface]
 
-    def getStock(): Stock = {
+    def getStock(): StockInterface = {
         stock
     }
 

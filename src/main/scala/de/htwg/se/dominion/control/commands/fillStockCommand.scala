@@ -5,8 +5,8 @@ import de.htwg.se.dominion.model.stockComponent.StockInterface
 import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import de.htwg.se.dominion.util.Command
 
-class FillStockCommand() extends Command[Stock] {
-    override def doStep(stock: Stock): Stock = {
+class FillStockCommand() extends Command[StockInterface] {
+    override def doStep(stock: StockInterface): StockInterface = {
         var debug_stock = stock
         debug_stock = debug_stock.addCard(Card.Garten)
         debug_stock = debug_stock.addCard(Card.Markt)
@@ -21,11 +21,11 @@ class FillStockCommand() extends Command[Stock] {
         debug_stock
     }
 
-    override def undoStep(stock: Stock): Stock = {
+    override def undoStep(stock: StockInterface): StockInterface = {
         new Stock()
     }
 
-    override def redoStep(stock: Stock): Stock = {
+    override def redoStep(stock: StockInterface): StockInterface = {
         doStep(stock)
     }
 }

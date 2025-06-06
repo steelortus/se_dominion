@@ -1,14 +1,13 @@
 package de.htwg.se.dominion.control.controlComponent
 
 import de.htwg.se.dominion.model.stockComponent.StockInterface
-import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import de.htwg.se.dominion.model.Card
 import de.htwg.se.dominion.util.Observable
 import de.htwg.se.dominion.util.Event
 
 trait ControllerInterface extends Observable {
 
-  def getStock(): Stock
+  def getStock(): StockInterface
   def addCard(card: String): Unit
   def removeCard(card: String): Unit
   def play(): Unit

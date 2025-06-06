@@ -3,7 +3,6 @@ package control.stateComponent.statePreparationImplementation
 
 import control.stateComponent.State
 import de.htwg.se.dominion.model.stockComponent.StockInterface
-import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import model.playerComponent.PlayerInterface
 import model.turnHandlerComponent.TurnHandlerInterface
@@ -14,19 +13,19 @@ import util.Command
 import util.UndoManager
 import control.commands._
 
-case class StatePreparation(stock: Stock) extends State {
+case class StatePreparation(stock: StockInterface) extends State {
 
-    override def addCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock = {
+    override def addCard(card: String, stock: StockInterface, um: UndoManager[StockInterface]): StockInterface = {
         val updatedStock = um.doStep(stock, AddCardCommand(stock.getCard(card)))
         updatedStock
     }
 
-    override def removeCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock = {
+    override def removeCard(card: String, stock: StockInterface, um: UndoManager[StockInterface]): StockInterface = {
         val updatedStock = um.doStep(stock, RemoveCardCommand(stock.getCard(card)))
         updatedStock
     }
 
-    override def play(stock: Stock, th: TurnHandlerInterface): Boolean = {
+    override def play(stock: StockInterface, th: TurnHandlerInterface): Boolean = {
         if (stock.getLength() < 17) {
             false
         } else {
@@ -34,12 +33,12 @@ case class StatePreparation(stock: Stock) extends State {
         }
     }
 
-    override def fillStock(stock: Stock, um: UndoManager[Stock]): Stock = {
+    override def fillStock(stock: StockInterface, um: UndoManager[StockInterface]): StockInterface = {
         val updatedStock = um.doStep(stock, FillStockCommand())
         updatedStock
     }
 
-    override def listCards(stock: Stock): String = {
+    override def listCards(stock: StockInterface): String = {
         val all_cards = List[Card](Card.Burggraben, Card.Kapelle, Card.Keller, Card.Dorf, Card.Holzfaeller,
                         Card.Werkstatt, Card.Buerokrat, Card.Dieb, Card.Festmahl, Card.Geldverleiher, Card.Miliz,
                         Card.Schmiede, Card.Spion, Card.Thronsaal, Card.Umbau, Card.Bibliothek, Card.Hexe,
@@ -51,7 +50,7 @@ case class StatePreparation(stock: Stock) extends State {
         s"$s1\n\n$s2"
     }
 
-    override def purchase(stock: Stock, card: Card, th: TurnHandlerInterface, um: UndoManager[TurnHandlerInterface]): TurnHandlerInterface = {
+    override def purchase(stock: StockInterface, card: Card, th: TurnHandlerInterface, um: UndoManager[TurnHandlerInterface]): TurnHandlerInterface = {
         th
     }
 }

@@ -2,7 +2,7 @@ package de.htwg.se.dominion.model.stockComponent
 
 import de.htwg.se.dominion.model.Card
 
-trait StockInterface {
+trait StockInterface(val stock: List[Card], val stockAmount: List[Int]) {
     def getCard(name: String): Card
     def addCard(card: Card): StockInterface
     def addCard(name: String): StockInterface

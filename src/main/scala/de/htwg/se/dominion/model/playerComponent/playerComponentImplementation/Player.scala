@@ -5,7 +5,6 @@ import de.htwg.se.dominion.model.playerComponent.PlayerInterface
 import scala.util.Random
 import de.htwg.se.dominion.model.Card
 import de.htwg.se.dominion.model.stockComponent.StockInterface
-import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 
 case class Player(override val deck: List[Card] = List(
                     Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer, Card.Kupfer,
@@ -83,7 +82,7 @@ case class Player(override val deck: List[Card] = List(
         hand.map(_.getPoints).sum + discard.map(_.getPoints).sum + deck.map(_.getPoints).sum
     }
 
-    def purchaseCard(card: Card, stock: Stock): Player = {
+    def purchaseCard(card: Card, stock: StockInterface): Player = {
         if (stock.contains(card)) {
             if (getMoneyInHand() >= card.getCost && purchases > 0) {
                 this.copy(discard = discard :+ card, purchases = purchases - 1)
@@ -95,7 +94,7 @@ case class Player(override val deck: List[Card] = List(
         }
     }
 
-    def purchaseCard(card: String, stock: Stock): Player = {
+    def purchaseCard(card: String, stock: StockInterface): Player = {
         purchaseCard(stock.getCard(card), stock)
     }
 

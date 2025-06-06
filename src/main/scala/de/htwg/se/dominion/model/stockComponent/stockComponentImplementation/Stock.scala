@@ -6,8 +6,8 @@ import scala.io.StdIn._
 import de.htwg.se.dominion.model.Card
 import scala.collection.immutable.List
 
-case class Stock(stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch),
-                 stockAmount: List[Int] = List(50, 50, 50, 50, 25, 12, 50)) extends StockInterface {
+case class Stock(override val stock: List[Card] = List(Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch),
+                 override val stockAmount: List[Int] = List(50, 50, 50, 50, 25, 12, 50)) extends StockInterface(stock, stockAmount) {
     val setupStock = List[Card](Card.Kupfer, Card.Silber, Card.Gold, Card.Anwesen, Card.Herzogtum, Card.Provinz, Card.Fluch)
 
     def getCard(name: String): Card = Card.values.find(_.toString.equalsIgnoreCase(name)).getOrElse(Card.NotACard)
