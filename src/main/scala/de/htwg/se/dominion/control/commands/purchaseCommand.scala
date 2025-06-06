@@ -3,7 +3,8 @@ package de.htwg.se.dominion.control.commands
 import de.htwg.se.dominion.model.Card
 import de.htwg.se.dominion.model.playerComponent.PlayerInterface
 import de.htwg.se.dominion.model.playerComponent.playerComponentImplementation.Player
-import de.htwg.se.dominion.model.Stock
+import de.htwg.se.dominion.model.stockComponent.StockInterface
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import de.htwg.se.dominion.model.turnHandlerComponent.TurnHandlerInterface
 import de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 import de.htwg.se.dominion.util.Command

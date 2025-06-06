@@ -2,7 +2,8 @@ package de.htwg.se.dominion
 package control.stateComponent.statePreparationImplementation
 
 import control.stateComponent.State
-import model.Stock
+import de.htwg.se.dominion.model.stockComponent.StockInterface
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import model.playerComponent.PlayerInterface
 import model.playerComponent.playerComponentImplementation.Player

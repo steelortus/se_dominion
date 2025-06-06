@@ -1,7 +1,8 @@
 package de.htwg.se.dominion.model.playerComponent
 
 import de.htwg.se.dominion.model.Card
-import de.htwg.se.dominion.model.Stock
+import de.htwg.se.dominion.model.stockComponent.StockInterface
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 
 trait PlayerInterface {
     def shuffleDeck(): PlayerInterface

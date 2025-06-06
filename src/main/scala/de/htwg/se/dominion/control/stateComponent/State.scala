@@ -1,7 +1,8 @@
 package de.htwg.se.dominion
 package control.stateComponent
 
-import model.Stock
+import de.htwg.se.dominion.model.stockComponent.StockInterface
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import util.UndoManager
 import model.turnHandlerComponent.TurnHandlerInterface

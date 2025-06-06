@@ -6,7 +6,8 @@ import control.controlComponent.ControllerInterface
 import util.Observable
 import util.Event
 import util.ErrorEvent
-import model.Stock
+import de.htwg.se.dominion.model.stockComponent.StockInterface
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import model.playerComponent.PlayerInterface
 import model.playerComponent.playerComponentImplementation.Player

@@ -1,5 +1,6 @@
 import scala.io.StdIn._
-import de.htwg.se.dominion.model.Stock
+import de.htwg.se.dominion.model.stockComponent.StockInterface
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 import de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation.TurnHandlerBuilder
 import de.htwg.se.dominion.view._

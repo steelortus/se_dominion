@@ -3,7 +3,8 @@ package control.stateComponent.statePlayingImplementation
 
 import control.stateComponent.State
 import model.ConsoleColors.*
-import model.Stock
+import de.htwg.se.dominion.model.stockComponent.StockInterface
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 import model.Card
 import model.playerComponent.PlayerInterface
 import model.playerComponent.playerComponentImplementation.Player

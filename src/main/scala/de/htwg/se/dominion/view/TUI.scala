@@ -2,8 +2,6 @@ package de.htwg.se.dominion
 package view
 
 import scala.io.StdIn._
-import model.Stock
-import model.Card
 import control.controlComponent.ControllerInterface
 import util.Observer
 import util.Event
