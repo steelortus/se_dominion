@@ -1,6 +1,6 @@
 package de.htwg.se.dominion.view
 
-import de.htwg.se.dominion.control._
+import de.htwg.se.dominion.control.controlComponent.ControllerInterface
 import de.htwg.se.dominion.model._
 import de.htwg.se.dominion.util.{Observer, Event, ErrorEvent}
 import scala.swing._
@@ -11,9 +11,9 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object GUI extends SimpleSwingApplication with Observer {
-    var controller: Controller = _
+    var controller: ControllerInterface = _
 
-    def initWith(c: Controller): Unit = {
+    def initWith(c: ControllerInterface): Unit = {
         controller = c
         controller.add(this)
         main(Array())
@@ -129,7 +129,7 @@ object GUI extends SimpleSwingApplication with Observer {
             statusLabel.text = "Preparation phase. Choose cards to add to the stock"
             updateStockDisplay()
             updateCardSelection()
-            statusLabel.
+            //statusLabel.
 
         case Event.cardAdded | Event.cardRemoved =>
             updateStockDisplay()
@@ -159,6 +159,9 @@ object GUI extends SimpleSwingApplication with Observer {
             statusLabel.text = "redo"
             updateStockDisplay()
             updateCardSelection()
+
+        case _ =>
+            statusLabel.text = "Unknown event"
         }
     }
 

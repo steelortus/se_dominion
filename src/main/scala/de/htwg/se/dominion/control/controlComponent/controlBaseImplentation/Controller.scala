@@ -1,5 +1,7 @@
 package de.htwg.se.dominion
-package control
+package control.controlComponent.controlBaseImplentation
+
+import control.controlComponent.ControllerInterface
 
 import util.Observable
 import util.Event
@@ -11,10 +13,12 @@ import model.ConsoleColors.*
 import model.TurnHandler
 import model.TurnHandlerBuilder
 import util.UndoManager
-import control.State
+import control.stateComponent.State
+import control.stateComponent.statePreparationImplementation.StatePreparation
+import control.stateComponent.statePlayingImplementation.StatePlaying
 import util.Command
 
-case class Controller(var stock: Stock, var state: State, var th: TurnHandler) extends Observable {
+case class Controller(var stock: Stock, var state: State, var th: TurnHandler) extends ControllerInterface with Observable {
 
     val prepUndoManager = new UndoManager[Stock]
     val playUndoManager = new UndoManager[TurnHandler]

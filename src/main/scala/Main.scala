@@ -3,10 +3,8 @@ import de.htwg.se.dominion.model.Stock
 import de.htwg.se.dominion.model.TurnHandler
 import de.htwg.se.dominion.model.TurnHandlerBuilder
 import de.htwg.se.dominion.view._
-import de.htwg.se.dominion.control.Controller
-import de.htwg.se.dominion.control.StatePreparation
-
-// hallo :)
+import de.htwg.se.dominion.control.controlComponent.controlBaseImplentation.Controller
+import de.htwg.se.dominion.control.stateComponent.statePreparationImplementation.StatePreparation
 
 @main def main(): Unit = {
     val stock = new Stock()

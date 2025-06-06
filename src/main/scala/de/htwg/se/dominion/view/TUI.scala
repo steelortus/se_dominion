@@ -5,7 +5,7 @@ import scala.io.StdIn._
 import model.Stock
 import model.Player
 import model.Card
-import control.Controller
+import control.controlComponent.ControllerInterface
 import util.Observer
 import util.Event
 import util.ErrorEvent
@@ -13,7 +13,7 @@ import model.ConsoleColors.*
 import scala.util.{Try, Success, Failure}
 import scala.annotation.tailrec
 
-case class TUI(controller: Controller) extends Observer {
+case class TUI(controller: ControllerInterface) extends Observer {
     controller.add(this)
     def run(): Unit = {
         println(BLUE("> Enter your command: (h for help)"))

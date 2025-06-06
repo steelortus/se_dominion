@@ -1,7 +1,7 @@
 package de.htwg.se.dominion
-package control
+package control.stateComponent.statePreparationImplementation
 
-import control.State
+import control.stateComponent.State
 import model.Stock
 import model.Card
 import model.Player

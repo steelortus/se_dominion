@@ -1,5 +1,5 @@
 package de.htwg.se.dominion
-package control
+package control.stateComponent
 
 import model.Stock
 import model.Card
