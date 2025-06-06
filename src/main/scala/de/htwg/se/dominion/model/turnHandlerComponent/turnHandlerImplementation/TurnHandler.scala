@@ -1,13 +1,9 @@
-package de.htwg.se.dominion.model
+package de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation
+
+import de.htwg.se.dominion.model.turnHandlerComponent.{Builder, TurnHandlerInterface}
 
 import de.htwg.se.dominion.model.Player
 import scala.collection.immutable.List
-
-trait Builder {
-    def setNumberOfPlayers(numberOfPlayers: Int): TurnHandlerBuilder
-    def setTurn(turn: Int): TurnHandlerBuilder
-    def getResult(): TurnHandler
-}
 
 case class TurnHandlerBuilder(numberOfPlayers: Int = 0, turn: Int = 0) extends Builder {
 
@@ -27,7 +23,7 @@ case class TurnHandlerBuilder(numberOfPlayers: Int = 0, turn: Int = 0) extends B
 case class TurnHandler(numberOfPlayers: Int, turn: Int, players: List[Player] = List(Player().shuffleDeck().drawFiveCardsFromDeck(),
                                                                                      Player().shuffleDeck().drawFiveCardsFromDeck(),
                                                                                      Player().shuffleDeck().drawFiveCardsFromDeck(),
-                                                                                     Player().shuffleDeck().drawFiveCardsFromDeck())) {
+                                                                                     Player().shuffleDeck().drawFiveCardsFromDeck())) extends TurnHandlerInterface {
     
     def nextTurn(): TurnHandler = {
         val nextTurn = turn + 1

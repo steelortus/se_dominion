@@ -1,7 +1,7 @@
 import scala.io.StdIn._
 import de.htwg.se.dominion.model.Stock
-import de.htwg.se.dominion.model.TurnHandler
-import de.htwg.se.dominion.model.TurnHandlerBuilder
+import de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
+import de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation.TurnHandlerBuilder
 import de.htwg.se.dominion.view._
 import de.htwg.se.dominion.control.controlComponent.controlBaseImplentation.Controller
 import de.htwg.se.dominion.control.stateComponent.statePreparationImplementation.StatePreparation

@@ -4,7 +4,8 @@ package control.stateComponent
 import model.Stock
 import model.Card
 import util.UndoManager
-import model.TurnHandler
+import model.turnHandlerComponent.TurnHandlerInterface
+import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 
 trait State {
     def addCard(card: String, stock: Stock, um: UndoManager[Stock]): Stock

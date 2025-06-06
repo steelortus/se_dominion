@@ -1,5 +1,7 @@
 package de.htwg.se.dominion.model
 
+import de.htwg.se.dominion.model.turnHandlerComponent.TurnHandlerInterface
+
 enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amount:Int) {
     def getName: String = name
     def getCost: Int = cost
@@ -47,7 +49,7 @@ enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amou
 
     case NotACard extends Card("NotACard", 0, 0, 0, 0)
 
-    def execute(th: TurnHandler): TurnHandler = {
+    def execute(th: TurnHandlerInterface): TurnHandlerInterface = {
         this match {
             case Dorf =>
                 th.updatePlayer(th.getPlayer().drawCardFromDeck().drawCardFromDeck())

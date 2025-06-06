@@ -10,8 +10,9 @@ import model.Stock
 import model.Card
 import model.Player
 import model.ConsoleColors.*
-import model.TurnHandler
-import model.TurnHandlerBuilder
+import model.turnHandlerComponent.TurnHandlerInterface
+import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
+import model.turnHandlerComponent.turnHandlerImplementation.TurnHandlerBuilder
 import util.UndoManager
 import control.stateComponent.State
 import control.stateComponent.statePreparationImplementation.StatePreparation

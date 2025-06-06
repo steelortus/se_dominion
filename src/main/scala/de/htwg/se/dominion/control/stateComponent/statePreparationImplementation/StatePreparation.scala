@@ -5,7 +5,8 @@ import control.stateComponent.State
 import model.Stock
 import model.Card
 import model.Player
-import model.TurnHandler
+import model.turnHandlerComponent.TurnHandlerInterface
+import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 import util.Event
 import util.ErrorEvent
 import util.Observable

@@ -6,7 +6,8 @@ import model.ConsoleColors.*
 import model.Stock
 import model.Card
 import model.Player
-import model.TurnHandler
+import model.turnHandlerComponent.TurnHandlerInterface
+import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 import util.Event
 import util.ErrorEvent
 import util.Observable
@@ -65,17 +66,5 @@ case class StatePlaying(stock: Stock) extends State {
     override def purchase(stock: Stock, card: Card, th: TurnHandler, um: UndoManager[TurnHandler]): TurnHandler = {
         val updatedTurnHandler = um.doStep(th, PurchaseCommand(card, stock))
         updatedTurnHandler
-
-        /*if (stock.contains(card)) {
-            val player = th.getCurrentPlayer()
-            val playerAfterPurchase = player.purchaseCard(card, player.getMoneyInHand())
-            if (playerAfterPurchase != player) {
-                th.setCurrentPlayer(playerAfterPurchase)
-            } else {
-                throw new ErrorEvent("Not enough money to purchase this card.")
-            }
-        } else {
-            throw new ErrorEvent("Card not available in stock.")
-        }*/
     }
 }
