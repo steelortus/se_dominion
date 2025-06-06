@@ -2,7 +2,8 @@ package de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation
 
 import de.htwg.se.dominion.model.turnHandlerComponent.{Builder, TurnHandlerInterface}
 
-import de.htwg.se.dominion.model.Player
+import de.htwg.se.dominion.model.playerComponent.PlayerInterface
+import de.htwg.se.dominion.model.playerComponent.playerComponentImplementation.Player
 import scala.collection.immutable.List
 
 case class TurnHandlerBuilder(numberOfPlayers: Int = 0, turn: Int = 0) extends Builder {

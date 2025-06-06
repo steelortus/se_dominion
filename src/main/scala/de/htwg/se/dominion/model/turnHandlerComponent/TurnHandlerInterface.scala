@@ -1,6 +1,7 @@
 package de.htwg.se.dominion.model.turnHandlerComponent
 
-import de.htwg.se.dominion.model.Player
+import de.htwg.se.dominion.model.playerComponent.PlayerInterface
+import de.htwg.se.dominion.model.playerComponent.playerComponentImplementation.Player
 
 trait Builder {
     def setNumberOfPlayers(numberOfPlayers: Int): Builder

@@ -1,7 +1,6 @@
 package de.htwg.se.dominion.control.commands
 
 import de.htwg.se.dominion.model.Card
-import de.htwg.se.dominion.model.Player
 import de.htwg.se.dominion.model.Stock
 import de.htwg.se.dominion.util.Command
 

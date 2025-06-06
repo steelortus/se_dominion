@@ -5,7 +5,8 @@ import control.stateComponent.State
 import model.ConsoleColors.*
 import model.Stock
 import model.Card
-import model.Player
+import model.playerComponent.PlayerInterface
+import model.playerComponent.playerComponentImplementation.Player
 import model.turnHandlerComponent.TurnHandlerInterface
 import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
 import util.Event

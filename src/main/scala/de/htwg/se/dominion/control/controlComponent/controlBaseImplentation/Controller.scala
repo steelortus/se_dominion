@@ -8,7 +8,8 @@ import util.Event
 import util.ErrorEvent
 import model.Stock
 import model.Card
-import model.Player
+import model.playerComponent.PlayerInterface
+import model.playerComponent.playerComponentImplementation.Player
 import model.ConsoleColors.*
 import model.turnHandlerComponent.TurnHandlerInterface
 import model.turnHandlerComponent.turnHandlerImplementation.TurnHandler

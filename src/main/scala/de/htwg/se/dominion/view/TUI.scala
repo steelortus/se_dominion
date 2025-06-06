@@ -3,7 +3,6 @@ package view
 
 import scala.io.StdIn._
 import model.Stock
-import model.Player
 import model.Card
 import control.controlComponent.ControllerInterface
 import util.Observer
