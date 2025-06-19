@@ -3,8 +3,8 @@ package de.htwg.se.dominion.model
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.dominion.model.Card
-import de.htwg.se.dominion.model.Player
-import de.htwg.se.dominion.model.Stock
+import de.htwg.se.dominion.model.playerComponent.playerComponentImplementation.Player
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
 
 class PlayerSpec extends AnyWordSpec {
     "A Player" should {

@@ -2,10 +2,18 @@ package de.htwg.se.dominion.control
 
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.dominion.control._
-import de.htwg.se.dominion.model._
-import de.htwg.se.dominion.util._
-import de.htwg.se.dominion.control._
+import de.htwg.se.dominion.control.controlComponent.controlBaseImplentation.Controller
+import de.htwg.se.dominion.control.stateComponent.statePreparationImplementation.StatePreparation
+import de.htwg.se.dominion.control.stateComponent.statePlayingImplementation.StatePlaying
+import de.htwg.se.dominion.util.Observer
+import de.htwg.se.dominion.util.Observable
+import de.htwg.se.dominion.util.Event
+import de.htwg.se.dominion.util.ErrorEvent
+import de.htwg.se.dominion.model.Card
+import de.htwg.se.dominion.model.stockComponent.stockComponentImplementation.Stock
+import de.htwg.se.dominion.model.playerComponent.playerComponentImplementation.Player
+import de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation.TurnHandler
+import de.htwg.se.dominion.util.UndoManager
 import scala.annotation.init
 import munit.Test
 
