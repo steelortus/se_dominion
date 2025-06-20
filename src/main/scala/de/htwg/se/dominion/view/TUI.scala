@@ -10,7 +10,9 @@ import model.ConsoleColors.*
 import scala.util.{Try, Success, Failure}
 import scala.annotation.tailrec
 
-case class TUI(controller: ControllerInterface) extends Observer {
+import de.htwg.se.dominion.modules.DefaultController.{given}
+
+class TUI(using controller: ControllerInterface) extends Observer {
     controller.add(this)
     def run(): Unit = {
         println(BLUE("> Enter your command: (h for help)"))

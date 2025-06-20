@@ -3,6 +3,8 @@ package control.controlComponent.controlBaseImplentation
 
 import control.controlComponent.ControllerInterface
 
+import com.google.inject.Inject
+
 import util.Observable
 import util.Event
 import util.ErrorEvent
@@ -19,7 +21,11 @@ import control.stateComponent.statePreparationImplementation.StatePreparation
 import control.stateComponent.statePlayingImplementation.StatePlaying
 import util.Command
 
-case class Controller(var stock: StockInterface, var state: State, var th: TurnHandlerInterface) extends ControllerInterface with Observable {
+class Controller extends ControllerInterface with Observable {
+
+    @Inject var stock: StockInterface = _
+    @Inject var state: State = _
+    @Inject var th: TurnHandlerInterface = _
 
     val prepUndoManager = new UndoManager[StockInterface]
     val playUndoManager = new UndoManager[TurnHandlerInterface]
