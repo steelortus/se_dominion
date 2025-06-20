@@ -7,8 +7,7 @@ import de.htwg.se.dominion.view._
 import de.htwg.se.dominion.control.controlComponent.controlBaseImplentation.Controller
 import de.htwg.se.dominion.control.stateComponent.statePreparationImplementation.StatePreparation
 
-import net.codingwell.scalaguice.InjectorExtensions._
-import de.htwg.se.dominion.modules.DefaultController.given
+import de.htwg.se.dominion.modules.DefaultSettings.{controller}
 
 @main def main(): Unit = {
     //val stock = new Stock()

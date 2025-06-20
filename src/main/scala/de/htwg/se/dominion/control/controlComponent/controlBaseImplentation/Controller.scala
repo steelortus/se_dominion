@@ -21,11 +21,13 @@ import control.stateComponent.statePreparationImplementation.StatePreparation
 import control.stateComponent.statePlayingImplementation.StatePlaying
 import util.Command
 
-class Controller extends ControllerInterface with Observable {
+import de.htwg.se.dominion.modules.DefaultSettings.{stock, th, state}
 
-    @Inject var stock: StockInterface = _
-    @Inject var state: State = _
-    @Inject var th: TurnHandlerInterface = _
+class Controller(using stockGiven: StockInterface, thGiven: TurnHandlerInterface, stateGiven: State) extends ControllerInterface with Observable {
+
+    var stock: StockInterface = stockGiven
+    var th: TurnHandlerInterface = thGiven
+    var state: State = stateGiven
 
     val prepUndoManager = new UndoManager[StockInterface]
     val playUndoManager = new UndoManager[TurnHandlerInterface]

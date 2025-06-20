@@ -10,7 +10,7 @@ import model.ConsoleColors.*
 import scala.util.{Try, Success, Failure}
 import scala.annotation.tailrec
 
-import de.htwg.se.dominion.modules.DefaultController.{given}
+import de.htwg.se.dominion.modules.DefaultSettings.{controller}
 
 class TUI(using controller: ControllerInterface) extends Observer {
     controller.add(this)
