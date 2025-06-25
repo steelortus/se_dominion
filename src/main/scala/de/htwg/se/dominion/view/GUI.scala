@@ -26,6 +26,20 @@ object GUI extends SimpleSwingApplication with Observer {
     val undoButton = new Button("undo")
     val redoButton = new Button("redo")
 
+    val saveMenuItem = new MenuItem(Action("Save game") {
+        if (controller.getStock().getLength() == 17 && controller.getTurn() > 0) {
+            controller.save()
+            statusLabel.text = "Game saved."
+        } else {
+            statusLabel.text = "Cannot save the game if it has not started yet. Fill the stock!"
+        }
+    })
+
+    val loadMenuItem = new MenuItem(Action("Load game") {
+        controller.load()
+        statusLabel.text = "Game loaded."
+    })
+
     val playerButtons = new FlowPanel(FlowPanel.Alignment.Center)(
         Seq(2, 3, 4).map { n =>
             new Button(s"$n players") {
@@ -60,6 +74,13 @@ object GUI extends SimpleSwingApplication with Observer {
     def top: Frame = new MainFrame {
         title = "Dominion GUI"
         preferredSize = new Dimension(900, 600)
+
+        menuBar = new MenuBar {
+            contents += new Menu("Datei") {
+                contents += saveMenuItem
+                contents += loadMenuItem
+            }
+        }
         contents = new BorderPanel {
         layout(new BoxPanel(Orientation.Vertical) {
             contents += statusLabel
