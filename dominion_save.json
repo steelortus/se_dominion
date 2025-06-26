@@ -1,0 +1,12 @@
+{
+  "stock" : [ "Kupfer", "Silber", "Gold", "Anwesen", "Herzogtum", "Provinz", "Fluch", "Garten", "Burggraben", "Dorf", "Holzfaeller", "Werkstatt", "Kapelle", "Thronsaal", "Schmiede", "Hexe", "Spion" ],
+  "stockAmount" : [ 50, 50, 50, 50, 25, 12, 50 ],
+  "turn" : 1,
+  "players" : [ {
+    "hand" : [ "Kupfer" ],
+    "deck" : [ "Gold" ],
+    "discard" : [ ],
+    "actions" : 1,
+    "purchases" : 1
+  } ]
+}

@@ -13,6 +13,7 @@ class FileIOJson extends FileIOInterface:
     override def save(stock: StockInterface, th: TurnHandlerInterface): Unit = {
         val pw = new PrintWriter(new File("dominion_save.json"))
         pw.write(Json.prettyPrint(stockToJson(stock, th)))
+        pw.close()
     }
 
     override def load(): (StockInterface, TurnHandlerInterface) = {
