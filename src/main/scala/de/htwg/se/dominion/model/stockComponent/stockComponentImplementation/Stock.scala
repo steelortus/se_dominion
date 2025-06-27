@@ -14,7 +14,7 @@ case class Stock(override val stock: List[Card] = List(Card.Kupfer, Card.Silber,
 
     def addCard(card:Card): Stock = {
         if (stock.length < 17 && !stock.contains(card) && card != Card.NotACard) {
-            Stock(stock :+ card)
+            Stock(stock :+ card, stockAmount :+ card.amount)
         } else {
             this
         }
@@ -26,7 +26,10 @@ case class Stock(override val stock: List[Card] = List(Card.Kupfer, Card.Silber,
 
     def removeCard(card:Card): Stock = {
         if (!setupStock.contains(card) && stock.contains(card)) {
-            Stock(stock.filterNot(_ == card))
+            val ind = stock.indexOf(card)
+            val amounts = stockAmount.patch(ind, Nil, 1)
+            val newStock = stock.patch(ind, Nil, 1)
+            Stock(newStock, amounts)
         } else {
             this
         }

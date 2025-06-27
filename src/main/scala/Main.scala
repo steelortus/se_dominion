@@ -11,7 +11,7 @@ import de.htwg.se.dominion.modules.DefaultSettings.{controller}
 
 @main def main(): Unit = {
     val t = new TUI()
-    GUI.initWith(controller)
+    //GUI.initWith(controller)
     t.run()
 
 }
