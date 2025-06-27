@@ -1,12 +1,30 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dominion>
-                <stock><card>Kupfer</card><card>Silber</card><card>Gold</card><card>Anwesen</card><card>Herzogtum</card><card>Provinz</card><card>Fluch</card><card>Garten</card><card>Burggraben</card><card>Dorf</card><card>Holzfaeller</card><card>Werkstatt</card><card>Kapelle</card><card>Thronsaal</card><card>Schmiede</card><card>Hexe</card><card>Spion</card></stock>
+                <stock><card>Kupfer</card><card>Silber</card><card>Gold</card><card>Anwesen</card><card>Herzogtum</card><card>Provinz</card><card>Fluch</card><card>Garten</card><card>Markt</card><card>Jahrmarkt</card><card>Dieb</card><card>Abenteurer</card><card>Dorf</card><card>Hexe</card><card>Laboratorium</card><card>Bibliothek</card><card>Holzfaeller</card></stock>
                 <stockAmount><amount>50</amount><amount>50</amount><amount>50</amount><amount>50</amount><amount>25</amount><amount>12</amount><amount>50</amount></stockAmount>
-                <turn>1</turn>
+                <turn>2</turn>
                 <players>
                     <player>
-                        <hand><card>Kupfer</card></hand>
-                        <deck><card>Gold</card></deck>
+                        <hand><card>Anwesen</card><card>Kupfer</card><card>Kupfer</card><card>Anwesen</card><card>Kupfer</card></hand>
+                        <deck></deck>
+                        <discard><card>Anwesen</card><card>Kupfer</card><card>Kupfer</card><card>Anwesen</card><card>Kupfer</card><card>Kupfer</card></discard>
+                        <actions>1</actions>
+                        <purchases>1</purchases>
+                    </player><player>
+                        <hand><card>Kupfer</card><card>Anwesen</card><card>Anwesen</card><card>Anwesen</card><card>Kupfer</card></hand>
+                        <deck></deck>
+                        <discard><card>Hexe</card><card>Kupfer</card><card>Kupfer</card><card>Kupfer</card><card>Kupfer</card><card>Kupfer</card></discard>
+                        <actions>1</actions>
+                        <purchases>1</purchases>
+                    </player><player>
+                        <hand><card>Kupfer</card><card>Anwesen</card><card>Kupfer</card><card>Kupfer</card><card>Anwesen</card></hand>
+                        <deck><card>Kupfer</card><card>Anwesen</card><card>Kupfer</card><card>Kupfer</card><card>Kupfer</card></deck>
+                        <discard></discard>
+                        <actions>1</actions>
+                        <purchases>1</purchases>
+                    </player><player>
+                        <hand><card>Anwesen</card><card>Kupfer</card><card>Kupfer</card><card>Anwesen</card><card>Kupfer</card></hand>
+                        <deck><card>Kupfer</card><card>Kupfer</card><card>Anwesen</card><card>Kupfer</card><card>Kupfer</card></deck>
                         <discard></discard>
                         <actions>1</actions>
                         <purchases>1</purchases>

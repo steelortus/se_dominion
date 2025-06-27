@@ -37,7 +37,7 @@ class FileIOXml extends FileIOInterface:
         val amounts = (file \ "stockAmount" \ "amount").map(n => n.text.toInt).toList
         val stock = Stock(stockCards, amounts)
         val turn = (file \ "turn").text.toInt
-        val players = (file \ "player").map { pNode =>
+        val players = (file \ "players" \ "player").map { pNode =>
             val hand = (pNode \ "hand" \ "card").map(n => Card.valueOf(n.text)).toList
             val deck = (pNode \ "deck" \ "card").map(n => Card.valueOf(n.text)).toList
             val discard = (pNode \ "discard" \ "card").map(n => Card.valueOf(n.text)).toList

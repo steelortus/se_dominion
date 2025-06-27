@@ -53,12 +53,7 @@ class TUI(using controller: ControllerInterface) extends Observer {
                 case "redo" =>
                     controller.redo()
                 case "save" =>
-                    if (controller.getStock().getLength() == 17 && controller.getTurn() > 0) {
-                        controller.save()
-                        println("Game saved.")
-                    } else {
-                        println("Cannot save the game if it has not started yet. Fill the stock!")
-                    }
+                    controller.save()
                 case "load" =>
                     controller.load()
                 case _ =>

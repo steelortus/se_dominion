@@ -17,6 +17,6 @@ object DefaultSettings {
     given stock: StockInterface = firstStock
     given th: TurnHandlerInterface = new TurnHandlerBuilder().setNumberOfPlayers(0).setTurn(0).getResult()
     given state: State = new StatePreparation(firstStock)
-    given fileIO: FileIOInterface = new FileIOJson()
+    given fileIO: FileIOInterface = new FileIOXml()
     given controller: ControllerInterface = new Controller()
 }

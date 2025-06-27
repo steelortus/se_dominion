@@ -13,6 +13,7 @@ import util.Observable
 import util.Command
 import util.UndoManager
 import control.commands._
+import fileio.FileIOInterface
 
 case class StatePlaying(stock: StockInterface) extends State {
     override def addCard(card: String, stock: StockInterface, um: UndoManager[StockInterface]): StockInterface = {
@@ -39,5 +40,13 @@ case class StatePlaying(stock: StockInterface) extends State {
     override def purchase(stock: StockInterface, card: Card, th: TurnHandlerInterface, um: UndoManager[TurnHandlerInterface]): TurnHandlerInterface = {
         val updatedTurnHandler = um.doStep(th, PurchaseCommand(card, stock))
         updatedTurnHandler
+    }
+
+    override def load(fileIO: FileIOInterface): (StockInterface, TurnHandlerInterface) = {
+        fileIO.load()
+    }
+
+    override def save(fileIO: FileIOInterface, stock: StockInterface, th: TurnHandlerInterface): Unit = {
+        fileIO.save(stock, th)
     }
 }

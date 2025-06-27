@@ -210,16 +210,20 @@ class Controller(using stockGiven: StockInterface, thGiven: TurnHandlerInterface
         }
     }
 
-    def save(): Unit = fileIO.save(stock, th)
+    def save(): Unit = {
+        state match {
+            case StatePlaying(stock) =>
+                state.save(fileIO, stock, th)
+            case _ =>
+                notifyObservers(ErrorEvent.invalidCommand)
+        }
+    }
 
     def load(): Unit = {
-        val (loadadStock, loadedTH) = fileIO.load()
-        stock = loadadStock
-        th = loadedTH
-        if (stock.getLength() != 17) {
-            updateState(Event.preparation)
-        } else {
-            updateState(Event.stockFull)
-        }
+        val loaded = state.load(fileIO)
+        stock = loaded._1
+        th = loaded._2
+        println(th)
+        notifyObservers(Event.playing)
     }
 }

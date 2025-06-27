@@ -12,6 +12,7 @@ import util.Observable
 import util.Command
 import util.UndoManager
 import control.commands._
+import fileio.FileIOInterface
 
 case class StatePreparation(stock: StockInterface) extends State {
 
@@ -52,5 +53,13 @@ case class StatePreparation(stock: StockInterface) extends State {
 
     override def purchase(stock: StockInterface, card: Card, th: TurnHandlerInterface, um: UndoManager[TurnHandlerInterface]): TurnHandlerInterface = {
         th
+    }
+
+    override def load(fileIO: FileIOInterface): (StockInterface, TurnHandlerInterface) = {
+        fileIO.load()
+    }
+
+    override def save(fileIO: FileIOInterface, stock: StockInterface, th: TurnHandlerInterface): Unit = {
+        fileIO.save(stock, th)
     }
 }
