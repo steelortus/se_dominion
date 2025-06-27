@@ -45,7 +45,6 @@ class FileIOJson extends FileIOInterface:
 
     private def jsonToStock(json: JsValue): StockInterface = {
         val cards = (json \ "stock").as[List[String]].map(Card.valueOf)
-        println(cards)
         val amounts = (json \ "stockAmount").as[List[Int]]
         Stock(cards, amounts)
     }
