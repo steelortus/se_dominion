@@ -28,4 +28,6 @@ trait ControllerInterface extends Observable {
   def updateState(e: Event): Unit
   def undo(): Unit
   def redo(): Unit
+  def save(): Unit
+  def load(): Unit
 }

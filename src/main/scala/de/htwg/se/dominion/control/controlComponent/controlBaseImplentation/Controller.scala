@@ -22,12 +22,16 @@ import control.stateComponent.statePlayingImplementation.StatePlaying
 import util.Command
 
 import de.htwg.se.dominion.modules.DefaultSettings.{stock, th, state}
+import de.htwg.se.dominion.fileio.FileIOInterface
+import de.htwg.se.dominion.fileio.FileIOJson
+import de.htwg.se.dominion.fileio.FileIOXml
 
-class Controller(using stockGiven: StockInterface, thGiven: TurnHandlerInterface, stateGiven: State) extends ControllerInterface with Observable {
+class Controller(using stockGiven: StockInterface, thGiven: TurnHandlerInterface, stateGiven: State, fileIOGiven: FileIOInterface) extends ControllerInterface with Observable {
 
     var stock: StockInterface = stockGiven
     var th: TurnHandlerInterface = thGiven
     var state: State = stateGiven
+    var fileIO: FileIOInterface = fileIOGiven
 
     val prepUndoManager = new UndoManager[StockInterface]
     val playUndoManager = new UndoManager[TurnHandlerInterface]
@@ -203,6 +207,19 @@ class Controller(using stockGiven: StockInterface, thGiven: TurnHandlerInterface
             case StatePlaying(stock) =>
                 this.th = playUndoManager.redoStep(this.th)
                 notifyObservers(Event.redoPlay)
+        }
+    }
+
+    def save(): Unit = fileIO.save(stock, th)
+
+    def load(): Unit = {
+        val (loadadStock, loadedTH) = fileIO.load()
+        stock = loadadStock
+        th = loadedTH
+        if (stock.getLength() != 17) {
+            updateState(Event.preparation)
+        } else {
+            updateState(Event.stockFull)
         }
     }
 }
