@@ -1,29 +1,29 @@
 {
   "stock" : [ "Kupfer", "Silber", "Gold", "Anwesen", "Herzogtum", "Provinz", "Fluch", "Garten", "Markt", "Jahrmarkt", "Dieb", "Abenteurer", "Dorf", "Hexe", "Laboratorium", "Bibliothek", "Holzfaeller" ],
-  "stockAmount" : [ 50, 50, 50, 50, 25, 12, 50 ],
+  "stockAmount" : [ 50, 50, 50, 50, 25, 12, 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ],
   "noP" : 2,
-  "turn" : 2,
+  "turn" : 6,
   "players" : [ {
-    "hand" : [ "Anwesen", "Kupfer", "Kupfer", "Kupfer", "Anwesen" ],
-    "deck" : [ ],
-    "discard" : [ "Dorf", "Kupfer", "Kupfer", "Kupfer", "Anwesen", "Kupfer" ],
+    "hand" : [ "Kupfer", "Anwesen", "Kupfer", "Anwesen", "Anwesen" ],
+    "deck" : [ "Kupfer", "Kupfer" ],
+    "discard" : [ "Dorf", "Garten", "Kupfer", "Kupfer", "Kupfer", "Dorf" ],
     "actions" : 1,
     "purchases" : 1
   }, {
-    "hand" : [ "Anwesen", "Kupfer", "Anwesen", "Kupfer", "Kupfer" ],
-    "deck" : [ ],
-    "discard" : [ "Holzfaeller", "Kupfer", "Anwesen", "Kupfer", "Kupfer", "Kupfer" ],
+    "hand" : [ "Anwesen", "Anwesen", "Anwesen", "Kupfer", "Kupfer" ],
+    "deck" : [ "Hexe", "Kupfer" ],
+    "discard" : [ "Dieb", "Anwesen", "Kupfer", "Kupfer", "Kupfer", "Kupfer" ],
     "actions" : 1,
     "purchases" : 1
   }, {
     "hand" : [ "Kupfer", "Kupfer", "Kupfer", "Anwesen", "Anwesen" ],
-    "deck" : [ "Kupfer", "Anwesen", "Kupfer", "Kupfer", "Kupfer" ],
+    "deck" : [ "Kupfer", "Kupfer", "Kupfer", "Anwesen", "Kupfer" ],
     "discard" : [ ],
     "actions" : 1,
     "purchases" : 1
   }, {
-    "hand" : [ "Kupfer", "Kupfer", "Kupfer", "Anwesen", "Kupfer" ],
-    "deck" : [ "Kupfer", "Anwesen", "Kupfer", "Kupfer", "Anwesen" ],
+    "hand" : [ "Kupfer", "Kupfer", "Kupfer", "Kupfer", "Kupfer" ],
+    "deck" : [ "Anwesen", "Kupfer", "Kupfer", "Anwesen", "Anwesen" ],
     "discard" : [ ],
     "actions" : 1,
     "purchases" : 1
