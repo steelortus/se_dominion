@@ -20,3 +20,7 @@ object DefaultSettings {
     given fileIO: FileIOInterface = new FileIOJson()
     given controller: ControllerInterface = new Controller()
 }
+
+object TestSettings {
+    given fullStock: StockInterFace = new Stock ++ List(Card.Garten, Card.Burggraben, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Kapelle, Card.Thronsaal, Card.Schmiede, Card.Hexe, Card.Spion)
+}

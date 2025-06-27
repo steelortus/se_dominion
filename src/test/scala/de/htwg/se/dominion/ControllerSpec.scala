@@ -16,6 +16,9 @@ import de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation.
 import de.htwg.se.dominion.util.UndoManager
 import scala.annotation.init
 import munit.Test
+import de.htwg.se.dominion.modules.DefaultSettings.{stock, th, state, fileIO}
+import de.htwg.se.dominion.fileio.FileIOInterface
+import de.htwg.se.dominion.fileio.FileIOJson
 
 class ControllerSpec extends AnyWordSpec {
 
@@ -33,6 +36,7 @@ class ControllerSpec extends AnyWordSpec {
     }
 
     "A Controller" should {
+        //given fileIO: FileIOInterface = new FileIOJson()
 
         val initialStock = new Stock
         val fullStock = new Stock ++ List(Card.Garten, Card.Burggraben, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Kapelle, Card.Thronsaal, Card.Schmiede, Card.Hexe, Card.Spion)
@@ -41,7 +45,7 @@ class ControllerSpec extends AnyWordSpec {
         val testCard = Card.Markt
 
         "start in Preparation State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             controller.state should be(StatePreparation(initialStock))
         }
 
@@ -74,7 +78,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "notify if Stock is full" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.addCard(testCard.toString)
