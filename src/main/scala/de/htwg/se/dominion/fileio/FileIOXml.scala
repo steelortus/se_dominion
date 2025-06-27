@@ -15,6 +15,7 @@ class FileIOXml extends FileIOInterface:
             <dominion>
                 <stock>{stock.stock.map(card => <card>{card.toString}</card>)}</stock>
                 <stockAmount>{stock.stockAmount.map(a => <amount>{a}</amount>)}</stockAmount>
+                <noP>{th.numberOfPlayers}</noP>
                 <turn>{th.turn}</turn>
                 <players>
                     {th.players.map(p =>
@@ -36,6 +37,7 @@ class FileIOXml extends FileIOInterface:
         val stockCards = (file \ "stock" \ "card").map(n => Card.valueOf(n.text)).toList
         val amounts = (file \ "stockAmount" \ "amount").map(n => n.text.toInt).toList
         val stock = Stock(stockCards, amounts)
+        val noP = (file \ "noP").text.toInt
         val turn = (file \ "turn").text.toInt
         val players = (file \ "players" \ "player").map { pNode =>
             val hand = (pNode \ "hand" \ "card").map(n => Card.valueOf(n.text)).toList
@@ -45,6 +47,6 @@ class FileIOXml extends FileIOInterface:
             val purchases = (pNode \ "purchases").text.toInt
             new de.htwg.se.dominion.model.playerComponent.playerComponentImplementation.Player(deck, hand, discard, purchases, actions)
         }.toList
-        val th = new TurnHandler(players.length, turn, players)
+        val th = new TurnHandler(noP, turn, players)
         (stock, th)
     }

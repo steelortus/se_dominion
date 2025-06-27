@@ -29,6 +29,7 @@ class FileIOJson extends FileIOInterface:
         Json.obj(
             "stock" -> stock.stock.map(_.toString),
             "stockAmount" -> stock.stockAmount,
+            "noP" -> th.numberOfPlayers,
             "turn" -> th.turn,
             "players" -> th.players.map(p =>
                 Json.obj(
@@ -43,20 +44,22 @@ class FileIOJson extends FileIOInterface:
     }
 
     private def jsonToStock(json: JsValue): StockInterface = {
-        val cards = (json \ "stock").head.as[List[String]].map(Card.valueOf)
-        val amounts = (json \ "stockAmount").head.as[List[Int]]
+        val cards = (json \ "stock").as[List[String]].map(Card.valueOf)
+        println(cards)
+        val amounts = (json \ "stockAmount").as[List[Int]]
         Stock(cards, amounts)
     }
 
     private def jsonToTurnHandler(json: JsValue): TurnHandlerInterface = {
-        val turn = (json \ "turn").head.as[Int]
-        val players = (json \ "players").head.as[List[JsValue]].map { pJson =>
-            val hand = (pJson \ "hand").head.as[List[String]].map(Card.valueOf)
-            val deck = (pJson \ "deck").head.as[List[String]].map(Card.valueOf)
-            val discard = (pJson \ "discard").head.as[List[String]].map(Card.valueOf)
-            val actions = (pJson \ "actions").head.as[Int]
-            val purchases = (pJson \ "purchases").head.as[Int]
+        val turn = (json \ "turn").as[Int]
+        val noP = (json \ "noP").as[Int]
+        val players = (json \ "players").as[List[JsValue]].map { pJson =>
+            val hand = (pJson \ "hand").as[List[String]].map(Card.valueOf)
+            val deck = (pJson \ "deck").as[List[String]].map(Card.valueOf)
+            val discard = (pJson \ "discard").as[List[String]].map(Card.valueOf)
+            val actions = (pJson \ "actions").as[Int]
+            val purchases = (pJson \ "purchases").as[Int]
             new de.htwg.se.dominion.model.playerComponent.playerComponentImplementation.Player(deck, hand, discard, purchases, actions)
         }
-        new TurnHandler(players.size, turn, players)
+        new TurnHandler(noP, turn, players)
     }
