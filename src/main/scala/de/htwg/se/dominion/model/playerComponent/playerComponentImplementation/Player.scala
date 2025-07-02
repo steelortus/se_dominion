@@ -84,7 +84,7 @@ case class Player(override val deck: List[Card] = List(
 
     def purchaseCard(card: Card, stock: StockInterface): Player = {
         if (stock.contains(card)) {
-            if (getMoneyInHand() >= card.getCost && purchases > 0) {
+            if (getMoneyInHand() >= card.getCost && purchases > 0 && stock.getCardAmount(card) > 0) {
                 this.copy(discard = discard :+ card, purchases = purchases - 1)
             } else {
                 this

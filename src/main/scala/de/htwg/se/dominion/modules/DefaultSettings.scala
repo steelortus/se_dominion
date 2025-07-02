@@ -11,6 +11,7 @@ import de.htwg.se.dominion.control.controlComponent.controlBaseImplentation.Cont
 import de.htwg.se.dominion.fileio.FileIOInterface
 import de.htwg.se.dominion.fileio.FileIOJson
 import de.htwg.se.dominion.fileio.FileIOXml
+import de.htwg.se.dominion.model.Card
 
 object DefaultSettings {
     val firstStock = new Stock()
@@ -22,5 +23,5 @@ object DefaultSettings {
 }
 
 object TestSettings {
-    given fullStock: StockInterFace = new Stock ++ List(Card.Garten, Card.Burggraben, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Kapelle, Card.Thronsaal, Card.Schmiede, Card.Hexe, Card.Spion)
+    given fullStock: StockInterface = new Stock ++ List(Card.Garten, Card.Burggraben, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Kapelle, Card.Thronsaal, Card.Schmiede, Card.Hexe, Card.Spion)
 }

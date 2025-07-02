@@ -142,7 +142,12 @@ class Controller(using stockGiven: StockInterface, thGiven: TurnHandlerInterface
             }
         } else {
             th = newTh
-            notifyObservers(Event.playing)
+            stock = stock.cardPurchased(card)
+            if (stock.checkIfGameShouldEnd() == true) {
+                endGame()
+            } else {
+                notifyObservers(Event.playing)
+            }
         }
     }
 

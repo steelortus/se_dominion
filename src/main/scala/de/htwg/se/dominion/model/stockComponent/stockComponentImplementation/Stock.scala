@@ -43,6 +43,35 @@ case class Stock(override val stock: List[Card] = List(Card.Kupfer, Card.Silber,
 
     def getLength(): Int = stock.length
 
+    def getCardAmount(card: Card): Int = {
+        val index = stock.indexOf(card)
+        if (index >= 0 && index < stockAmount.length) {
+            stockAmount(index)
+        } else {
+            0
+        }
+    }
+
+    def cardPurchased(card: Card): Stock = {
+        if (stock.contains(card) && getCardAmount(card) > 0) {
+            val cardIndex = stock.indexOf(card)
+            val newAmounts = stockAmount.updated(cardIndex, getCardAmount(card) - 10)
+            this.copy(stockAmount = newAmounts)
+        } else {
+            this
+        }
+    }
+
+    def checkIfGameShouldEnd(): Boolean = {
+        val emptyStacks = stockAmount.count(_ == 0)
+        val provinceEmpty = stockAmount(stock.indexOf(Card.Provinz)) == 0
+        if (emptyStacks >= 3 || provinceEmpty) {
+            true
+        } else {
+            false
+        }
+    }
+
     override def toString(): String = {
         stock.map(card =>
             s"${card.getName} - Cost: ${card.getCost}, Value: ${card.getValue}, Points: ${card.getPoints}, Amount: ${card.getAmount}"
@@ -51,7 +80,7 @@ case class Stock(override val stock: List[Card] = List(Card.Kupfer, Card.Silber,
 
     def toSellString(): String = {
         stock.map(card =>
-            s"${card.getName} - Cost: ${card.getCost}"
+            s"${card.getName} - Cost: ${card.getCost}. Amount: ${stockAmount(stock.indexOf(card))}"
         ).mkString("\n")
     }
 }

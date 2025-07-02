@@ -12,5 +12,8 @@ trait StockInterface(val stock: List[Card], val stockAmount: List[Int]) {
     def contains(card: Card): Boolean
     def contains(card: String): Boolean
     def getLength(): Int
+    def getCardAmount(card: Card): Int
+    def cardPurchased(card: Card): StockInterface
+    def checkIfGameShouldEnd(): Boolean
     def toSellString(): String
 }
