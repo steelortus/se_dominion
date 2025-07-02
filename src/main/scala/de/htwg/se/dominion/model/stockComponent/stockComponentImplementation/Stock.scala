@@ -55,7 +55,7 @@ case class Stock(override val stock: List[Card] = List(Card.Kupfer, Card.Silber,
     def cardPurchased(card: Card): Stock = {
         if (stock.contains(card) && getCardAmount(card) > 0) {
             val cardIndex = stock.indexOf(card)
-            val newAmounts = stockAmount.updated(cardIndex, getCardAmount(card) - 10)
+            val newAmounts = stockAmount.updated(cardIndex, getCardAmount(card) - 1)
             this.copy(stockAmount = newAmounts)
         } else {
             this
