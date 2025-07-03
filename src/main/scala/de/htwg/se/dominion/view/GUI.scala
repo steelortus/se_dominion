@@ -25,6 +25,10 @@ object GUI extends SimpleSwingApplication with Observer {
     val startGameButton = new Button("Start the game") { visible = false }
     val undoButton = new Button("undo")
     val redoButton = new Button("redo")
+    val stockScroll = new ScrollPane(stockPanel)
+    val selectScroll = new ScrollPane(selectionPanel)
+    stockScroll.horizontalScrollBar.unitIncrement = 48
+    selectScroll.horizontalScrollBar.unitIncrement = 48
 
     val saveMenuItem = new MenuItem(Action("Save game") {
         if (controller.getStock().getLength() == 17 && controller.getTurn() > 0) {
@@ -71,6 +75,17 @@ object GUI extends SimpleSwingApplication with Observer {
         }
     }
 
+    val stockRows: Array[FlowPanel] = Array.fill(3)(new FlowPanel(FlowPanel.Alignment.Left)())
+    val playerHandPanel = new FlowPanel(FlowPanel.Alignment.Left)()
+    val gameArea = new BoxPanel(Orientation.Vertical) {
+        contents ++= stockRows
+        contents += Swing.VStrut(24)
+        contents += new Label("Active player:")
+        contents += playerHandPanel
+        border = Swing.EmptyBorder(16, 16, 16, 16)
+    }
+    gameArea.visible = false
+
     def top: Frame = new MainFrame {
         title = "Dominion GUI"
         preferredSize = new Dimension(900, 600)
@@ -82,26 +97,44 @@ object GUI extends SimpleSwingApplication with Observer {
             }
         }
         contents = new BorderPanel {
-        layout(new BoxPanel(Orientation.Vertical) {
-            contents += statusLabel
-            contents += unredoButtons
-        }) = BorderPanel.Position.North
+            layout(new BoxPanel(Orientation.Vertical) {
+                contents += statusLabel
+                contents += unredoButtons
+            }) = BorderPanel.Position.North
 
-        layout(new BoxPanel(Orientation.Vertical) {
-            contents += new Label("Stock:")
-            contents += new ScrollPane(stockPanel)
-            contents += Swing.VStrut(10)
-            contents += new Label("Cards to add:")
-            contents += new ScrollPane(selectionPanel)
-        }) = BorderPanel.Position.Center
-
-        layout(new BoxPanel(Orientation.Vertical) {
-            contents += startGameButton
-            contents += playerButtons
-            border = Swing.EmptyBorder(10, 0, 0, 0)
-        }) = BorderPanel.Position.South
+            layout(new BoxPanel(Orientation.Vertical) {
+                contents += statusLabel
+                contents += startGameButton
+                contents += playerButtons
+                contents += new Label("Stock:")
+                contents += stockScroll
+                contents += selectScroll
+                contents += gameArea
+            }) = BorderPanel.Position.Center
         }
+        
         controller.updateState(Event.preparation)
+    }
+
+    def updateGameArea(): Unit = {
+        val stockList = controller.getStock().stock
+        val cardsPerRow = 6
+        stockRows.foreach(_.contents.clear())
+        for ((card, idx) <- stockList.zipWithIndex) {
+            val row = idx / cardsPerRow
+            loadCardImage(card.getName, () => controller.purchase(card.getName)).foreach { img =>
+                stockRows(row).contents += img
+            }
+        }
+        stockRows.foreach { row => row.revalidate(); row.repaint() }
+
+        playerHandPanel.contents.clear()
+        val handCards = controller.getPlayerHand().split(",").map(_.trim).filter(_.nonEmpty)
+        handCards.foreach { name =>
+            loadCardImage(name, () => ()).foreach(playerHandPanel.contents += _)
+        }
+        playerHandPanel.revalidate()
+        playerHandPanel.repaint()
     }
 
     def loadCardImage(cardName: String, onClick: () => Unit): Option[Label] = {
@@ -150,26 +183,34 @@ object GUI extends SimpleSwingApplication with Observer {
             statusLabel.text = "Preparation phase. Choose cards to add to the stock"
             updateStockDisplay()
             updateCardSelection()
-            //statusLabel.
+            gameArea.visible = false
 
         case Event.cardAdded | Event.cardRemoved =>
             updateStockDisplay()
             updateCardSelection()
+            gameArea.visible = false
 
         case Event.stockFull =>
             statusLabel.text = "Stock full. Start the game"
             startGameButton.visible = true
             updateStockDisplay()
             updateCardSelection()
+            gameArea.visible = false
 
         case Event.selectNumberOfPlayers =>
             statusLabel.text = "Choose number of players"
             startGameButton.visible = false
             playerButtons.visible = true
+            gameArea.visible = false
 
         case Event.playing =>
             statusLabel.text = "Game started!"
             playerButtons.visible = false
+            startGameButton.visible = false
+            selectionPanel.visible = false
+            stockPanel.visible = false
+            gameArea.visible = true
+            updateGameArea()
 
         case Event.undoPrep =>
             statusLabel.text = "undo"

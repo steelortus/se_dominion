@@ -10,8 +10,11 @@ import de.htwg.se.dominion.control.stateComponent.statePreparationImplementation
 import de.htwg.se.dominion.modules.DefaultSettings.{controller}
 
 @main def main(): Unit = {
-    val t = new TUI()
-    //GUI.initWith(controller)
-    t.run()
+    new Thread(() => {
+        val t = new TUI()
+        t.run()
+    }, "TUI-Thread").start()
 
+    GUI.initWith(controller)
+    Thread.currentThread().join()
 }
