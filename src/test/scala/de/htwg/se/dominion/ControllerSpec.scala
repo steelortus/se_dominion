@@ -39,7 +39,7 @@ class ControllerSpec extends AnyWordSpec {
         //given fileIO: FileIOInterface = new FileIOJson()
 
         val initialStock = new Stock
-        val fullStock = new Stock ++ List(Card.Garten, Card.Burggraben, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Kapelle, Card.Thronsaal, Card.Schmiede, Card.Hexe, Card.Spion)
+        val testFullStock = new Stock ++ List(Card.Garten, Card.Burggraben, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Kapelle, Card.Thronsaal, Card.Schmiede, Card.Hexe, Card.Spion)
         val testHandler = new TurnHandler(2, 0)
         val testState = new StatePreparation(initialStock)
         val testCard = Card.Markt
@@ -50,18 +50,18 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "return it's associated stock" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             controller.getStock() should be(initialStock)
         }
 
         "return a list of all Cards not in it's Stock in Preparation State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val regx = "Liste der noch verfuegbaren Karten:\n\n([a-zA-Z]* \\| )*[a-zA-Z]*"
             controller.listCards() should fullyMatch regex regx
         }
 
         "return of a list of all Cards in it's Stock in Playing State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             controller.fillStock()
             controller.createPlayers(2)
             val regx = "([a-zA-Z]+ - Cost: [0-8]{1}, Value: [0123]{1}, Points: (-1|[01369])+, Amount: [0-9]+\n?)*"
@@ -69,7 +69,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "add a Card to the Stock in Preparation State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver()
             controller.add(testObserver)
             controller.addCard(testCard.toString)
@@ -87,7 +87,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "notify if card could not be added" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.addCard(Card.Provinz.toString)
@@ -95,7 +95,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not remove a card from default stock" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.removeCard(Card.Provinz.toString)
@@ -103,7 +103,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not remove a card that is not in stock" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.removeCard(testCard.toString)
@@ -111,16 +111,18 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "notify if card has been removed" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.removeCard(Card.Garten.toString)
             testObserver.lastEvent should be(Some(Event.cardRemoved))
-            controller.state.removeCard(Card.Dorf.toString, fullStock, controller.prepUndoManager) should not equal controller.stock
+            controller.state.removeCard(Card.Dorf.toString, testFullStock, controller.prepUndoManager) should not equal controller.stock
         }
 
         "before game starts ask for player quantity if stock is full" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.play()
@@ -128,7 +130,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not start the game if stock is not filled" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.play()
@@ -136,7 +138,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not try to fill an already full stock" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.fillStock()
@@ -144,7 +147,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "only accept player count between 2 and 4" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(1)
@@ -153,68 +157,77 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not add card to stock while playing" in {
+            import de.htwg.se.dominion.modules.TestSettings.{testPlayState}
             val playState = StatePlaying(initialStock)
-            val controller = Controller(initialStock, playState, testHandler)
+            val controller = Controller()
             controller.addCard(Card.Geldverleiher.toString)
             controller.getStock() should equal (initialStock)
         }
 
         "not remove a card from stock while playing" in {
-            val playState = StatePlaying(fullStock)
-            val controller = Controller(fullStock, playState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock, testPlayState}
+            val playState = StatePlaying(testFullStock)
+            val controller = Controller()
             controller.removeCard(Card.Garten.toString)
-            controller.getStock() should equal (fullStock)
+            controller.getStock() should equal (testFullStock)
         }
 
         "not fill cards to stock while playing" in {
-            val playState = StatePlaying(fullStock)
-            val controller = Controller(fullStock, playState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val playState = StatePlaying(testFullStock)
+            val controller = Controller()
             controller.fillStock()
-            controller.getStock() should equal (fullStock)
+            controller.getStock() should equal (testFullStock)
         }
 
         "not purchase a Card while in Preparation State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{newTh}
+            val controller = Controller()
             val oldTh = controller.th
             controller.purchase(Card.Kupfer)
             oldTh == controller.th should be(true)
         }
 
         "be able to return the current turn" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             controller.getTurn() should be(0)
         }
 
         "be able to return the current player's Hand as String" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             controller.createPlayers(2)
             val player = controller.getPlayerHand()
             player should fullyMatch regex "(((Deck|Hand|Discard):\n?)?([a-zA-Z]+ - Value: [0123]{1}, Points: (-1|[01369])+\n?)*\n?)+"
         }
 
         "be able to return the current player's money in Hand" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             controller.createPlayers(2)
             val playerMoney = controller.getPlayerMoney()
             playerMoney should (be >= 2 and be <= 5)
         }
 
         "be able to return how many purchases the current player has left" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             controller.createPlayers(2)
             val purchases = controller.getPlayerPurchases()
             purchases should be(1)
         }
 
         "be able to return how many actions the current player has left" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             controller.createPlayers(2)
             val actions = controller.getPlayerActions()
             actions should be(1)
         }
 
         "observe ErrorEvent.invalidCommand when nextTurn() is called if the State is in Preparation" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.nextTurn()
@@ -222,7 +235,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "go to the next turn in Playing State" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(2)
@@ -232,7 +246,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "purchase a card" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(2)
@@ -242,7 +257,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not purchase a card if the player has no purchases left" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(2)
@@ -253,7 +269,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not purchase a card if the player has no money left or the card is not in the stock" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(2)
@@ -263,7 +280,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "be able to purchase a card with a String of a card" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(2)
@@ -273,7 +291,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "not end the game if it hasn't started yet" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.endGame()
@@ -281,7 +299,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "be able to end the game" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(2)
@@ -291,13 +310,14 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "be able to get a List of Points of all Players" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             controller.createPlayers(2)
             controller.getAllPoints() should be(List(3, 3))
         }
 
         "display Preparation commands in Preparation State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.showHelp()
@@ -305,7 +325,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "display Playing commands in Playing State" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(2)
@@ -315,7 +336,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "signal an Event that the State is now in Preparation" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.updateState(Event.preparation)
@@ -323,7 +344,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "return an invalid State Event if the wrong Event is sent to updateState" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.updateState(Event.endGame)
@@ -331,7 +352,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "undo and redo adding Cards in Preparation State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.addCard(testCard.toString)
@@ -343,7 +364,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "undo and redo removing Cards in Preparation State" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.removeCard(Card.Garten.toString)
@@ -355,7 +377,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "undo and redo filling the Stock in Preparation State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.fillStock()
@@ -367,7 +389,8 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "undo and redo purchasing Cards in Playing State" in {
-            val controller = Controller(fullStock, testState, testHandler)
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock}
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.createPlayers(2)
@@ -381,7 +404,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "fill a stock in Preparation State" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             val newStock = controller.state.fillStock(initialStock, controller.prepUndoManager)
@@ -389,7 +412,7 @@ class ControllerSpec extends AnyWordSpec {
         }
 
         "remove an observable again" in {
-            val controller = Controller(initialStock, testState, testHandler)
+            val controller = Controller()
             val testObserver = new TestObserver
             controller.add(testObserver)
             controller.remove(testObserver)

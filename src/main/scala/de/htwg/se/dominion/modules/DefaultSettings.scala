@@ -6,6 +6,7 @@ import de.htwg.se.dominion.model.turnHandlerComponent.TurnHandlerInterface
 import de.htwg.se.dominion.model.turnHandlerComponent.turnHandlerImplementation.TurnHandlerBuilder
 import de.htwg.se.dominion.control.stateComponent.State
 import de.htwg.se.dominion.control.stateComponent.statePreparationImplementation.StatePreparation
+import de.htwg.se.dominion.control.stateComponent.statePlayingImplementation.StatePlaying
 import de.htwg.se.dominion.control.controlComponent.ControllerInterface
 import de.htwg.se.dominion.control.controlComponent.controlBaseImplentation.Controller
 import de.htwg.se.dominion.fileio.FileIOInterface
@@ -23,5 +24,9 @@ object DefaultSettings {
 }
 
 object TestSettings {
-    given fullStock: StockInterface = new Stock ++ List(Card.Garten, Card.Burggraben, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Kapelle, Card.Thronsaal, Card.Schmiede, Card.Hexe, Card.Spion)
+    val trulyFullStock = new Stock ++ List(Card.Garten, Card.Burggraben, Card.Dorf, Card.Holzfaeller, Card.Werkstatt, Card.Kapelle, Card.Thronsaal, Card.Schmiede, Card.Hexe, Card.Spion)
+    given fullStock: StockInterface = trulyFullStock
+    given newTh: TurnHandlerInterface = TurnHandlerBuilder().setNumberOfPlayers(2).setTurn(0).getResult()
+    given testPlayState: State = StatePlaying(Stock())
+    given testPlayStateFullStock: State = StatePlaying(trulyFullStock)
 }

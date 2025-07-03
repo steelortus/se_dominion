@@ -218,7 +218,7 @@ class CardSpec extends AnyWordSpec {
         }
         "print a Sell String of the Stock" in {
             s = new Stock()
-            val stockString = "([a-zA-Z]+ - Cost: [0-8]{1}\n?)+" 
+            val stockString = "([a-zA-Z]+ - Cost: [0-8]{1}, Amount: [0-9]+\n?)+" 
             s.toSellString() should fullyMatch regex stockString
         }
     }

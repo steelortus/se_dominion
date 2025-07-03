@@ -80,7 +80,7 @@ case class Stock(override val stock: List[Card] = List(Card.Kupfer, Card.Silber,
 
     def toSellString(): String = {
         stock.map(card =>
-            s"${card.getName} - Cost: ${card.getCost}. Amount: ${stockAmount(stock.indexOf(card))}"
+            s"${card.getName} - Cost: ${card.getCost}, Amount: ${stockAmount(stock.indexOf(card))}"
         ).mkString("\n")
     }
 }
