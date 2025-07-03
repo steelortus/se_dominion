@@ -29,4 +29,5 @@ object TestSettings {
     given newTh: TurnHandlerInterface = TurnHandlerBuilder().setNumberOfPlayers(2).setTurn(0).getResult()
     given testPlayState: State = StatePlaying(Stock())
     given testPlayStateFullStock: State = StatePlaying(trulyFullStock)
+    given newFileIO: FileIOInterface = new FileIOXml()
 }

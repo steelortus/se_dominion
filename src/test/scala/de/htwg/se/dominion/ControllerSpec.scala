@@ -417,5 +417,24 @@ class ControllerSpec extends AnyWordSpec {
             controller.add(testObserver)
             controller.remove(testObserver)
         }
+
+        "not save in preparation state" in {
+            val controller = Controller()
+            val testObserver = new TestObserver
+            controller.add(testObserver)
+            controller.save()
+            testObserver.lastErrorEvent should be(Some(ErrorEvent.invalidCommand))
+        }
+
+        "load a game state from file" in {
+            import de.htwg.se.dominion.modules.TestSettings.{fullStock, newTh, testPlayStateFullStock}
+            val controller = Controller()
+            controller.fileIO.save(controller.stock, controller.th)
+            val (loadedStock, loadedTH) = controller.fileIO.load()
+            loadedStock.stock should contain theSameElementsAs controller.stock.stock
+            loadedStock.stockAmount should equal(controller.stock.stockAmount)
+            loadedTH.players.head.hand should equal(controller.th.getPlayer().hand)
+            loadedTH.turn should equal(0)
+        }
     }
 }

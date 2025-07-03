@@ -4,25 +4,25 @@
   "noP" : 2,
   "turn" : 0,
   "players" : [ {
-    "hand" : [ "Anwesen", "Kupfer", "Kupfer", "Kupfer", "Kupfer" ],
-    "deck" : [ "Kupfer", "Anwesen", "Kupfer", "Anwesen", "Kupfer" ],
+    "hand" : [ "Kupfer", "Kupfer", "Anwesen", "Kupfer", "Anwesen" ],
+    "deck" : [ "Kupfer", "Kupfer", "Anwesen", "Kupfer", "Kupfer" ],
     "discard" : [ ],
     "actions" : 1,
     "purchases" : 1
   }, {
-    "hand" : [ "Kupfer", "Kupfer", "Anwesen", "Anwesen", "Anwesen" ],
-    "deck" : [ "Kupfer", "Kupfer", "Kupfer", "Kupfer", "Kupfer" ],
+    "hand" : [ "Kupfer", "Anwesen", "Kupfer", "Kupfer", "Kupfer" ],
+    "deck" : [ "Anwesen", "Kupfer", "Kupfer", "Kupfer", "Anwesen" ],
     "discard" : [ ],
     "actions" : 1,
     "purchases" : 1
   }, {
     "hand" : [ "Kupfer", "Kupfer", "Kupfer", "Kupfer", "Anwesen" ],
-    "deck" : [ "Kupfer", "Kupfer", "Anwesen", "Kupfer", "Anwesen" ],
+    "deck" : [ "Kupfer", "Anwesen", "Kupfer", "Kupfer", "Anwesen" ],
     "discard" : [ ],
     "actions" : 1,
     "purchases" : 1
   }, {
-    "hand" : [ "Kupfer", "Kupfer", "Kupfer", "Anwesen", "Anwesen" ],
+    "hand" : [ "Anwesen", "Anwesen", "Kupfer", "Kupfer", "Kupfer" ],
     "deck" : [ "Kupfer", "Kupfer", "Anwesen", "Kupfer", "Kupfer" ],
     "discard" : [ ],
     "actions" : 1,
