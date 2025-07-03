@@ -1,5 +1,7 @@
 val scala3Version = "3.6.4"
 
+scalaVersion := scala3Version
+
 enablePlugins(CoverallsPlugin)
 coverageEnabled := true
 
@@ -18,15 +20,4 @@ lazy val root = project
     libraryDependencies += "net.codingwell" %% "scala-guice" % "7.0.0",
     libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.4.0",
     libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC5"
-    /*libraryDependencies += "org.scalafx" %% "scalafx" % "24.0.0-R35",
-    libraryDependencies ++= {
-      lazy val osName = System.getProperty("os.name") match {
-        case os if os.toLowerCase.contains("mac") => "mac"
-        case os if os.toLowerCase.contains("win") => "win"
-        case os if os.toLowerCase.contains("linux") => "linux"
-        case _ => throw new RuntimeException("Unsupported OS")
-      }
-      Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-        .map(lib => "org.openjfx" % s"javafx-$lib" % "21" classifier osName)
-    }*/
   )
