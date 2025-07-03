@@ -17,7 +17,7 @@ import de.htwg.se.dominion.model.Card
 object DefaultSettings {
     val firstStock = new Stock()
     given stock: StockInterface = firstStock
-    given th: TurnHandlerInterface = new TurnHandlerBuilder().setNumberOfPlayers(0).setTurn(0).getResult()
+    given th: TurnHandlerInterface = new TurnHandlerBuilder().setNumberOfPlayers(0).getResult()
     given state: State = new StatePreparation(firstStock)
     given fileIO: FileIOInterface = new FileIOJson()
     given controller: ControllerInterface = new Controller()
