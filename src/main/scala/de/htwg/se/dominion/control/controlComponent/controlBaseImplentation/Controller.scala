@@ -68,7 +68,12 @@ class Controller(using stockGiven: StockInterface, thGiven: TurnHandlerInterface
         if (state.play(stock, th) == true) {
             notifyObservers(Event.selectNumberOfPlayers)
         } else {
-            notifyObservers(ErrorEvent.cantStart)
+            state match {
+                case StatePreparation(stock) =>
+                    notifyObservers(ErrorEvent.cantStart)
+                case StatePlaying(stock) =>
+                    notifyObservers(Event.selectCard)
+        }
         }
     }
 
@@ -153,6 +158,25 @@ class Controller(using stockGiven: StockInterface, thGiven: TurnHandlerInterface
 
     def purchase(card: String): Unit = {
         purchase(stock.getCard(card))
+    }
+
+    def playCard(card: Card): Unit = {
+        if (th.getPlayer().hand.contains(card) && th.getPlayer().actions > 0) {
+            th = card.execute(th)
+            val updatedPlayer = th.getPlayer().discardFromHand(card).cardPlayed()
+            th = th.updatePlayer(updatedPlayer)
+            notifyObservers(Event.playing)
+        } else if (th.getPlayer().actions < 1) {
+            notifyObservers(Event.playing)
+            notifyObservers(ErrorEvent.outOfActions)
+        } else {
+            notifyObservers(Event.playing)
+            notifyObservers(ErrorEvent.invalidCard)
+        }
+    }
+
+    def playCard(card: String): Unit = {
+        playCard(stock.getCard(card))
     }
 
     def endGame(): Unit = {

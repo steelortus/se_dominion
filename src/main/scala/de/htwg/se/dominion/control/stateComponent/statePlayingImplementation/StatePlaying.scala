@@ -15,7 +15,7 @@ import util.UndoManager
 import control.commands._
 import fileio.FileIOInterface
 
-case class StatePlaying(stock: StockInterface) extends State {
+case class StatePlaying(stock: StockInterface) extends State with Observable{
     override def addCard(card: String, stock: StockInterface, um: UndoManager[StockInterface]): StockInterface = {
         stock
     }
@@ -25,7 +25,6 @@ case class StatePlaying(stock: StockInterface) extends State {
     }
 
     override def play(stock: StockInterface, th: TurnHandlerInterface): Boolean = {
-        println(CYAN(s"TODO\n"))
         false
     }
 

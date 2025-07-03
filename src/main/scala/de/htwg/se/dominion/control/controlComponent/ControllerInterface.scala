@@ -22,6 +22,8 @@ trait ControllerInterface extends Observable {
   def getPlayerPurchases(): Int
   def purchase(card: Card): Unit
   def purchase(card: String): Unit
+  def playCard(card: Card): Unit
+  def playCard(card: String): Unit
   def endGame(): Unit
   def getAllPoints(): List[Int]
   def showHelp(): Unit

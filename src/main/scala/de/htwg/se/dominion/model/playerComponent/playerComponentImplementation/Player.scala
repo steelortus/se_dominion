@@ -47,7 +47,7 @@ case class Player(override val deck: List[Card] = List(
         newPlayer
     }
 
-    def discardFromHand(index:Int): Player = {
+    def discardFromHand(index: Int): Player = {
         if (index >= 0 && index < hand.length) {
             val discardedCard = hand(index)
             val newHand = hand.take(index) ++ hand.drop(index + 1)
@@ -56,6 +56,11 @@ case class Player(override val deck: List[Card] = List(
         } else {
             this
         }
+    }
+
+    def discardFromHand(card: Card): Player = {
+        val idx = hand.indexOf(card)
+        discardFromHand(idx)
     }
 
     def discardAllFromHand(): Player = {
@@ -96,6 +101,10 @@ case class Player(override val deck: List[Card] = List(
 
     def purchaseCard(card: String, stock: StockInterface): Player = {
         purchaseCard(stock.getCard(card), stock)
+    }
+
+    def cardPlayed(): Player = {
+        this.copy(actions = actions - 1)
     }
 
     // Never call this method directly, only through the UndoManager, otherwise this will break the game logic.

@@ -134,6 +134,10 @@ class TUI(using controller: ControllerInterface) extends Observer {
                 println(GREEN("> Undone!"))
             case Event.redoPlay =>
                 println(GREEN("> Redone!"))
+            case Event.selectCard =>
+                println(CYAN("Please select a card to play"))
+                print("> ")
+                controller.playCard(readLine())
         }
     }
 
@@ -161,6 +165,8 @@ class TUI(using controller: ControllerInterface) extends Observer {
                 println(RED("You are out of purchases for this turn.\n"))
             case ErrorEvent.couldNotPurchaseCard =>
                 println(RED("Could not purchase the Card.\n"))
+            case ErrorEvent.invalidCard =>
+                println(RED("Invalid Card. Please try again.\n"))
         }
     }
 

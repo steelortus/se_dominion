@@ -13,12 +13,14 @@ trait PlayerInterface(val deck: List[Card] = List(),
     def drawCardFromDeck(): PlayerInterface
     def drawFiveCardsFromDeck(): PlayerInterface
     def discardFromHand(index: Int): PlayerInterface
+    def discardFromHand(card: Card): PlayerInterface
     def discardAllFromHand(): PlayerInterface
     def discardFromDeck(index: Int): PlayerInterface
     def getMoneyInHand(): Int
     def getPoints(): Int
     def purchaseCard(card: Card, stock: StockInterface): PlayerInterface
     def purchaseCard(card: String, stock: StockInterface): PlayerInterface
+    def cardPlayed(): PlayerInterface
     def returnCard(card: Card): PlayerInterface
     def nextTurn(): PlayerInterface
     def addCardToHand(card: Card): PlayerInterface

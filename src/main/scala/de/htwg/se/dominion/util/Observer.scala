@@ -28,6 +28,7 @@ enum Event {
     case redoPrep
     case undoPlay
     case redoPlay
+    case selectCard
 }
 
 enum ErrorEvent {
@@ -41,4 +42,5 @@ enum ErrorEvent {
     case couldNotPurchaseCard
     case outOfActions
     case outOfPurchases
+    case invalidCard
 }
