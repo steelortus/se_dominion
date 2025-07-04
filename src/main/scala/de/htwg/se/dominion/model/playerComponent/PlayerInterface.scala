@@ -25,6 +25,8 @@ trait PlayerInterface(val deck: List[Card] = List(),
     def nextTurn(): PlayerInterface
     def addCardToHand(card: Card): PlayerInterface
     def addCardToDeck(card: Card): PlayerInterface
+    def addPurchase(): PlayerInterface
+    def addAction(): PlayerInterface
     def deckToString(): String
     def handToString(): String
     def discardToString(): String

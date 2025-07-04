@@ -52,7 +52,7 @@ enum Card(val name:String, val cost:Int, val value:Int, val points:Int, val amou
     def execute(th: TurnHandlerInterface): TurnHandlerInterface = {
         this match {
             case Dorf =>
-                th.updatePlayer(th.getPlayer().drawCardFromDeck().drawCardFromDeck())
+                th.updatePlayer(th.getPlayer().drawCardFromDeck().addAction().addAction())
             case _ => th
         }
     }

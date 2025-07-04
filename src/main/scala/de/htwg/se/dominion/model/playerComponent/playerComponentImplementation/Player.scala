@@ -131,6 +131,14 @@ case class Player(override val deck: List[Card] = List(
         this.copy(deck = deck :+ card)
     }
 
+    def addPurchase(): Player = {
+        this.copy(purchases = purchases + 1)
+    }
+
+    def addAction(): Player = {
+        this.copy(actions = actions + 1)
+    }
+
     override def toString(): String = {
         "Deck:\n" + deckToString() + "\nHand:\n" + handToString() + "\nDiscard:\n" + discardToString()
     }
